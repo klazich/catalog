@@ -9,4 +9,5 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
+    # http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/
     pass
