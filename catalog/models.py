@@ -1,21 +1,29 @@
 import datetime
 import random
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.exc import IntegrityError
 
 from catalog.database import Base, db_session
 
 
-class Item(Base):
+class Model(Base):
+    __abstract__ = True
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date_created = Column(DateTime, default=func.current_timestamp())
+    date_updated = Column(DateTime, default=func.current_timestamp(), onupdate=func.current_timestamp())
+
+
+class Item(Model):
     __tablename__ = 'item'
 
-    id = Column(Integer, primary_key=True)
+    # id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
     description = Column(Text, nullable=False)
-    created = Column(DateTime, default=datetime.datetime.now, nullable=False)
-    updated = Column(DateTime, onupdate=datetime.datetime.now)
+    # created = Column(DateTime, default=datetime.datetime.now, nullable=False)
+    # updated = Column(DateTime, onupdate=datetime.datetime.now)
 
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship('User', back_populates='items')
@@ -71,17 +79,17 @@ class Item(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'created': self.created,
-            'updated': self.updated,
+            # 'created': self.created,
+            # 'updated': self.updated,
             'user': self.user.name,
             'category': self.category.name
         }
 
 
-class Category(Base):
+class Category(Model):
     __tablename__ = 'category'
 
-    id = Column(Integer, primary_key=True)
+    # id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
 
     items = relationship('Item', order_by=Item.title, back_populates='category')
@@ -117,10 +125,10 @@ class Category(Base):
         }
 
 
-class User(Base):
+class User(Model):
     __tablename__ = 'user'
 
-    id = Column(Integer, primary_key=True)
+    # id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
     picture = Column(String(250))
