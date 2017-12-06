@@ -3,10 +3,8 @@ from sqlalchemy.orm import relationship
 
 from catalog import db
 
-Base = db.Base
 
-
-class Model(Base):
+class Model(db.Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)
