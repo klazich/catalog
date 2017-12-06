@@ -1,11 +1,22 @@
-from catalog.database import db_session
 from flask import Flask
 
-app = Flask(__name__)
+from catalog.database import Database
+from config import app_dir
 
-import catalog.views
+db = Database(app_dir)
 
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
+def create_app():
+    app = Flask(__name__)
+
+    import catalog.views
+
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db.session.remove()
+
+    import catalog.models
+
+    app.register_blueprint(catalog.views.home)
+
+    return app
