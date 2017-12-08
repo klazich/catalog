@@ -4,25 +4,40 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link href="https://unpkg.com/ace-css/css/ace.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-utility-headings@0.1.0/css/utility-headings.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-background-images/css/background-images.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-border-colors/css/border-colors.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-btn/css/btn.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-btn-outline/css/btn-outline.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-btn-primary/css/btn-primary.css" rel="stylesheet">
+    <link href="https://unpkg.com/basscss-btn-sizes/css/btn-sizes.css" rel="stylesheet">
+    <style type="text/css">
+        header {
+            background-image: url(https://d262ilb51hltx0.cloudfront.net/max/2000/1*DZwdGMaeu-rvTroJYui6Uw.jpeg);
+        }
+
+        footer {
+            background-image: url(https://d262ilb51hltx0.cloudfront.net/max/2000/1*DZwdGMaeu-rvTroJYui6Uw.jpeg);
+        }
+    </style>
 </head>
 <body>
 
-<header class="white bg-gray bg-cover bg-center"
-        style="background-image: url(https://d262ilb51hltx0.cloudfront.net/max/2000/1*DZwdGMaeu-rvTroJYui6Uw.jpeg)">
-    <nav class="clearfix white">
+<header class="white bg-gray bg-cover bg-center">
+    <nav class="clearfix white py1 border-bottom">
         <div class="sm-col">
             <a href="/" class="btn py2">Home</a>
-            <a href="/" class="btn py2">...</a>
-            <a href="/" class="btn py2">...</a>
+            <a href="/" class="btn py2">Categories</a>
+            <a href="/" class="btn py2">Your Items</a>
         </div>
         <div class="sm-col-right">
             <a href="/" class="btn py2">Login</a>
         </div>
     </nav>
     <div class="center px2 py4">
-        <h1 class="h00 h0-responsive caps mt4 mb0 regular">Hamburgers</h1>
-        <p class="h3">Artisinal ground chuck creations</p>
-        <a href="#" class="h3 btn btn-outline mb4">ADD ITEM</a>
+        <h1 class="h00 h0-responsive caps mt4 mb0 regular">Catalog App</h1>
+        <p class="h3">A RESTful project</p>
+        <a href="#" class="h3 btn btn-outline mb4">Login</a>
     </div>
 
 </header>
@@ -32,8 +47,7 @@
     {% endblock %}
 </main>
 
-<footer class="white bg-black"
-        style="background-image: url(https://d262ilb51hltx0.cloudfront.net/max/2000/1*DZwdGMaeu-rvTroJYui6Uw.jpeg);">
+<footer class="white bg-black">
     <div class="px2 py3 container">
         <p class="h6 center">&copy; 2017 Kevin Lazich</p>
     </div>

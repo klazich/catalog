@@ -6,11 +6,12 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from config import app_dir
 
-engine = create_engine('sqlite:///{}'.format(path.join(app_dir, 'catalog.db')))
-db_session = scoped_session(sessionmaker(bind=engine))
-
 Base = declarative_base()
-Base.query = db_session.query_property()
+
+engine = create_engine('sqlite:///{}'.format(path.join(app_dir, 'catalog.db')))
+Base.metadata.bind = engine
+
+db_session = scoped_session(sessionmaker(bind=engine))
 
 
 def init_db():

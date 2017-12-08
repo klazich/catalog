@@ -8,12 +8,14 @@ def create_app(config_obj):
     app.config.from_object(config_obj)
 
     import catalog.views
+    import catalog.models
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
 
-    import catalog.models
+    # from catalog.home import home as home_blueprint
+    # app.register_blueprint(home_blueprint)
 
     app.register_blueprint(catalog.views.home)
 
