@@ -1,10 +1,10 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
 
-from catalog import db
+from catalog.database import Base
 
 
-class Model(db.Base):
+class Model(Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)

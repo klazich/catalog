@@ -3,7 +3,7 @@ import json
 from flask import render_template, Blueprint
 from sqlalchemy import asc, desc
 
-from catalog import db
+from catalog.database import db_session
 from catalog.models import User, Category, Item
 
 # CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
@@ -20,6 +20,5 @@ def index():
 
 @home.route('/raw/')
 def raw():
-    # categories = db.session.query(Category).order_by(asc(Category.name))
-    items = db.session.query(Item).order_by(Item.date_created)
+    items = db_session.query(Item).order_by(Item.date_created)
     return render_template('test.html', items=items)

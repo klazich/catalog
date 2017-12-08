@@ -1,19 +1,17 @@
 from flask import Flask
 
-from catalog.database import Database
-from config import app_dir
-
-db = Database(app_dir)
+from catalog.database import db_session
 
 
-def create_app():
+def create_app(config_obj):
     app = Flask(__name__)
+    # app.config.from_object(config_obj)
 
     import catalog.views
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
-        db.session.remove()
+        db_session.remove()
 
     import catalog.models
 

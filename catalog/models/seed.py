@@ -4,22 +4,22 @@ from sqlalchemy.exc import IntegrityError
 from mimesis import Personal, Text, Food
 
 from catalog.models import Item, Category, User
-from catalog import db
+from catalog import db_session
 
 
 def populate_item(count=200, locale='en'):
     food = Food(locale=locale)
     text = Text(locale=locale)
 
-    users = db.session.query(User).all()
-    categories = db.session.query(Category).all()
+    users = db_session.query(User).all()
+    categories = db_session.query(Category).all()
 
     if not users:
         populate_user()
-        users = db.session.query(User).all()
+        users = db_session.query(User).all()
     if not categories:
         populate_category()
-        categories = db.session.query(Category).all()
+        categories = db_session.query(Category).all()
 
     for _ in range(count):
         category = categories[random.randrange(0, len(categories))]
@@ -32,22 +32,22 @@ def populate_item(count=200, locale='en'):
             category=category
         )
 
-        db.session.add(item)
+        db_session.add(item)
         try:
-            db.session.commit()
+            db_session.commit()
         except IntegrityError:
-            db.session.rollback()
+            db_session.rollback()
 
 
 def populate_category():
     for name in ['dish', 'drink', 'fruit', 'spices', 'vegetable']:
         category = Category(name=name)
 
-        db.session.add(category)
+        db_session.add(category)
         try:
-            db.session.commit()
+            db_session.commit()
         except IntegrityError:
-            db.session.rollback()
+            db_session.rollback()
 
 
 def populate_user(count=75, locale='en'):
@@ -60,8 +60,8 @@ def populate_user(count=75, locale='en'):
             picture=person.avatar()
         )
 
-        db.session.add(user)
+        db_session.add(user)
         try:
-            db.session.commit()
+            db_session.commit()
         except IntegrityError:
-            db.session.rollback()
+            db_session.rollback()
