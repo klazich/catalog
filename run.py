@@ -7,5 +7,4 @@ config = app_config['development']
 app = create_app(config)
 
 if __name__ == '__main__':
-    app.debug = True
     app.run()

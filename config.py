@@ -5,15 +5,15 @@ class BaseConfig:
     """Base configuration"""
     DEBUG = False
     TESTING = False
-    # SECRET_KEY = ''
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # DATABASE_URI = 'sqlite:///catalog.db'
+    SECRET_KEY = ''
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DATABASE_URI = 'sqlite:///catalog.db'
 
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     DEBUG = True
-    # SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = True
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 

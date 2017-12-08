@@ -5,7 +5,7 @@ from catalog.database import db_session
 
 def create_app(config_obj):
     app = Flask(__name__)
-    # app.config.from_object(config_obj)
+    app.config.from_object(config_obj)
 
     import catalog.views
 
