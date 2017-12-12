@@ -8,27 +8,21 @@
 </head>
 <body class="bg-white">
 
-<header class="bg-light-gray mv3 bb bt b--black">
-    <nav class="mw9 pv4 ph2 center">
-        <a class="link f2 dim b near-black ttc tracked-tight dib v-mid" href="#" title="Home">Catalog App</a>
-        <div class="fr ttu tracked dib v-mid">
-            <a class="link dim b near-black dib ph3" href="#" title="Items">Items</a><!-- don't add whitespace
-         --><a class="link dim b near-black dib pa2 ba bw1" href="#" title="Login">Login</a>
+<header class="bg-near-black">
+    <nav class="mw9 pt5 pb3 ph2 center">
+        <a class="link f2 b dim white ttc tracked-tight dib" href="#" title="Home">Catalog App</a>
+        <div class="fr ttu tracked dib">
+            <a class="link  dim b white dib ph4" href="#" title="Items">Items</a><!-- don't add whitespace
+         --><a class="link  dim b white dib pa2 ba b--white bw1" href="#" title="Login">Login</a>
         </div>
     </nav>
 </header>
 
+
 <main class="cf mw9 mt5 center">
 
-    <section class="fl w-30 pr4 tc b--black">
-        <h1 class="f-subheadline serif near-black ttc bb mv0">Latest</h1>
-    </section>
-
-    <section class="fl w-70 pl4 tc b--black bw1">
-        <h1 class="f-subheadline serif near-black ttc bb mv0">Categories</h1>
-    </section>
-
     <section class="fl w-30 pr4">
+        <h1 class="f-headline near-black ttc tracked-tight bb b--moon-gray bw3 tc">Latest</h1>
         <section class="cf center ph5">
             {% block latest %}
             {% endblock %}
@@ -36,7 +30,8 @@
     </section>
 
     <section class="fl w-70 pl4">
-        <section class="cf center ph6">
+        <h1 class="f-headline near-black ttc tracked-tight bb b--moon-gray bw3 tc">Categories & Items</h1>
+        <section class="cf center ph5">
             {% block content %}
             {% endblock %}
         </section>
@@ -44,10 +39,10 @@
 
 </main>
 
-<footer class="bg-light-gray pv6 mv2 bt b--black-10 black-70 center">
+<footer class="bg-black pv6 mv2 bt b--silver bw4 black-70 center">
     <div class="mw9 ph3 ph4-ns center">
-        <a href="mailto:" class="link b f3 f2-ns dim black-70 lh-solid">dev@kevinlazich.com</a>
-        <p class="f6 db b ttu lh-solid">© 2017 Kevin Lazich</p>
+        <a href="mailto:" class="link b f3 f2-ns dim white lh-solid">dev@kevinlazich.com</a>
+        <p class="f6 db b ttu white-70 lh-solid">© 2017 Kevin Lazich</p>
         <div class="mt5">
             <a href="/language/" title="Language" class="f6 dib pr2 mid-gray dim">Language</a>
             <a href="/terms/" title="Terms" class="f6 dib ph2 mid-gray dim">Terms of Use</a>
