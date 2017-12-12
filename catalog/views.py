@@ -15,7 +15,8 @@ home = Blueprint('home', __name__)
 @home.route('/')
 @home.route('/catalog/')
 def index():
-    return render_template('index.html')
+    categories = db_session.query(Category).all()
+    return render_template('categories.html', categories=categories)
 
 
 @home.route('/raw/')

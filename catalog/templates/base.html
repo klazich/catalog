@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }} | Catalog App</title>
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    <link href="https://unpkg.com/basscss/css/basscss.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-responsive-typography/css/responsive-typography" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-responsive-layout/css/responsive-layout" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-utility-headings/css/utility-headings" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-background-images/css/background-images" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-border-colors/css/border-colors" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-btn/css/btn" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-btn-outline/css/btn-outline" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-btn-primary/css/btn-primary" rel="stylesheet">
-    <link href="https://unpkg.com/basscss-btn-sizes/css/btn-sizes" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
-<nav class="clearfix white border-bottom ">
+<body class="bg-near-white">
+<header class="bg-black-90 w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
+    <nav class="f5 fw6 ttu tracked">
+        <a class="link dim near-white dib mr3" href="#" title="Home">Home</a>
+        <a class="link dim near-white dib mr3" href="#" title="About">About</a>
+        <a class="link dim near-white dib mr3" href="#" title="Store">Store</a>
+        <a class="link dim near-white dib" href="#" title="Contact">Contact</a>
+    </nav>
+</header>
 
-</nav>
+<section class="cf center w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
+    {% block content %}
+    {% endblock %}
+</section>
 
+<footer class="ph3 ph4-ns pv6 bt b--black-10 black-70">
+    <a href="mailto:" class="link b f3 f2-ns dim black-70 lh-solid">dev@kevinlazich.com</a>
+    <p class="f6 db b ttu lh-solid">© 2017 Kevin Lazich</p>
+    <div class="mt5">
+        <a href="/language/" title="Language" class="f6 dib pr2 mid-gray dim">Language</a>
+        <a href="/terms/" title="Terms" class="f6 dib ph2 mid-gray dim">Terms of Use</a>
+        <a href="/privacy/" title="Privacy" class="f6 dib pl2 mid-gray dim">Privacy</a>
+    </div>
+</footer>
 
 </body>
 </html>
