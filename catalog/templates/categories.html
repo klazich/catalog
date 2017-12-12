@@ -1,17 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
     {% for category in categories %}
-        <div class="fl w-50 w-third-m w-25-ns pa2">
-            <article class="center mw6 hidden ba b--silver">
-                <h1 class="f4 bg-silver near-black ttc mv0 pv2 ph3">{{ category.name }}</h1>
-                <div class="ph2 bt b--silver">
-                    <ul class="list pl1">
-                        {% for item in category.items %}
-                            <li class="f6 lh-copy dib mr2 mb1 pa1 ba b--black-20">{{ item.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </article>
+        <article class="fl w-100 center mv4">
+            <header class="fn fl-ns">
+                <h2 class="f1 ttc tracked-tight near-black mv2 mh4">
+                    {{ category.name }}
+                </h2>
+            </header>
+            <ul class="list pa0 ma0 tj">
+                {% for item in category.items %}
+                    <li class="f7 code lh-solid dib ma1 pa2 ba br1 b--none bg-moon-gray">{{ item.title }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+    {% endfor %}
+{% endblock %}
+{% block latest %}
+    <article class="fl w-100 center mv4">
+        <div class="list pa0 ma0 tc">
+            {% for item in ["A", "Black", "Jack", "Absinthe", "Bee's", "Knees", "Brandy", "Alexander", "Corn", "N'", "Oil", "Cuba", "Libre", "Derby", "Earthquake", "Gin", "and", "tonic", "Glowtini", "Hanky-Panky", "Jungle", "Juice", "Kasiri", "Kir", "Royal", "Mezcal", "Mimosa", "My", "Fair", "Lady", "Orgasm", "Ouzo", "Palm", "wine", "RakÄ~+mn~", "Rob", "Roy", "Sidecar", "Williamine", "Wolfram", "Wolfram", "Woo", "Woo"] %}
+                <span class="f7 code dib ma1 pa2 ba br1 b--none bg-moon-gray">{{ item }}</span>
+            {% endfor %}
         </div>
-    {% endfor %}0
+    </article>
 {% endblock %}
