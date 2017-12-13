@@ -8,38 +8,28 @@
 </head>
 <body class="bg-white">
 
-<header class="bg-near-black flex flex-wrap justify-around">
+<header class="bg-black pt6 pb2 mb4 bb b--light-silver bw5">
 
-    <nav class="mw9 pt5 pb3 ph4 mb4 center">
-        <a class="link f2 b dim white ttc tracked-tight dib" href="#" title="Home">Catalog App</a>
-        <div class="fr ttu tracked dib">
-            <a class="link  dim b white dib ph4" href="#" title="Items">Items</a><!-- don't add whitespace
-         --><a class="link  dim b white dib pa2 ba b--white bw1" href="#" title="Login">Login</a>
+    <nav class="item mw9 ph4 center white">
+        <div class="mh5 pv3">
+            <a class="link dim w-20 f1 ttu tracked-mega b white ttc tracked-tight"
+               href="#"
+               title="Home">Catalog<br>App</a>
+            <a class="link dim ttu tracked b light-red mr2"
+               href="#"
+               title="Login">Login</a>
+            <a class="link dim ttu tracked b white"
+               href="#"
+               title="Items">Items</a>
         </div>
     </nav>
 
 </header>
-{#<div class="flex flex-wrap">#}
-{#  <div class="outline w-25 pa3 mr2">#}
-{#    <code>1</code>#}
-{#  </div>#}
-{#  <div class="outline w-25 pa3 mr2">#}
-{#    <code>2</code>#}
-{#  </div>#}
-{#  <div class="outline w-25 pa3 mr2">#}
-{#    <code>3</code>#}
-{#  </div>#}
-{#  <div class="outline w-25 pa3 mr2">#}
-{#    <code>4</code>#}
-{#  </div>#}
-{#  <div class="outline w-25 pa3">#}
-{#    <code>5</code>#}
-{#  </div>#}
-{#</div>#}
+
 
 <main class="cf mw9 ph4 center">
 
-    <section class="fl bg-light-blue w-30">
+    <section class="fl bg-light-blue w-30 h-100">
         <h1 class="f2 near-black ttu tracked tc pv3">Latest</h1>
         <section class="cf center ph5 ">
             {% block latest %}
@@ -57,7 +47,7 @@
 
 </main>
 
-<footer class="bg-black pv6 mt4 black-70 center">
+<footer class="bg-black pv6 mt4 black-70 center bt b--light-silver bw2">
     <div class="mw9 ph3 ph4-ns center">
         <a href="mailto:" class="link b f3 f2-ns dim white lh-solid">dev@kevinlazich.com</a>
         <p class="f6 db b ttu white-70 lh-solid">© 2017 Kevin Lazich</p>

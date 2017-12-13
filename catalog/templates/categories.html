@@ -7,9 +7,9 @@
                     {{ category.name }}
                 </h2>
             </header>
-            <ul class="list pa0 ma0 tj">
+            <ul class="list pa0 ma0 tc">
                 {% for item in category.items %}
-                    <li class="f7 bg-washed-green lh-solid code ttu tracked b gray dib mb1 pa2">{{ item.title }}</li>
+                    <li class="f7 bg-animate bg-washed-green hover-bg-gray br1 lh-solid code ttu tracked b hover-washed-green gray dib mb1 pa2">{{ item.title }}</li>
                 {% endfor %}
             </ul>
         </article>
@@ -19,7 +19,7 @@
     <article class="fl w-100 center mv4">
         <div class="list pa0 ma0 tc">
             {% for item in ["A", "Black", "Jack", "Absinthe", "Bee's", "Knees", "Brandy", "Alexander", "Corn", "N'", "Oil", "Cuba", "Libre", "Derby", "Earthquake", "Gin", "and", "tonic", "Glowtini", "Hanky-Panky", "Jungle", "Juice", "Kasiri", "Kir", "Royal", "Mezcal", "Mimosa", "My", "Fair", "Lady", "Orgasm", "Ouzo", "Palm", "wine", "RakÄ~+mn~", "Rob", "Roy", "Sidecar", "Williamine", "Wolfram", "Wolfram", "Woo", "Woo"] %}
-                <span class="f7 bg-washed-blue lh-solid code ttu tracked b gray dib mb1 pa2">{{ item }}</span>
+                <span class="f7 dim bg-washed-blue lh-solid code ttu tracked b gray dib mb1 pa2">{{ item }}</span>
             {% endfor %}
         </div>
     </article>
