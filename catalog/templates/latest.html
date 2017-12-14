@@ -1,0 +1,8 @@
+{% block latest %}
+    <h1 class="f1 ttu tracked near-black tc">Latest</h1>
+    <article class="ma4 tc">
+        {% for item in latest_items %}
+            <a class="w-90 f7 dib bg-animate bg-light-gray hover-bg-gray lh-solid ttu tracked code b hover-white gray ma1 pa2 br1">{{ item.title }}</a>
+        {% endfor %}
+    </article>
+{% endblock %}
