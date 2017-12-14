@@ -1,4 +1,6 @@
+from slugify import slugify
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 
 from catalog.database import Base
@@ -17,6 +19,7 @@ class Item(Model):
 
     title = Column(String(250), nullable=False)
     description = Column(Text, nullable=False)
+    slug = Column(String(250), nullable=False)
 
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship('User', back_populates='items')
@@ -29,6 +32,7 @@ class Item(Model):
         self.description = description
         self.user = user
         self.category = category
+        self.slug = slugify(self.title)
 
     @property
     def serialize(self):
@@ -48,6 +52,7 @@ class Category(Model):
     __tablename__ = 'category'
 
     name = Column(String(250), nullable=False)
+    slug = Column(String(250), nullable=False)
 
     items = relationship('Item', order_by=Item.title, back_populates='category')
 
@@ -56,6 +61,7 @@ class Category(Model):
             items = []
         self.name = name
         self.items = items
+        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
@@ -76,6 +82,7 @@ class User(Model):
 
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
+    slug = Column(String(250), nullable=False)
     picture = Column(String(250))
 
     items = relationship('Item', order_by=Item.id, back_populates='user')
@@ -87,6 +94,7 @@ class User(Model):
         self.email = email
         self.picture = picture
         self.items = items
+        self.slug = slugify(self.name)
 
     @property
     def serialize(self):

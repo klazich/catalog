@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1 class="f1 light-red ttu tracked tc">{{ category.name }} Items</h1>
+
+
+
+    <article class="fl mv4 tc">
+        {% for item in category.items -%}
+            <a class="f7 dib bg-animate bg-light-gray hover-bg-blue lh-solid ttu tracked code b hover-white gray ma1 pa2 br1"
+            >{{ item.title }}</a>
+        {%- endfor %}
+    </article>
+
+{% endblock %}

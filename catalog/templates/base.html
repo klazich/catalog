@@ -11,16 +11,18 @@
 <header class="bg-black pv3 mb5 bb b--light-silver bw2">
     <nav class="item mw9 ph4 center white">
         <div class="mh3 pv3">
-            <a class="link dim f1 ttu tracked-mega white" href="#" title="Home">Catalog<br>App</a><a
-                class="link dim ttu tracked b light-red ml4" href="#" title="Login">Login</a><a
-                class="link dim ttu tracked b white ml3" href="#" title="Items">Items</a>
+            <a class="link dim f1 ttu tracked-mega white"
+               href="{{ url_for('home.show_categories') }}"
+               title="Home">Catalog<br>App</a><!--
+         --><a class="link dim ttu tracked b light-red ml4" href="#" title="Login">Login</a><!--
+         --><a class="link dim ttu tracked b white ml3" href="#" title="Items">Items</a>
         </div>
     </nav>
 </header>
 
 <main class="cf mw9 ph4 center">
 
-    <section class="fl w-20">
+    <section class="fl bg-near-black w-20">
         {% include 'latest.html' %}
     </section>
 
