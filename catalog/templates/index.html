@@ -1,24 +1,15 @@
-{% extends "layout.html" %}
-{% block title %}Index{% endblock %}
-{% block main %}
-    <div class="clearfix mxn2">
-        <div class="sm-col sm-col-4 px2">
-            <h2 class="h1 mb0">Bacon</h2>
-            <p>Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig
-                venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin
-                ham hock kevin.</p>
-        </div>
-        <div class="sm-col sm-col-4 px2">
-            <h2 class="h1 mb0">Bratwurst</h2>
-            <p>Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig
-                venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin
-                ham hock kevin.</p>
-        </div>
-        <div class="sm-col sm-col-4 px2">
-            <h2 class="h1 mb0">Andouille</h2>
-            <p>Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig
-                venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin
-                ham hock kevin.</p>
-        </div>
-    </div>
+{% extends "base.html" %}
+
+{% block content %}
+    {% for category in categories %}
+        <article class="fl mv4 tc">
+            <h2 class="fl f-subheadline ttc tracked-tight near-black pa2 ma0">
+                {{ category.name }}
+            </h2>
+            {% for item in category.items -%}
+                <a class="f7 dib bg-animate bg-light-gray hover-bg-gray lh-solid ttu tracked code b hover-white gray ma1 pa2 br1">{{ item.title }}</a>
+            {%- endfor %}
+        </article>
+    {% endfor %}
 {% endblock %}
+
