@@ -8,46 +8,30 @@
 </head>
 <body class="bg-white">
 
-<header class="bg-black pt6 pb2 mb4 bb b--light-silver bw5">
-
+<header class="bg-black pv3 mb5 bb b--light-silver bw2">
     <nav class="item mw9 ph4 center white">
-        <div class="mh5 pv3">
-            <a class="link dim w-20 f1 ttu tracked-mega b white ttc tracked-tight"
-               href="#"
-               title="Home">Catalog<br>App</a>
-            <a class="link dim ttu tracked b light-red mr2"
-               href="#"
-               title="Login">Login</a>
-            <a class="link dim ttu tracked b white"
-               href="#"
-               title="Items">Items</a>
+        <div class="mh3 pv3">
+            <a class="link dim f1 ttu tracked-mega white" href="#" title="Home">Catalog<br>App</a><a
+                class="link dim ttu tracked b light-red ml4" href="#" title="Login">Login</a><a
+                class="link dim ttu tracked b white ml3" href="#" title="Items">Items</a>
         </div>
     </nav>
-
 </header>
-
 
 <main class="cf mw9 ph4 center">
 
-    <section class="fl bg-light-blue w-30 h-100">
-        <h1 class="f2 near-black ttu tracked tc pv3">Latest</h1>
-        <section class="cf center ph5 ">
-            {% block latest %}
-            {% endblock %}
-        </section>
+    <section class="fl w-20">
+        {% include 'latest.html' %}
     </section>
 
-    <section class="fl bg-light-green w-70">
-        <h1 class="f2 near-black ttu tracked tc pv3">Categories & Items</h1>
-        <section class="cf center ph5">
-            {% block content %}
-            {% endblock %}
-        </section>
+    <section class="fl w-80 pl5">
+        {% block content %}
+        {% endblock %}
     </section>
 
 </main>
 
-<footer class="bg-black pv6 mt4 black-70 center bt b--light-silver bw2">
+<footer class="bg-black pv6 mt6 black-70 center bt b--light-silver bw2">
     <div class="mw9 ph3 ph4-ns center">
         <a href="mailto:" class="link b f3 f2-ns dim white lh-solid">dev@kevinlazich.com</a>
         <p class="f6 db b ttu white-70 lh-solid">© 2017 Kevin Lazich</p>
