@@ -15,8 +15,7 @@ def show_categories():
     :return: template
     """
     categories = db_session.query(Category).all()
-    return render_template('show_categories.html', categories=categories, title="Welcome",
-                           latest_items=h.latest_items(40))
+    return render_template('show_categories.html', categories=categories, title="Welcome")
 
 
 @home.route('/catalog/<category_slug>/')
@@ -27,8 +26,7 @@ def show_category(category_slug):
     :return: template
     """
     category = h.get_category_by_slug(category_slug)
-    return render_template('show_category.html', category=category, title=category.name,
-                           latest_items=h.latest_items(40))
+    return render_template('show_category.html', category=category, title=category.name)
 
 
 @home.route('/catalog/<category_slug>/<item_slug>')
@@ -41,5 +39,4 @@ def show_item(category_slug, item_slug):
     """
     category = h.get_category_by_slug(category_slug)
     item = h.get_item_by_slug(item_slug)
-    return render_template('show_item.html', category=category, item=item, title=item.title,
-                           latest_items=h.latest_items(40))
+    return render_template('show_item.html', category=category, item=item, title=item.title)

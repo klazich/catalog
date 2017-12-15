@@ -1,14 +1,14 @@
 {% extends "base.html" %}
+{% import 'macros.html' as macros %}
 
 {% block content %}
 
-    <a class="link" href="{{ url_for('home.show_categories') }}">back</a>
-    <h1 class="f-headline ttc b near-black ma0">{{ category.name }} Items</h1>
+{#    <a class="link" href="{{ url_for('home.show_categories') }}">back</a>#}
+    <h1 class="f-headline bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>
 
-    <article class="flex flex-column mv4 tc">
+    <article class="flex flex-column ">
         {% for item in category.items -%}
-            <a class="f7 link dib bg-animate bg-light-gray hover-bg-blue lh-solid ttu tracked code b hover-white gray ma1 pa2 br1"
-            >{{ item.title }}</a>
+            {{ macros.show_item(item, with_category=True, with_user=True) }}
         {%- endfor %}
     </article>
 

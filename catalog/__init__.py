@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, current_app
 
 from catalog.database import db_session
+from catalog.helpers import latest_items
 
 
 def create_app(config_obj):
@@ -12,6 +13,10 @@ def create_app(config_obj):
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
+
+    @app.context_processor
+    def inject_latest_items():
+        return dict(latest_items=latest_items(40))
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
