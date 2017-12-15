@@ -1,0 +1,35 @@
+{% set height = 2 %}
+
+{% macro item_title(item) -%}
+    <div class="f6 flex items-center hover-bg-light-red bg-red ttu tracked b white h{{ height }} pv1 ph2">
+        <a>{{ item.title }}</a>
+    </div>
+{%- endmacro %}
+
+{% macro item_category(item) -%}
+    <div class="f6 flex items-center hover-bg-light-blue bg-blue ttu tracked b white h{{ height }} pv1 ph2 bl b--white">
+        <a>{{ item.category.name }}</a>
+    </div>
+{%- endmacro %}
+
+{% macro item_user(item) -%}
+    <div class="f6 flex items-center hover-bg-light-green bg-green ttu tracked b white h{{ height }} pv1 ph2 bl b--white">
+        <a>{{ item.user.name }}</a>
+    </div>
+{%- endmacro %}
+
+{% macro show_item(item, with_category=False, with_user=False) -%}
+    <div class="flex flex-auto bg-light-gray mb1">
+
+        {{ item_title(item) }}
+
+        {% if with_category %}
+            {{ item_category(item) }}
+        {% endif %}
+
+        {% if with_user %}
+            {{ item_user(item) }}
+        {% endif %}
+
+    </div>
+{%- endmacro %}
