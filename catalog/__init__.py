@@ -1,4 +1,7 @@
 from flask import Flask, current_app
+from flask_login import LoginManager
+
+login_manager = LoginManager()
 
 from catalog.database import db_session
 from catalog.helpers import latest_items
@@ -7,6 +10,10 @@ from catalog.helpers import latest_items
 def create_app(config_obj):
     app = Flask(__name__)
     app.config.from_object(config_obj)
+
+    login_manager.init_app(app)
+    login_manager.login_message = "You must be logged in to access this page."
+    login_manager.login_view = "auth.login"
 
     import catalog.models
 

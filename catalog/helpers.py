@@ -13,7 +13,7 @@ def latest_items(limit):
     return db_session.query(Item).order_by(Item.date_updated).limit(limit)
 
 
-def get_category_by_name(category_name):
+def get_category_by_name(category_name: str) -> Category:
     """
     Get a Category object by its name
     :param category_name: string
@@ -22,7 +22,7 @@ def get_category_by_name(category_name):
     return db_session.query(Category).filter(Category.name == category_name).one_or_none()
 
 
-def get_category_by_slug(category_slug):
+def get_category_by_slug(category_slug: str) -> Category:
     """
     Get a Category object by its slugified name
     :param category_slug: string
@@ -31,7 +31,7 @@ def get_category_by_slug(category_slug):
     return db_session.query(Category).filter(Category.slug == category_slug).one_or_none()
 
 
-def get_category_by_id(category_id):
+def get_category_by_id(category_id: int) -> Category:
     """
     Get a Category object by its primary id
     :param category_id: int
