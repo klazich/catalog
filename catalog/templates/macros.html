@@ -18,7 +18,13 @@
     </div>
 {%- endmacro %}
 
-{% macro show_item(item, with_category=False, with_user=False) -%}
+{% macro item_description(item) %}
+    <div class="f6 flex items-start hover-bg-light-silver bg-silver white h{{ height }} pv1 ph2 bl b--white">
+        <a>{{ item.description }}</a>
+    </div>
+{% endmacro %}
+
+{% macro show_item(item, with_category=False, with_user=False, with_desc=False) -%}
     <div class="flex flex-auto bg-light-gray mb1">
 
         {{ item_title(item) }}
@@ -29,6 +35,10 @@
 
         {% if with_user %}
             {{ item_user(item) }}
+        {% endif %}
+
+        {% if with_desc %}
+            {{ item_description(item) }}
         {% endif %}
 
     </div>
