@@ -24,3 +24,7 @@ def seed_db():
     seed.populate_category()
     seed.populate_user()
     seed.populate_item()
+
+
+def drop_db():
+    Base.metadata.drop_all(bind=engine)

@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% import 'macros.html' as macros %}
 
 {% block content %}
+    {# TODO: add a "extend" that makes a block of given argument
+       TODO: add a text size argument #}
 
-    <h1 class="f1 light-red ttu tracked tc">{{ category.name }} Items</h1>
-
-    <article class="fl mv4 tc">
-        {% for item in category.items -%}
-            <a class="f7 dib bg-animate bg-light-gray hover-bg-blue lh-solid ttu tracked code b hover-white gray ma1 pa2 br1"
-            >{{ item.title }}</a>
-        {%- endfor %}
+    {#    <h1 class="f2 bg-blue ttc b white pl2 mt2 ma0"></h1>#}
+    {#    <h1 class="f2  ttc b red pl2 mv2 ">{{ item.title }} (<span class="blue i">{{ category.name }}</span>)</h1>#}
+    <h1 class="mt2 mb0">{{ macros.show_item(item, with_category=True) }}</h1>
+    <article class="bg-green white">
+        <p class="indent lh-copy pa3 tj">{{ item.description }}</p>
     </article>
 
 {% endblock %}
