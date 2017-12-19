@@ -6,7 +6,7 @@
 {#    <a class="link" href="{{ url_for('home.show_categories') }}">back</a>#}
     <h1 class="f-headline bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>
 
-    <article class="flex flex-column ">
+    <article class="flex flex-column">
         {% for item in category.items -%}
             {{ macros.show_item(item, with_category=True, with_user=True) }}
         {%- endfor %}

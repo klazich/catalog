@@ -1,25 +1,27 @@
 {% set height = 2 %}
 
 {% macro item_title(item) -%}
-    <div class="f6 flex items-center hover-bg-light-red bg-red ttu tracked b white h{{ height }} pv1 ph2">
-        <a>{{ item.title }}</a>
+    <div class="f6 flex items-center self-stretch hover-bg-light-red bg-red pv1 ph2">
+        <a href="{{ url_for('home.show_item', category_slug=item.category.slug, item_slug=item.slug) }}"
+           class="link ttu tracked b white">{{ item.title }}</a>
     </div>
 {%- endmacro %}
 
 {% macro item_category(item) -%}
-    <div class="f6 flex items-center hover-bg-light-blue bg-blue ttu tracked b white h{{ height }} pv1 ph2 bl b--white">
-        <a>{{ item.category.name }}</a>
+    <div class="f6 flex items-center self-stretch hover-bg-light-blue bg-blue pv1 ph2 bl b--white">
+        <a href="{{ url_for('home.show_category', category_slug=item.category.slug) }}"
+           class="link ttu tracked b white">{{ item.category.name }}</a>
     </div>
 {%- endmacro %}
 
 {% macro item_user(item) -%}
-    <div class="f6 flex items-center hover-bg-light-green bg-green ttu tracked b white h{{ height }} pv1 ph2 bl b--white">
+    <div class="f6 flex items-center self-stretch hover-bg-light-green bg-green ttu tracked b white pv1 ph2 bl b--white">
         <a>{{ item.user.name }}</a>
     </div>
 {%- endmacro %}
 
 {% macro show_item(item, with_category=False, with_user=False) -%}
-    <div class="flex flex-auto bg-light-gray mb1">
+    <div class="flex flex-auto bg-light-gray mb1 h{{ height }}">
 
         {{ item_title(item) }}
 
@@ -29,6 +31,9 @@
 
         {% if with_user %}
             {{ item_user(item) }}
+        {% endif %}
+
+        {% if with_time %}
         {% endif %}
 
     </div>
