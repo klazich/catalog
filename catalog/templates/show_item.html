@@ -3,12 +3,16 @@
 
 {% block content %}
 
-    {{ macros.content_heading(item.title) }}
+    <article class="w-60  mt4 ba b--moon-gray">
 
-    <div class="mt2 mb0">{{ macros.show_item(item, with_title=False, with_category=True, with_user=True, with_time=True) }}</div>
+        {#        {{ macros.content_heading(item.title, color='bg-blue') }}#}
+        <h1 class="f1 lh-title ttc dark-gray pa4 ma0 bl b--moon-gray bw4">{{ item.title }}</h1>
 
-    <article class="bg-silver white">
-        <p class="f4 indent lh-copy pa4 mv0 tj">{{ item.description }}</p>
+        <div class="">
+            {{ macros.show_item(item, title=False, category=True, user=True, time=True, height=2) }}
+        </div>
+        <p class="f4 dark-gray measure-wide indent lh-copy pa3 tj bl b--gray bw4">{{ item.description }}</p>
+
     </article>
 
 {% endblock %}

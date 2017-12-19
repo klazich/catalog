@@ -7,8 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body class="bg-white">
-
-<header class="bg-black pv3 mb5 bb b--light-silver bw2">
+<header class="bg-near-black pv3 mb5 bb b--light-silver bw2">
     <nav class="item mw9 ph4 center white">
         <div class="mh3 pv3">
             <a class="f2 lh-title fw8 link dim ttu tracked-mega b white"
@@ -23,16 +22,16 @@
 <main class="flex flex-wrap items-start mw9 ph4 center">
 
     {% import 'macros.html' as macros %}
-    <section class="w-30">
+    <section class="w-25">
         <aside>
             {{ macros.content_heading('Latest') }}
             {% for item in latest_items %}
-                {{ macros.show_item(item, with_category=True) }}
+                <div class="mb1">{{ macros.show_item(item, category=True) }}</div>
             {% endfor %}
         </aside>
     </section>
 
-    <section class="w-70 pl4">
+    <section class="w-75 pl4">
         {% block content %}
         {% endblock %}
     </section>

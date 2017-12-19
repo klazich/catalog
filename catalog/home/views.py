@@ -2,9 +2,18 @@ from flask import render_template, redirect, url_for
 # from flask_login import login_required
 
 from . import home
-from .. import db_session
-from ..models import Category, Item
-from .. import helpers as h
+from catalog.database import db_session
+from catalog.models import Category, Item
+from catalog import helpers as h
+
+"""
+URL 	        Method 	Description
+/users/ 	    GET 	Gives a list of all users
+/users/ 	    POST 	Creates a new user
+/users/<id> 	GET 	Shows a single user
+/users/<id> 	PUT 	Updates a single user
+/users/<id> 	DELETE 	Deletes a single user
+"""
 
 
 @home.route('/')

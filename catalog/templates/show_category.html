@@ -2,12 +2,12 @@
 {% import 'macros.html' as macros %}
 
 {% block content %}
+    <article class="w-60 flex flex-column">
+{#    <h1 class="f1 lh-title bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>#}
+    {{ macros.content_heading(category.name, color='bg-mid-gray') }}
 
-    <h1 class="f1 lh-title bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>
-
-    <article class="flex flex-column">
         {% for item in category.items -%}
-            {{ macros.show_item(item, with_category=True, with_user=True, with_time=True) }}
+            {{ macros.show_item(item, category=True, user=True, time=True) }}
         {%- endfor %}
     </article>
 
