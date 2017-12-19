@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, current_app
 from flask_login import LoginManager
 
@@ -22,8 +24,12 @@ def create_app(config_obj):
         db_session.remove()
 
     @app.context_processor
-    def inject_latest_items():
+    def inject_latest():
         return dict(latest_items=latest_items(40))
+
+    @app.template_filter('format_date')
+    def format_date_filter(dt):
+        return dt.strftime('%B %d %Y %I:%M%p')
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)

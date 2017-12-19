@@ -2,14 +2,13 @@
 {% import 'macros.html' as macros %}
 
 {% block content %}
-    {# TODO: add a "extend" that makes a block of given argument
-       TODO: add a text size argument #}
 
-    {#    <h1 class="f2 bg-blue ttc b white pl2 mt2 ma0"></h1>#}
-    {#    <h1 class="f2  ttc b red pl2 mv2 ">{{ item.title }} (<span class="blue i">{{ category.name }}</span>)</h1>#}
-    <div class="mt2 mb0">{{ macros.show_item(item, with_category=True, with_desc=True) }}</div>
-    <article class="bg-green white">
-{#        <p class="indent lh-copy pa3 tj">{{ item.description }}</p>#}
+    {{ macros.content_heading(item.title) }}
+
+    <div class="mt2 mb0">{{ macros.show_item(item, with_title=False, with_category=True, with_user=True, with_time=True) }}</div>
+
+    <article class="bg-silver white">
+        <p class="f4 indent lh-copy pa4 mv0 tj">{{ item.description }}</p>
     </article>
 
 {% endblock %}
