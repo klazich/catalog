@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros %}
+
+{% block content %}
+
+    <h1 class="f1 lh-title bg-black ttc white pl2 mv2">Categories</h1>
+
+    {% for category in categories %}
+
+        <article class="bg-light-yellow pv2 mv2">
+
+            <h2 class="fl f-subheadline ttc tracked-tight near-black hover-white pv2 ph3 ma0">
+                <a class="link near-black hover-blue"
+                   href="{{ url_for('home.show_category', category_slug=category.slug) }}">
+                    {{ category.name }}</a></h2>
+
+            <div class="ph2">
+                {% for item in category.items -%}
+                    <a class="f7 link dib bg-light-green hover-bg-green lh-solid ttu tracked near-black hover-white ma1 pa2"
+                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=item.slug) }}"
+                    >{{ item.title }}</a>
+                    {#                    {{ macros.show_item(item) }}#}
+                {%- endfor %}
+            </div>
+        </article>
+
+    {% endfor %}
+
+{% endblock %}

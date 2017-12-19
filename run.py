@@ -1,5 +1,4 @@
 from catalog import create_app
-from catalog.database import init_db, seed_db
 from config import app_config
 
 config = app_config['development']

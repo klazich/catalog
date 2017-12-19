@@ -1,22 +1,40 @@
-from flask import Flask
+from datetime import datetime
+
+from flask import Flask, current_app
+from flask_login import LoginManager
+
+login_manager = LoginManager()
 
 from catalog.database import db_session
+from catalog.helpers import latest_items
 
 
 def create_app(config_obj):
     app = Flask(__name__)
     app.config.from_object(config_obj)
 
-    import catalog.views
+    login_manager.init_app(app)
+    login_manager.login_message = "You must be logged in to access this page."
+    login_manager.login_view = "auth.login"
+
     import catalog.models
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
 
-    # from catalog.home import home as home_blueprint
-    # app.register_blueprint(home_blueprint)
+    @app.context_processor
+    def inject_latest():
+        return dict(latest_items=latest_items(40))
 
-    app.register_blueprint(catalog.views.home)
+    @app.template_filter('format_date')
+    def format_date_filter(dt):
+        return dt.strftime('%B %d %Y %I:%M%p')
+
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    from catalog.home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
 
     return app

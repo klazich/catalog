@@ -1,0 +1,44 @@
+{% macro content_heading(title) %}
+    <h1 class="f1 lh-title bg-black ttc white pl2 mv2">{{ title }}</h1>
+{% endmacro %}
+
+{#  ITEM CONTENT BOXING  #}
+
+{% macro item_title(item) -%}
+    <a href="{{ url_for('home.show_item', category_slug=item.category.slug, item_slug=item.slug) }}"
+       class="f5 link flex items-center bg-green hover-bg-light-green white hover-gray pa2 ph2">
+        <span class="ttu tracked">{{ item.title }}</span>
+    </a>
+{%- endmacro %}
+
+{% macro item_category(item) -%}
+    <a href="{{ url_for('home.show_category', category_slug=item.category.slug) }}"
+       class="f5 link flex items-center bg-blue hover-bg-light-blue white hover-gray pv1 ph2">
+        <span class="ttc tracked-tight b">{{ item.category.name }}</span>
+    </a>
+{%- endmacro %}
+
+{% macro item_user(item) -%}
+    <div class="f6 flex items-center pv1 ph2 bg-red ml-auto">
+        <a class="link ttu tracked b white">{{ item.user.name }}</a>
+    </div>
+{%- endmacro %}
+
+{% macro item_time(item) -%}
+    <div class="f6 flex items-center pv1 ph2 bg-purple">
+        <a class="link code ttu tracked b white">{{ item.date_updated | format_date }}</a>
+    </div>
+{%- endmacro %}
+
+{#{% set height = 2 %}#}
+
+{% macro show_item(item, with_title=True, with_category=False, with_user=False, with_time=False) -%}
+    <div class="flex flex-auto bg-light-gray mb1 h{{ height }}">
+
+        {% if with_title %}{{ item_title(item) }}{% endif %}
+        {% if with_category %}{{ item_category(item) }}{% endif %}
+        {% if with_user %}{{ item_user(item) }}{% endif %}
+        {% if with_time %}{{ item_time(item) }}{% endif %}
+
+    </div>
+{%- endmacro %}

@@ -1,27 +1,33 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
+from slugify import slugify
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from catalog.database import Base
+from catalog import login_manager
 
 
 class Model(Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    date_created = Column(DateTime, default=func.current_timestamp())
-    date_updated = Column(DateTime, default=func.current_timestamp(), onupdate=func.current_timestamp())
+    date_created = Column(DateTime(timezone=True), default=func.current_timestamp(timezone=True))
+    date_updated = Column(DateTime(timezone=True), default=func.current_timestamp(timezone=True),
+                          onupdate=func.current_timestamp(timezone=True))
 
 
 class Item(Model):
-    __tablename__ = 'item'
+    __tablename__ = 'items'
 
     title = Column(String(250), nullable=False)
     description = Column(Text, nullable=False)
+    slug = Column(String(250), nullable=False)
 
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='items')
 
-    category_id = Column(Integer, ForeignKey('category.id'))
+    category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
 
     def __init__(self, title, description, user, category=None):
@@ -29,6 +35,7 @@ class Item(Model):
         self.description = description
         self.user = user
         self.category = category
+        self.slug = slugify(self.title)
 
     @property
     def serialize(self):
@@ -45,9 +52,10 @@ class Item(Model):
 
 
 class Category(Model):
-    __tablename__ = 'category'
+    __tablename__ = 'categories'
 
     name = Column(String(250), nullable=False)
+    slug = Column(String(250), nullable=False)
 
     items = relationship('Item', order_by=Item.title, back_populates='category')
 
@@ -56,6 +64,7 @@ class Category(Model):
             items = []
         self.name = name
         self.items = items
+        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
@@ -71,11 +80,12 @@ class Category(Model):
         return '<Category: {}>'.format(self.name)
 
 
-class User(Model):
-    __tablename__ = 'user'
+class User(UserMixin, Model):
+    __tablename__ = 'users'
 
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
+    slug = Column(String(250), nullable=False)
     picture = Column(String(250))
 
     items = relationship('Item', order_by=Item.id, back_populates='user')
@@ -87,6 +97,7 @@ class User(Model):
         self.email = email
         self.picture = picture
         self.items = items
+        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
@@ -101,4 +112,4 @@ class User(Model):
         }
 
     def __repr__(self):
-        return '<User: {} {}>'.format(self.name, self.email)
+        return '<User: {}({})>'.format(self.name, self.email)

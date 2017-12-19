@@ -1,3 +1,11 @@
+werkzeug
+python-slugify
 flask
+flask-login
 sqlalchemy
 mimesis
+#google-api-python-client
+#google-auth
+#google-auth-oauthlib
+#google-auth-httplib2
+requests

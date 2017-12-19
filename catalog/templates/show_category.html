@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros %}
+
+{% block content %}
+
+    <h1 class="f1 lh-title bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>
+
+    <article class="flex flex-column">
+        {% for item in category.items -%}
+            {{ macros.show_item(item, with_category=True, with_user=True, with_time=True) }}
+        {%- endfor %}
+    </article>
+
+{% endblock %}
