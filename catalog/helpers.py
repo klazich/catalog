@@ -13,6 +13,14 @@ def latest_items(limit):
     return db_session.query(Item).order_by(Item.date_updated).limit(limit)
 
 
+def get_all_categories():
+    """
+    Helper function to fetch all category names
+    :return: query
+    """
+    return db_session.query(Category).all()
+
+
 def get_category_by_name(category_name: str) -> Category:
     """
     Get a Category object by its name

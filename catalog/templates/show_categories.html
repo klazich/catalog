@@ -1,29 +1,18 @@
 {% extends "base.html" %}
-{% import 'macros.html' as macros %}
 
-{% block content %}
+{% block categories -%}
+    <article class="flex flex-wrap">
+        <h1 class="f1 tracked-tight ttc tr pa1 ma0 w-25">Categories
+            <i class="fa fa-long-arrow-right light-blue mh3" aria-hidden="true"></i>
+        </h1>
+        <div class="flex flex-wrap items-end bl pa2 w-75">
+            {% for category in all_categories -%}
+                <h1 class="f2 tracked-tight ttc pa1 mr4 ma0">
+                    <i class="fa fa-angle-right light-red" aria-hidden="true"></i>
+                    <a class="link white" href="{{ url_for('home.show_category', category_slug=category.slug) }}">{{ category.name }}</a>
+                </h1>
+            {%- endfor %}
+        </div>
+    </article>
+{%- endblock %}
 
-    {{ macros.content_heading('Categories') }}
-
-    {% for category in categories %}
-
-        <article class="bg-silver pv2 mb2 mt1">
-
-            <h2 class="fl f-subheadline ttc tracked-tight near-black pv2 ph3 ma0">
-                <a class="link near-black hover-moon-gray"
-                   href="{{ url_for('home.show_category', category_slug=category.slug) }}">
-                    {{ category.name }}</a></h2>
-
-            <div class="ph2">
-                {% for item in category.items -%}
-                    <a class="f7 link dim dib bg-mid-gray lh-solid ttu tracked white ma1 pa2"
-                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=item.slug) }}"
-                    >{{ item.title }}</a>
-                    {#                    {{ macros.show_item(item) }}#}
-                {%- endfor %}
-            </div>
-        </article>
-
-    {% endfor %}
-
-{% endblock %}

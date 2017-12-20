@@ -1,14 +1,17 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros %}
+{% extends "show_categories.html" %}
 
-{% block content %}
-    <article class="w-60 flex flex-column">
-{#    <h1 class="f1 lh-title bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>#}
-    {{ macros.content_heading(category.name, color='bg-mid-gray') }}
-
-        {% for item in category.items -%}
-            {{ macros.show_item(item, category=True, user=True, time=True) }}
-        {%- endfor %}
+{% block items -%}
+    <article class="flex flex-auto bt">
+        <h1 class="f1 tracked-tight ttc tr pa1 ma0 w-25">Items
+            <i class="fa fa-long-arrow-right light-red mh3" aria-hidden="true"></i>
+        </h1>
+        <div class="flex flex-wrap items-end bl pa2 w-75">
+            {% for item in category.items -%}
+                <h1 class="f2 tracked-tight ttc pa1 mr4 ma0">
+                    <i class="fa fa-angle-right light-green" aria-hidden="true"></i>
+                    {{ item.title }}
+                </h1>
+            {%- endfor %}
+        </div>
     </article>
-
-{% endblock %}
+{%- endblock %}
