@@ -24,7 +24,7 @@ def show_categories():
     :return: template
     """
     categories = db_session.query(Category).all()
-    return render_template('show_categories.html', categories=categories, title="Welcome")
+    return render_template('show_categories.html', title="Welcome")
 
 
 @home.route('/catalog/<category_slug>/')

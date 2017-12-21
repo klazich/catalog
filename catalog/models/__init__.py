@@ -20,7 +20,7 @@ class Model(Base):
 class Item(Model):
     __tablename__ = 'items'
 
-    title = Column(String(250), nullable=False)
+    title = Column(String(250), nullable=False, unique=True)
     description = Column(Text, nullable=False)
     slug = Column(String(250), nullable=False)
 
@@ -54,7 +54,7 @@ class Item(Model):
 class Category(Model):
     __tablename__ = 'categories'
 
-    name = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False, unique=True)
     slug = Column(String(250), nullable=False)
 
     items = relationship('Item', order_by=Item.title, back_populates='category')
