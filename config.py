@@ -1,4 +1,5 @@
 import os
+import json
 
 
 class BaseConfig:
@@ -6,8 +7,10 @@ class BaseConfig:
     DEBUG = False
     TESTING = False
     SECRET_KEY = ''
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # SQLALCHEMY_TRACK_MODIFICATIONS = False
     DATABASE_URI = 'sqlite:///catalog.db'
+    CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
+    APPLICATION_NAME = 'Catalog App'
 
 
 class DevelopmentConfig(BaseConfig):
