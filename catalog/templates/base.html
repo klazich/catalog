@@ -7,11 +7,11 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="bg-near-black">
+<body id="home" class="bg-near-black">
 
-<header class="pv4 center bg-near-black">
+<header id="header" class="pv4 center bg-near-black">
     <nav class="flex flex-auto items-center mw9 ph4 center">
-        <a class="f1 flex link dim lh-title ttu tracked-mega b white bl b--light-blue bw4 pa3 mr-auto"
+        <a class="f1 flex link dim lh-title ttu tracked-mega b white bl b--light-blue bw4 pl4 pv3 mr-auto"
            href="{{ url_for('home.show_categories') }}" title="Home">Catalog App</a>
         <a class="link flex dim ttu tracked b white pa3 br bw1" href="#" title="Items">Items</a>
         <a class="link flex dim ttu tracked b white pa3 bl bw1" href="#" title="Login">Login</a>
@@ -22,21 +22,23 @@
 
     <div class="mw9 center">
 
-        <section class="white">
+        <section id="categories" class="white">
             {% block categories %}
             {% endblock %}
         </section>
 
-        <section class="white">
-            {% block items %}
+        <section id="items" class="white">
+            {% block category_items %}
             {% endblock %}
         </section>
 
-        <section class="white">
-            {% block desc %}
+        <section id="description" class="white">
+            {% block item_description %}
             {% endblock %}
         </section>
+
     </div>
+
 </main>
 
 <footer class="pv6 center bg-near-black">

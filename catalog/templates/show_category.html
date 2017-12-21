@@ -1,17 +1,30 @@
 {% extends "show_categories.html" %}
 
-{% block items -%}
-    <article class="flex flex-auto bt">
-        <h1 class="f1 tracked-tight ttc tr pa1 ma0 w-25">Items
-            <i class="fa fa-long-arrow-right light-red mh3" aria-hidden="true"></i>
-        </h1>
-        <div class="flex flex-wrap items-end bl pa2 w-75">
-            {% for item in category.items -%}
-                <h1 class="f2 tracked-tight ttc pa1 mr4 ma0">
-                    <i class="fa fa-angle-right light-green" aria-hidden="true"></i>
-                    {{ item.title }}
+{% block category_items -%}
+
+    <article class="flex flex-wrap items-center justify-between ph4 mb3">
+
+        {% for i in category.items -%}
+
+            {% macro show_elm(color) %}
+                <h1 class="f4 lh-solid tracked-tight ttc pa1 mr4 ma0">
+                    <a class="link dim {{ color }}"
+                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}">
+                        {{ i.title }}
+                    </a>
                 </h1>
-            {%- endfor %}
-        </div>
+            {% endmacro %}
+
+            {% if item and item.title == i.title %}
+                {{ show_elm('light-green') }}
+            {% elif item and item.title != i.title %}
+                {{ show_elm('gray') }}
+            {% else %}
+                {{ show_elm('near-white') }}
+            {% endif %}
+
+        {%- endfor %}
+
+
     </article>
 {%- endblock %}
