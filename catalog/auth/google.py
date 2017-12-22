@@ -1,19 +1,11 @@
 from requests_oauthlib import OAuth2Session
-# https://requests-oauthlib.readthedocs.io/en/latest/examples/google.html
 
-from config import GoogleAuth
-
-google = OAuth2Session(
-    GoogleAuth.CLIENT_ID,
-    scope=GoogleAuth.SCOPE,
-    redirect_uri=GoogleAuth.REDIRECT_URI)
-
-authorization_url, state = google.authorization_url(
-    GoogleAuth.AUTH_URI,
-    access_type='offline',
-    prompt='select_account')
+from config import GoogleAuthConfig
 
 
-class OAuth2(GoogleAuth):
-    state = state
-    authorization_url = authorization_url
+class GoogleOAuth2(GoogleAuthConfig):
+    def __init__(self):
+        self.session = OAuth2Session(
+            self.CLIENT_ID,
+            scope=self.SCOPE,
+            redirect_uri=self.REDIRECT_URI)
