@@ -1,5 +1,8 @@
 @import "tachyons.css";
 
+.sans-serif { font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif; }
+.serif { font-family: "Noto Serif", georgia, times, serif; }
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
 }
