@@ -1,14 +1,21 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros %}
+{% extends "show_category.html" %}
 
-{% block content %}
+{% block item_description -%}
+    <article class="flex flex-column bl b--light-blue bw4 mt5">
+        <h1 class="f1 silver tracked-tight ttc tl pl4 pv3 mv0 w-100">
+            <span class="light-red">{{ item.category.name }}</span>
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            <span class="light-green">{{ item.title }}</span>
+        </h1>
 
-    {{ macros.content_heading(item.title) }}
+        <p class="lh-copy measure-wide white-70 pl4">
+            {{ item.description }}
+        </p>
 
-    <div class="mt2 mb0">{{ macros.show_item(item, with_title=False, with_category=True, with_user=True, with_time=True) }}</div>
+        <p class="code white-40 pl4">Created by <span class="purple">{{ item.user.name }}</span>
+            on {{ item.date_updated }}</p>
 
-    <article class="bg-silver white">
-        <p class="f4 indent lh-copy pa4 mv0 tj">{{ item.description }}</p>
+
     </article>
 
-{% endblock %}
+{%- endblock %}

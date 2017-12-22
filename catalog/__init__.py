@@ -6,7 +6,7 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 
 from catalog.database import db_session
-from catalog.helpers import latest_items
+from catalog.helpers import latest_items, get_all_categories
 
 
 def create_app(config_obj):
@@ -24,8 +24,10 @@ def create_app(config_obj):
         db_session.remove()
 
     @app.context_processor
-    def inject_latest():
-        return dict(latest_items=latest_items(40))
+    def inject_variables():
+        return dict(
+            latest_items=latest_items(40),
+            all_categories=get_all_categories())
 
     @app.template_filter('format_date')
     def format_date_filter(dt):

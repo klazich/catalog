@@ -1,14 +1,30 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros %}
+{% extends "show_categories.html" %}
 
-{% block content %}
+{% block category_items -%}
 
-    <h1 class="f1 lh-title bg-black ttc b white pl2 mv2">Items in <span class="blue">{{ category.name }}</span></h1>
+    <article class="flex flex-wrap items-center justify-between ph4 mb3">
 
-    <article class="flex flex-column">
-        {% for item in category.items -%}
-            {{ macros.show_item(item, with_category=True, with_user=True, with_time=True) }}
+        {% for i in category.items -%}
+
+            {% macro show_elm(color) %}
+                <h1 class="f4 lh-solid tracked-tight ttc pa1 mr4 ma0">
+                    <a class="link dim {{ color }}"
+                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}">
+                        {{ i.title }}
+                    </a>
+                </h1>
+            {% endmacro %}
+
+            {% if item and item.title == i.title %}
+                {{ show_elm('light-green') }}
+            {% elif item and item.title != i.title %}
+                {{ show_elm('gray') }}
+            {% else %}
+                {{ show_elm('near-white') }}
+            {% endif %}
+
         {%- endfor %}
-    </article>
 
-{% endblock %}
+
+    </article>
+{%- endblock %}
