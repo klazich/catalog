@@ -1,7 +1,8 @@
-{% extends "show_category.html" %}
+{% extends "home/show_category.html" %}
 
 {% block item_description -%}
     <article class="flex flex-column bl b--light-blue bw4 mt5">
+
         <h1 class="f1 silver tracked-tight ttc tl pl4 pv3 mv0 w-100">
             <span class="light-red">{{ item.category.name }}</span>
             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
@@ -14,7 +15,6 @@
 
         <p class="code white-40 pl4">Created by <span class="purple">{{ item.user.name }}</span>
             on {{ item.date_updated }}</p>
-
 
     </article>
 
