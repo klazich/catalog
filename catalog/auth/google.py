@@ -1,5 +1,5 @@
 from requests_oauthlib import OAuth2Session
-from requests.exceptions import HTTPError
+# https://requests-oauthlib.readthedocs.io/en/latest/examples/google.html
 
 from config import GoogleAuth
 
@@ -13,4 +13,7 @@ authorization_url, state = google.authorization_url(
     access_type='offline',
     prompt='select_account')
 
-setattr(GoogleAuth, 'state', lambda: state)
+
+class OAuth2(GoogleAuth):
+    state = state
+    authorization_url = authorization_url
