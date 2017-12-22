@@ -26,14 +26,14 @@ def create_app(config_obj):
     @app.context_processor
     def inject_variables():
         return dict(
-            latest_items=latest_items(40),
+            latest_items=latest_items(10),
             all_categories=get_all_categories())
 
     @app.template_filter('format_date')
     def format_date_filter(dt):
         return dt.strftime('%B %d %Y %I:%M%p')
 
-    from .auth import auth as auth_blueprint
+    from catalog.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     from catalog.home import home as home_blueprint
