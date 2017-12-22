@@ -1,10 +1,29 @@
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, session
 # from flask_login import login_required, login_user, logout_user
 
 from . import auth
 # from forms import LoginForm, RegistrationForm
-from .. import db_session
-from ..models import User
+from catalog import db_session
+from catalog.models import User
+from catalog.auth.google import GoogleAuth
+
+
+@auth.route('/authorize/<provider>')
+def oath2_authorize(provider):
+    if provider not in ['google', 'facebook']:
+        return
+    if provider == 'google':
+        session['state'] = GoogleAuth.state
+    if provider == 'facebook':
+        pass
+
+
+
+
+
+@auth.route('/callback/<provider>')
+def oath2_callback(provider):
+    pass
 
 
 @auth.route('/register', methods=['GET', 'POST'])
