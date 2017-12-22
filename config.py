@@ -1,42 +1,52 @@
 import os
 import json
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+
+class GoogleAuth:
+    CLIENT_ID = '288467794624-ol9d6dpr3fccs8v0olhpbp1r6ots6sf7.apps.googleusercontent.com'
+    CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
+    REDIRECT_URI = 'https://localhost:5000/oauth2calback'
+    AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
+    TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
+    USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
+    SCOPE = ["https://www.googleapis.com/auth/userinfo.email",
+             "https://www.googleapis.com/auth/userinfo.profile"]
+
+
+class FacebookAuth:
+    pass
+
 
 class BaseConfig:
-    """Base configuration"""
-    DEBUG = False
-    TESTING = False
-    SECRET_KEY = ''
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DATABASE_URI = 'sqlite:///catalog.db'
-    CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
-    APPLICATION_NAME = 'Catalog App'
+    APP_NAME = 'FSND Catalog App'
+    SECRET_KEY = os.environ.get("SECRET_KEY") or b'\x1dLK!\xa9\xa3VwJ&j\x97l\x07(\x08M\x97PV\xc8g\xe8\xcd'
 
 
-class DevelopmentConfig(BaseConfig):
-    """Development configuration"""
+class DevConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_ECHO = True
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    TESTING = False
+    DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'catalog.dev.db')
 
 
-class TestingConfig(BaseConfig):
-    """Testing configuration"""
+class TestConfig(BaseConfig):
     DEBUG = True
     TESTING = True
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
+    DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'catalog.test.db')
 
 
-class ProductionConfig(BaseConfig):
-    """Production configuration"""
-    DEBUG = False
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+class ProdConfig(BaseConfig):
+    DEBUG = True
+    TESTING = False
+    DATABASE_URI = 'sqlite:///' + os.path.join(basedir, "catalog.db")
 
 
-app_config = {
-    'development': DevelopmentConfig,
-    'testing': TestingConfig,
-    'production': ProductionConfig
+config = {
+    'dev': DevConfig,
+    'test': TestConfig,
+    'prod': ProdConfig,
+    'default': DevConfig
 }
-
-app_dir = os.path.dirname(os.path.abspath(__file__))
