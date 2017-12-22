@@ -1,11 +1,10 @@
 from slugify import slugify
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 
 from catalog.database import Base
-from catalog import login_manager
+from catalog import login_manager, db_session
 
 
 class Model(Base):
@@ -113,3 +112,8 @@ class User(UserMixin, Model):
 
     def __repr__(self):
         return '<User: {}({})>'.format(self.name, self.email)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db_session.query(User).filter_by(int(user_id) == User.id).first()
