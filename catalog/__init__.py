@@ -27,8 +27,7 @@ def create_app(config_obj):
     def inject_variables():
         return dict(
             latest_items=latest_items(40),
-            all_categories=get_all_categories()
-        )
+            all_categories=get_all_categories())
 
     @app.template_filter('format_date')
     def format_date_filter(dt):
