@@ -1,14 +1,13 @@
 from os import path
 
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from config import basedir
+from catalog.models import metadata
+from config import config
 
-Base = declarative_base()
+engine = create_engine(config['default'].DATABASE_URI)
+metadata.create_all(bind=engine)
 
-engine = create_engine('sqlite:///{}'.format(path.join(basedir, 'catalog.db')))
-Base.metadata.bind = engine
-
-db_session = scoped_session(sessionmaker(bind=engine))
+session_factory = sessionmaker(bind=engine)
+Session = scoped_session(session_factory)

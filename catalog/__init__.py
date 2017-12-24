@@ -1,12 +1,7 @@
-from datetime import datetime
-
-from flask import Flask, current_app
+from flask import Flask
 from flask_login import LoginManager
 
 login_manager = LoginManager()
-
-from catalog.database import db_session
-from catalog.helpers import latest_items, get_all_categories
 
 
 def create_app(config_obj):
@@ -21,10 +16,12 @@ def create_app(config_obj):
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
-        db_session.remove()
+        from catalog.database import Session
+        Session.remove()
 
     @app.context_processor
     def inject_variables():
+        from catalog.helpers import latest_items, get_all_categories
         return dict(
             latest_items=latest_items(10),
             all_categories=get_all_categories())

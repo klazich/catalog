@@ -1,7 +1,7 @@
 # from flask_login import login_required
 
-from . import db_session
-from .models import Category, Item
+from catalog.database import Session
+from catalog.models import Category, Item
 
 
 def latest_items(limit):
@@ -10,7 +10,7 @@ def latest_items(limit):
     :param limit: int
     :return: query
     """
-    return db_session.query(Item).order_by(Item.date_updated).limit(limit)
+    return Session.query(Item).order_by(Item.date_updated).limit(limit)
 
 
 def get_all_categories():
@@ -18,7 +18,7 @@ def get_all_categories():
     Helper function to fetch all category names
     :return: query
     """
-    return db_session.query(Category).all()
+    return Session.query(Category).all()
 
 
 def get_category_by_name(category_name: str) -> Category:
@@ -27,7 +27,7 @@ def get_category_by_name(category_name: str) -> Category:
     :param category_name: string
     :return: Category
     """
-    return db_session.query(Category).filter(Category.name == category_name).one_or_none()
+    return Session.query(Category).filter(Category.name == category_name).one_or_none()
 
 
 def get_category_by_slug(category_slug: str) -> Category:
@@ -36,7 +36,7 @@ def get_category_by_slug(category_slug: str) -> Category:
     :param category_slug: string
     :return: Category
     """
-    return db_session.query(Category).filter(Category.slug == category_slug).one_or_none()
+    return Session.query(Category).filter(Category.slug == category_slug).one_or_none()
 
 
 def get_category_by_id(category_id: int) -> Category:
@@ -45,7 +45,7 @@ def get_category_by_id(category_id: int) -> Category:
     :param category_id: int
     :return: Category
     """
-    return db_session.query(Category).filter(Category.id == category_id).one_or_none()
+    return Session.query(Category).filter(Category.id == category_id).one_or_none()
 
 
 def get_item_by_title(item_title):
@@ -54,7 +54,7 @@ def get_item_by_title(item_title):
     :param item_title: string
     :return: Item
     """
-    return db_session.query(Item).filter(Item.name == item_title).one_or_none()
+    return Session.query(Item).filter(Item.name == item_title).one_or_none()
 
 
 def get_item_by_slug(item_slug):
@@ -63,7 +63,7 @@ def get_item_by_slug(item_slug):
     :param item_slug: string
     :return: Item
     """
-    return db_session.query(Item).filter(Item.slug == item_slug).one_or_none()
+    return Session.query(Item).filter(Item.slug == item_slug).one_or_none()
 
 
 def get_item_by_id(item_id):
@@ -72,4 +72,4 @@ def get_item_by_id(item_id):
     :param item_id: int
     :return: Item
     """
-    return db_session.query(Item).filter(Item.id == item_id).one_or_none()
+    return Session.query(Item).filter(Item.id == item_id).one_or_none()

@@ -4,7 +4,7 @@ from flask import session as flask_session
 
 from . import auth
 # from forms import LoginForm, RegistrationForm
-from catalog import db_session
+from catalog.database import Session
 from catalog.models import User
 from catalog.auth.google import GoogleOAuth2
 from catalog.auth.facebook import FacebookOAuth2

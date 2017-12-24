@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for
 # from flask_login import login_required
 
 from . import home
-from catalog.database import db_session
+from catalog.database import Session
 from catalog.models import Category, Item
 from catalog import helpers as h
 

@@ -5,7 +5,7 @@ from flask import make_response
 from flask.views import MethodView
 from flask import session as flask_session
 
-from catalog import db_session
+from catalog import Session
 from catalog.models import User
 
 
