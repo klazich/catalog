@@ -16,15 +16,30 @@ db_session = scoped_session(sessionmaker(bind=engine))
 
 def init_db():
     import catalog.models
+    print('Initializing new database...')
     Base.metadata.create_all(bind=engine)
+    print('  done')
 
 
 def seed_db():
     from catalog.models import seed
+    print('Populating the database...')
+    print('  ...category table')
     seed.populate_category()
+    print('  ...user table')
     seed.populate_user()
+    print('  ...item table')
     seed.populate_item()
+    print('  done')
 
 
 def drop_db():
+    print('dropping database...')
     Base.metadata.drop_all(bind=engine)
+    print('  done')
+
+
+def reload_db():
+    drop_db()
+    init_db()
+    seed_db()
