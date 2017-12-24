@@ -26,7 +26,7 @@ def populate_item(count=200, locale='en'):
         user = users[random.randrange(0, len(users))]
 
         item = Item(
-            title=food.__getattribute__(category.name)(),
+            name=food.__getattribute__(category.name)(),
             description=text.text(),
             user=user,
             category=category

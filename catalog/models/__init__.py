@@ -29,8 +29,8 @@ class Item(Model):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
 
-    def __init__(self, title, description, user, category=None):
-        self.name = title
+    def __init__(self, name, description, user, category=None):
+        self.name = name
         self.description = description
         self.user = user
         self.category = category
@@ -40,7 +40,7 @@ class Item(Model):
     def serialize(self):
         return {
             'id': self.id,
-            'title': self.name,
+            'name': self.name,
             'description': self.description,
             'user': self.user.name,
             'category': self.category.name
