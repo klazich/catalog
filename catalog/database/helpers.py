@@ -3,6 +3,7 @@ import random
 from sqlalchemy.exc import IntegrityError
 from mimesis import Personal, Text, Food
 
+from catalog.database import Base, engine
 from catalog.models import Item, Category, User
 from catalog import db_session
 
@@ -65,3 +66,33 @@ def populate_user(count=75, locale='en'):
             db_session.commit()
         except IntegrityError:
             db_session.rollback()
+
+
+def init_db():
+    print('Initializing new database...')
+    Base.metadata.create_all(bind=engine)
+    print('  done')
+
+
+def populate_db():
+    from catalog.database import helpers
+    print('Populating the database...')
+    print('  category table...')
+    helpers.populate_category()
+    print('  user table...')
+    helpers.populate_user()
+    print('  item table...')
+    helpers.populate_item()
+    print('  done')
+
+
+def drop_db():
+    print('dropping database...')
+    Base.metadata.drop_all(bind=engine)
+    print('  done')
+
+
+def reload_db():
+    drop_db()
+    init_db()
+    populate_db()

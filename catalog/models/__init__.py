@@ -11,9 +11,8 @@ class Model(Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    date_created = Column(DateTime(timezone=True), default=func.current_timestamp(timezone=True))
-    date_updated = Column(DateTime(timezone=True), default=func.current_timestamp(timezone=True),
-                          onupdate=func.current_timestamp(timezone=True))
+    date_created = Column(DateTime, default=func.current_timestamp())
+    date_updated = Column(DateTime, default=func.current_timestamp(), onupdate=func.current_timestamp())
 
 
 class Item(Model):
