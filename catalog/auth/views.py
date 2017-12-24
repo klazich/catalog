@@ -2,12 +2,11 @@ from flask import flash, redirect, render_template, url_for
 from flask import session as flask_session
 # from flask_login import login_required, login_user, logout_user
 
-from . import auth
+from catalog.auth import auth
 # from forms import LoginForm, RegistrationForm
 from catalog.database import Session
 from catalog.models import User
-from catalog.auth.google import GoogleOAuth2
-from catalog.auth.facebook import FacebookOAuth2
+from catalog.auth.oauth2 import GoogleOAuth2, FacebookOAuth2
 
 
 @auth.route('/authorize/<provider>')

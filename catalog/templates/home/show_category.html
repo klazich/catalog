@@ -2,14 +2,14 @@
 
 {% block category_items -%}
 
-    <article class="flex flex-wrap items-center justify-between ph4 mb3">
+    <article class="flex flex-wrap items-center justify-around ph4 mb3 w-100">
 
         {% for i in category.items -%}
 
             {% macro show_elm(color) %}
                 <h1 class="f4 lh-solid tracked-tight ttc pa1 mr4 ma0">
                     <a class="link dim {{ color }}"
-                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}">
+                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}#categories">
                         {{ i.name }}
                     </a>
                 </h1>
