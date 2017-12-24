@@ -19,7 +19,7 @@ class Model(Base):
 class Item(Model):
     __tablename__ = 'items'
 
-    title = Column(String(250), nullable=False, unique=True)
+    name = Column(String(250), nullable=False, unique=True)
     description = Column(Text, nullable=False)
     slug = Column(String(250), nullable=False)
 
@@ -30,24 +30,24 @@ class Item(Model):
     category = relationship('Category', back_populates='items')
 
     def __init__(self, title, description, user, category=None):
-        self.title = title
+        self.name = title
         self.description = description
         self.user = user
         self.category = category
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
         return {
             'id': self.id,
-            'title': self.title,
+            'title': self.name,
             'description': self.description,
             'user': self.user.name,
             'category': self.category.name
         }
 
     def __repr__(self):
-        return '<Item: {} in {}>'.format(self.title, self.category.name)
+        return '<Item: {} in {}>'.format(self.name, self.category.name)
 
 
 class Category(Model):
@@ -56,7 +56,7 @@ class Category(Model):
     name = Column(String(250), nullable=False, unique=True)
     slug = Column(String(250), nullable=False)
 
-    items = relationship('Item', order_by=Item.title, back_populates='category')
+    items = relationship('Item', order_by=Item.name, back_populates='category')
 
     def __init__(self, name, items=None):
         if items is None:

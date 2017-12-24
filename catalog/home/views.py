@@ -47,4 +47,4 @@ def show_item(category_slug, item_slug):
     """
     category = h.get_category_by_slug(category_slug)
     item = h.get_item_by_slug(item_slug)
-    return render_template('home/show_item.html', category=category, item=item, title=item.title)
+    return render_template('home/show_item.html', category=category, item=item, title=item.name)

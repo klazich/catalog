@@ -54,7 +54,7 @@ def get_item_by_title(item_title):
     :param item_title: string
     :return: Item
     """
-    return db_session.query(Item).filter(Item.title == item_title).one_or_none()
+    return db_session.query(Item).filter(Item.name == item_title).one_or_none()
 
 
 def get_item_by_slug(item_slug):

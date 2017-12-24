@@ -10,14 +10,14 @@
                 <h1 class="f4 lh-solid tracked-tight ttc pa1 mr4 ma0">
                     <a class="link dim {{ color }}"
                        href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}">
-                        {{ i.title }}
+                        {{ i.name }}
                     </a>
                 </h1>
             {% endmacro %}
 
-            {% if item and item.title == i.title %}
+            {% if item and item.name == i.name %}
                 {{ show_elm('light-green') }}
-            {% elif item and item.title != i.title %}
+            {% elif item and item.name != i.name %}
                 {{ show_elm('gray') }}
             {% else %}
                 {{ show_elm('near-white') }}
