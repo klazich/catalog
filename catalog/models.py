@@ -1,10 +1,13 @@
 from slugify import slugify
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func, MetaData
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 
-from catalog.database import Base
-from catalog import login_manager, db_session
+from catalog import login_manager
+
+metadata = MetaData()
+Base = declarative_base(metadata=metadata)
 
 
 class Model(Base):
@@ -115,4 +118,5 @@ class User(UserMixin, Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return db_session.query(User).filter_by(int(user_id) == User.id).first()
+    from catalog.database import Session
+    return Session.query(User).filter_by(int(user_id) == User.id).first()
