@@ -10,7 +10,7 @@ class BaseConfig:
     SECRET_KEY = os.environ.get("SECRET_KEY") or b'\x1dLK!\xa9\xa3VwJ&j\x97l\x07(\x08M\x97PV\xc8g\xe8\xcd'
 
 
-class GoogleOAuth2(BaseConfig):
+class GoogleAuthConfig(BaseConfig):
     CLIENT_ID = '288467794624-ol9d6dpr3fccs8v0olhpbp1r6ots6sf7.apps.googleusercontent.com'
     CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
     AUTHORIZATION_BASE_URL = 'https://accounts.google.com/o/oauth2/auth'
@@ -21,12 +21,12 @@ class GoogleOAuth2(BaseConfig):
              "https://www.googleapis.com/auth/userinfo.profile"]
 
 
-class FacebookOAuth2(BaseConfig):
+class FacebookAuthConfig(BaseConfig):
     CLIENT_ID = '1273316589480067'
     CLIENT_SECRET = 'efd08abe7ac83d5f05777ce2f07a1bb2'
     AUTHORIZATION_BASE_URL = 'https://www.facebook.com/dialog/oauth'
     TOKEN_URL = 'https://graph.facebook.com/oauth/access_token'
-    REDIRECT_URI = 'https://localhost/callback/facebook'
+    REDIRECT_URI = 'http://localhost:5000/callback/facebook'
     USER_INFO = 'https://graph.facebook.com/me?'
 
 
