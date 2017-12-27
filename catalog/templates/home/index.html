@@ -1,33 +1,41 @@
 {% extends "base.html" %}
 
+{% if category %}
+    {% set c_color = 'white-10' %}
+{% else %}
+    {% set c_color = 'light-blue' %}
+{% endif %}
+
 {% block categories -%}
-    <article class="flex flex-auto items-center ph4">
+    <article class="flex flex-auto items-center bl b--{{ c_color }} bw4 ph4 mb3">
 
-        <h1 class="f2 light-blue tracked-tight ttc tr w5">Categories</h1>
+        <h1 class="f2 light-blue tracked-tight ttc tr mv0">Categories</h1>
 
-        <h1 class="f2 mh4 silver tl"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
+        <h1 class="f2 silver mv0 mh4"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
 
-        {% macro show_elm(color, category) %}
+        {% macro show_elm(color, category) -%}
             <h1 class="f2 lh-title tracked-tight ttc pa1 mr4 ma0">
                 <a class="link dim {{ color }}"
                    href="{{ url_for('home.show_category', category_slug=category.slug) }}">
                     {{ category.name }}
                 </a>
             </h1>
-        {% endmacro %}
+        {%- endmacro %}
 
-        {% for c in all_categories -%}
+        <div class="flex flex-wrap">
+            {% for c in all_categories -%}
 
-            {% if category and category.name == c.name %}
-                {{ show_elm('light-red', c) }}
-            {% elif category and category.name != c.name %}
-                {{ show_elm('gray', c) }}
-            {% else %}
-                {{ show_elm('white', c) }}
-            {% endif %}
+                {% if category and category.name == c.name %}
+                    {{ show_elm('light-red', c) }}
+                {% elif category and category.name != c.name %}
+                    {{ show_elm('gray', c) }}
+                {% else %}
+                    {{ show_elm('white', c) }}
+                {% endif %}
 
-        {%- endfor %}
+            {%- endfor %}
 
+        </div>
     </article>
 {%- endblock %}
 
