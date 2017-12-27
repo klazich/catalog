@@ -23,7 +23,7 @@ class GoogleAuthConfig(BaseConfig):
 
 
 class FacebookAuthConfig(BaseConfig):
-    CLIENT_ID = '<the id you get from facebook>'
+    CLIENT_ID = '1273316589480067'
     CLIENT_SECRET = '<the secret you get from facebook>'
     AUTHORIZATION_BASE_URL = 'https://www.facebook.com/dialog/oauth'
     TOKEN_URL = 'https://graph.facebook.com/oauth/access_token'
