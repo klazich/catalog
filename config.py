@@ -24,10 +24,10 @@ class GoogleAuthConfig(BaseConfig):
 
 class FacebookAuthConfig(BaseConfig):
     CLIENT_ID = '1273316589480067'
-    CLIENT_SECRET = '<the secret you get from facebook>'
+    CLIENT_SECRET = 'efd08abe7ac83d5f05777ce2f07a1bb2'
     AUTHORIZATION_BASE_URL = 'https://www.facebook.com/dialog/oauth'
     TOKEN_URL = 'https://graph.facebook.com/oauth/access_token'
-    REDIRECT_URI = 'https://localhost/'
+    REDIRECT_URI = 'https://localhost/callback/facebook'
 
 
 class DevConfig(BaseConfig):
