@@ -1,16 +1,15 @@
+import flask
 from flask import flash, redirect, render_template, url_for
-from flask import session as flask_session
-# from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from catalog.auth import auth
 # from forms import LoginForm, RegistrationForm
-from catalog.database import Session
-from catalog.models import User
 from catalog.auth.oauth2 import GoogleOAuth2, FacebookOAuth2
+import catalog.helpers as h
 
 
 @auth.route('/authorize/<provider>')
-def oath2_authorize(provider):
+def oauth2_authorize(provider):
     if provider not in ['google', 'facebook']:
         return
 
@@ -22,7 +21,8 @@ def oath2_authorize(provider):
             access_type='offline',
             prompt='select_account')
 
-        flask_session['oauth_state'] = state
+        flask.session['oauth_state'] = state
+        flask.session['redirected_from'] = h.redirect_url()
 
         return redirect(authorization_url)
 
@@ -31,14 +31,20 @@ def oath2_authorize(provider):
         authorization_url, state = facebook.authorization_url(
             FacebookOAuth2.AUTHORIZATION_BASE_URL)
 
-        flask_session['oauth_state'] = state
+        flask.session['oauth_state'] = state
 
         return redirect(authorization_url)
 
 
 @auth.route('/callback/<provider>')
-def oath2_callback(provider):
-    pass
+def oauth2_callback(provider):
+    if provider == 'google':
+        state = flask.session['oauth_state']
+        redirect_back = flask.session['redirected_from']
+        flash('You were successfully logged in.')
+        flash('You were successfully logged in.')
+        flash('You were successfully logged in.')
+        return redirect(redirect_back)
 
 
 @auth.route('/login', methods=['GET', 'POST'])

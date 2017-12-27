@@ -1,5 +1,3 @@
-from os import path
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 

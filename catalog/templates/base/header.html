@@ -1,0 +1,23 @@
+<header id="header" class="pt4 center bg-near-black">
+
+    <nav class="flex flex-auto items-center mw9 ph4 center">
+
+        <a class="f1 flex link dim lh-title ttu tracked-mega b white bl b--white-10 bw4 pl4 pv2 mr-auto"
+           href="{{ url_for('home.index') }}"
+           title="Home">Catalog App</a>
+
+        <a class="flex justify-center items-center link dim f3 ttu tracked b white h3 w2"
+           href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
+           title="Google OAuth2"><i class="fa fa-google" aria-hidden="true"></i>
+        </a>
+
+        <p class="f1 white-10 pa0 ma0">/</p>
+
+        <a class="flex justify-center items-center link dim f3 ttu tracked b white h3 w2 mr5"
+           href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
+           title="Facebook OAuth2"><i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+
+    </nav>
+
+</header>

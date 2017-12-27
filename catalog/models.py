@@ -84,6 +84,7 @@ class Category(Model):
 class User(UserMixin, Model):
     __tablename__ = 'users'
 
+    # auth_id = Column(String(64), nullable=False, unique=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
     slug = Column(String(250), nullable=False)

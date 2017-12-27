@@ -1,8 +1,21 @@
 @import "tachyons.css";
 
-.sans-serif { font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif; }
-.serif { font-family: "Noto Serif", georgia, times, serif; }
+.sans-serif {
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
+}
+
+.serif {
+    font-family: "Roboto Slab", georgia, times, serif;
+}
+
+code, .code {
+    font-family: "Roboto Mono" ,Consolas, monaco, monospace;
+}
 
 body {
-    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box
 }

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, session, flash, request
 # from flask_login import login_required
 
 from . import home
@@ -18,7 +18,7 @@ URL 	        Method 	Description
 
 @home.route('/')
 @home.route('/catalog/')
-def show_categories():
+def index():
     """
     Render the homepage template on the / route
     :return: template

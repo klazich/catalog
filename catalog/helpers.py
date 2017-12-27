@@ -1,7 +1,14 @@
 # from flask_login import login_required
+from flask import request, url_for
 
 from catalog.database import Session
 from catalog.models import Category, Item
+
+
+def redirect_url(default='home.index'):
+    return request.args.get('next') \
+           or request.referrer \
+           or url_for(default)
 
 
 def latest_items(limit):

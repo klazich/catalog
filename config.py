@@ -16,7 +16,7 @@ class GoogleAuthConfig(BaseConfig):
     CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
     AUTHORIZATION_BASE_URL = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
-    REDIRECT_URI = 'http://localhost:5000/catalog'
+    REDIRECT_URI = 'http://localhost:5000/callback/google'
     USER_INFO = 'https://www.googleapis.com/oauth2/v3/userinfo'
     SCOPE = ["https://www.googleapis.com/auth/userinfo.email",
              "https://www.googleapis.com/auth/userinfo.profile"]

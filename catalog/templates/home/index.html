@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 
 {% block categories -%}
-    <article class="flex flex-wrap items-center ph4 mt3">
+    <article class="flex flex-auto items-center ph4">
 
-        <h1 class="f2 light-red tracked-tight ttc tr">Categories</h1>
+        <h1 class="f2 light-blue tracked-tight ttc tr w5">Categories</h1>
 
-        <h1 class="f2 mh4 silver"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
+        <h1 class="f2 mh4 silver tl"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
 
-            {% for c in all_categories -%}
+        {% macro show_elm(color, category) %}
+            <h1 class="f2 lh-title tracked-tight ttc pa1 mr4 ma0">
+                <a class="link dim {{ color }}"
+                   href="{{ url_for('home.show_category', category_slug=category.slug) }}">
+                    {{ category.name }}
+                </a>
+            </h1>
+        {% endmacro %}
 
-                {% macro show_elm(text) %}
-                    <h1 class="f2 lh-title tracked-tight ttc pa1 mr4 ma0">
-                        <a class="link dim {{ text }}"
-                           href="{{ url_for('home.show_category', category_slug=c.slug) }}">
-                            {{ c.name }}
-                        </a>
-                    </h1>
-                {% endmacro %}
+        {% for c in all_categories -%}
 
-                {% if category and category.name == c.name %}
-                    {{ show_elm('light-red') }}
-                {% elif category and category.name != c.name %}
-                    {{ show_elm('gray') }}
-                {% else %}
-                    {{ show_elm('white') }}
-                {% endif %}
+            {% if category and category.name == c.name %}
+                {{ show_elm('light-red', c) }}
+            {% elif category and category.name != c.name %}
+                {{ show_elm('gray', c) }}
+            {% else %}
+                {{ show_elm('white', c) }}
+            {% endif %}
 
-            {%- endfor %}
+        {%- endfor %}
 
     </article>
 {%- endblock %}

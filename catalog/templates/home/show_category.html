@@ -2,28 +2,35 @@
 
 {% block category_items -%}
 
-    <article class="flex flex-wrap items-center justify-around ph4 mb3 w-100">
+    <article class="flex flex-auto items-center justify-around ph4 mb3">
 
-        {% for i in category.items -%}
+        {% macro show_elm(color, item) %}
+            <h1 class="f4 lh-solid tracked-tight ttc pa1 mr3 ma0">
+                <a class="link dim {{ color }}"
+                   href="{{ url_for('home.show_item', category_slug=item.category.slug, item_slug=item.slug) }}#categories">
+                    {{ item.name }}
+                </a>
+            </h1>
+        {% endmacro %}
 
-            {% macro show_elm(color) %}
-                <h1 class="f4 lh-solid tracked-tight ttc pa1 mr4 ma0">
-                    <a class="link dim {{ color }}"
-                       href="{{ url_for('home.show_item', category_slug=category.slug, item_slug=i.slug) }}#categories">
-                        {{ i.name }}
-                    </a>
-                </h1>
-            {% endmacro %}
+        <h2 class="f2 light-red tracked-tight ttc tr w5">{{ category.name }}</h2>
 
-            {% if item and item.name == i.name %}
-                {{ show_elm('light-green') }}
-            {% elif item and item.name != i.name %}
-                {{ show_elm('gray') }}
-            {% else %}
-                {{ show_elm('near-white') }}
-            {% endif %}
+        <h2 class="f2 mh4 silver tl"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h2>
 
-        {%- endfor %}
+        <div class="flex flex-wrap">
 
+            {% for i in category.items -%}
+
+                {% if item and item.name == i.name %}
+                    {{ show_elm('light-green', i) }}
+                {% elif item and item.name != i.name %}
+                    {{ show_elm('gray', i) }}
+                {% else %}
+                    {{ show_elm('near-white', i) }}
+                {% endif %}
+
+            {%- endfor %}
+
+        </div>
     </article>
 {%- endblock %}

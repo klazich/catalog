@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+{% set client_id='288467794624-ol9d6dpr3fccs8v0olhpbp1r6ots6sf7.apps.googleusercontent.com' %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }} | Catalog App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i|Noto+Serif:400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto+Mono:100,100i,300,300i,400,400i,500,500i,700,700i|Roboto+Slab:100,300,400,700|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block add_ins %}{% endblock %}
 </head>
-<body id="home" class="bg-near-black">
+<body class="bg-near-black">
 
-<header id="header" class="pv4 center bg-near-black">
-    <nav class="flex flex-auto items-center mw9 ph4 center">
-        <a class="f1 flex link dim lh-title ttu tracked-mega b white bl b--light-blue bw4 pl4 pv3 mr-auto"
-           href="{{ url_for('home.show_categories') }}" title="Home">Catalog App</a>
-        <a class="link flex dim ttu tracked b white pa3 br bw1" href="#" title="Items">Items</a>
-        <a class="link flex dim ttu tracked b white pa3 bl bw1"
-           href="{{ url_for('auth.login') }}"
-           title="Login">Login</a>
-    </nav>
-</header>
+{% include 'base/header.html' %}
+
+<aside id="flash" class="center pa4">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flex flex-column items-start ph0">
+                {% for message in messages %}
+                    <div class="flex items-center justify-center pt1 ma1 light-blue">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <span class="lh-title ml3">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+</aside>
 
 <main class="center min-vh-100 pa4">
 
@@ -51,8 +61,8 @@
 </main>
 
 <footer id="footer" class="pv6 ph4 center bg-near-black">
-    <div class="mw9 ph4 center bl b--light-blue bw4">
-        <a href="mailto:" class="link b f3 f2-ns dim white lh-solid">dev@kevinlazich.com</a>
+    <div class="mw9 ph4 pv2 center bl b--white-10 bw4">
+        <a href="mailto:dev@kevinlazich.com" class="link b f3 f2-ns dim white lh-solid">dev@kevinlazich.com</a>
         <p class="f6 db b ttu white-70 lh-solid">© 2017 Kevin Lazich</p>
     </div>
 </footer>
