@@ -15,22 +15,7 @@
 
 {% include 'base/header.html' %}
 
-<aside id="flash" class="center ph4 mw9 center">
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flex flex-column items-start ph0">
-                {% for message in messages %}
-                    <div class="flex items-center justify-center pt1 ma1 light-blue">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        <span class="lh-title ml3">{{ message }}</span>
-                    </div>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
-</aside>
+{% include 'base/flash_messages.html' %}
 
 <main class="center min-vh-100 pa4">
 
