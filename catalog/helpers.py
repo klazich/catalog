@@ -5,12 +5,6 @@ from catalog.database import Session
 from catalog.models import Category, Item
 
 
-def redirect_url(default='home.index'):
-    return request.args.get('next') \
-           or request.referrer \
-           or url_for(default)
-
-
 def latest_items(limit):
     """
     Helper function that returns the most recent items created

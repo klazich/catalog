@@ -46,7 +46,7 @@ def oauth2_authorize(provider):
             FacebookAuthConfig.AUTHORIZATION_BASE_URL)
 
         flask.session['oauth_state'] = state
-        flask.session['redirected_from'] = h.redirect_url()
+        flask.session['redirected_from'] = redirect_url()
 
         return redirect(authorization_url)
 

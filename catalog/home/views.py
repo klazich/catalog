@@ -23,7 +23,7 @@ def index():
     Render the homepage template on the / route
     :return: template
     """
-    return render_template('home/index.html', title="Home")
+    return render_template('home/read_all_categories.html', title="Home")
 
 
 @home.route('/catalog/<category_slug>/')
@@ -34,7 +34,7 @@ def show_category(category_slug):
     :return: template
     """
     category = h.get_category_by_slug(category_slug)
-    return render_template('home/show_category.html', category=category, title=category.name)
+    return render_template('home/read_category.html', category=category, title=category.name)
 
 
 @home.route('/catalog/<category_slug>/<item_slug>')
@@ -47,4 +47,4 @@ def show_item(category_slug, item_slug):
     """
     category = h.get_category_by_slug(category_slug)
     item = h.get_item_by_slug(item_slug)
-    return render_template('home/show_item.html', category=category, item=item, title=item.name)
+    return render_template('home/read_item.html', category=category, item=item, title=item.name)
