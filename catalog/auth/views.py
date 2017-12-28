@@ -1,4 +1,3 @@
-import json
 import flask
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
@@ -8,7 +7,12 @@ from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from catalog.auth import auth
 # from forms import LoginForm, RegistrationForm
 from config import GoogleAuthConfig, FacebookAuthConfig
-import catalog.helpers as h
+
+
+def redirect_url(default='home.index'):
+    return request.args.get('next') \
+           or request.referrer \
+           or url_for(default)
 
 
 @auth.route('/authorize/<provider>')
@@ -28,7 +32,7 @@ def oauth2_authorize(provider):
             prompt='select_account')
 
         flask.session['oauth_state'] = state
-        flask.session['redirected_from'] = h.redirect_url()
+        flask.session['redirected_from'] = redirect_url()
 
         return redirect(authorization_url)
 
