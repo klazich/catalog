@@ -14,7 +14,7 @@ class GoogleAuthConfig(BaseConfig):
     CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
     AUTHORIZATION_BASE_URL = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
-    REVOKE_URL = 'https://accounts.google.com/o/oauth2/revoke'
+    REFRESH_URL = 'https://accounts.google.com/o/oauth2/token'
     REDIRECT_URI = 'http://localhost:5000/auth/callback'
     USER_INFO = 'https://www.googleapis.com/oauth2/v3/userinfo'
     SCOPE = ["https://www.googleapis.com/auth/userinfo.email",
@@ -27,7 +27,6 @@ class FacebookAuthConfig(BaseConfig):
     CLIENT_SECRET = 'efd08abe7ac83d5f05777ce2f07a1bb2'
     AUTHORIZATION_BASE_URL = 'https://www.facebook.com/dialog/oauth'
     TOKEN_URL = 'https://graph.facebook.com/oauth/access_token'
-    REVOKE_URL = ''
     REDIRECT_URI = 'http://localhost:5000/auth/callback'
     USER_INFO = 'https://graph.facebook.com/me?fields=id,name,email'
     SCOPE = ''
@@ -55,5 +54,4 @@ config_obj = {
     'dev': DevConfig,
     'test': TestConfig,
     'prod': ProdConfig,
-    'default': DevConfig
-}
+    'default': DevConfig}

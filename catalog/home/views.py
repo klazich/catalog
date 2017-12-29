@@ -5,15 +5,6 @@ from . import home
 from catalog.database import Session
 from catalog.models import Category, Item
 
-"""
-URL 	        Method 	Description
-/users/ 	    GET 	Gives a list of all users
-/users/ 	    POST 	Creates a new user
-/users/<id> 	GET 	Shows a single user
-/users/<id> 	PUT 	Updates a single user
-/users/<id> 	DELETE 	Deletes a single user
-"""
-
 
 def get_category_by_slug(category_slug):
     return Session.query(Category).filter(Category.slug == category_slug).one_or_none()
@@ -30,7 +21,7 @@ def index():
     Render the homepage template on the / route
     :return: template
     """
-    return render_template('home/read_all_categories.html', title="Home")
+    return render_template('read_all_categories.html', title="Home")
 
 
 @home.route('/catalog/<category_slug>/')
@@ -41,7 +32,7 @@ def show_category(category_slug):
     :return: template
     """
     category = get_category_by_slug(category_slug)
-    return render_template('home/read_category.html', category=category, title=category.name)
+    return render_template('read_category.html', category=category, title=category.name)
 
 
 @home.route('/catalog/<category_slug>/<item_slug>')
@@ -54,4 +45,4 @@ def show_item(category_slug, item_slug):
     """
     category = get_category_by_slug(category_slug)
     item = get_item_by_slug(item_slug)
-    return render_template('home/read_item.html', category=category, item=item, title=item.name)
+    return render_template('read_item.html', category=category, item=item, title=item.name)

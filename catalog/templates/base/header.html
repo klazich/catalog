@@ -12,18 +12,27 @@
             <div id="login" class="flex flex-auto items-center pv0">
                 <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 ml-auto"
                    href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
-                   title="Google OAuth2"><i class="fa fa-google" aria-hidden="true"></i>
+                   title="Google OAuth2">
+                    <i class="fa fa-google" aria-hidden="true"></i>
                 </a>
 
                 <p class="f1 white-10 pa0 ma0">/</p>
 
                 <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 mr4"
                    href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
-                   title="Facebook OAuth2"><i class="fa fa-facebook" aria-hidden="true"></i>
+                   title="Facebook OAuth2">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
                 </a>
             </div>
         {% else %}
-            <a href="{{ url_for('auth.logout') }}" class="link dim"><h3 class="f3 black bg-white ttu pa2 ma0">Logout</h3></a>
+            <div class="ml-auto">
+                <a href="#" class="dib items-center link dim white mr4">
+                    <h4 class="f4 ttu pa2 ma0"> New Item</h4>
+                </a>
+                <a href="{{ url_for('auth.logout') }}" class="dib link dim bg-white black">
+                    <h3 class="f3 ttu pa2 ma0">Logout</h3>
+                </a>
+            </div>
         {% endif %}
 
 

@@ -1,4 +1,4 @@
-import json
+from time import time
 
 from sqlalchemy.exc import IntegrityError
 import requests
@@ -103,26 +103,11 @@ def oauth2_callback():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    Handle requests to the /login route
-    Log a user in through the todo: login form
-    """
-    return render_template('auth/login.html', title='Login')
+    return render_template('login.html', title='Login')
 
 
 @auth.route('/auth/logout')
 def logout():
-    flask.session['logged_in'] = False
-    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
-
-    response = requests.get(
-        config.REVOKE_URL,
-        params={'token': flask.session['user']['token']['access_token']})
-
-    if response.status_code != 200:
-        flash('You were not logged out!', 'error')
-        redirect(flask.session['last'])
-
     del flask.session['user']
     flask.session['logged_in'] = False
     flash('You were successfully logged out.', 'info')
