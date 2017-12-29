@@ -25,11 +25,17 @@
                 </a>
             </div>
         {% else %}
-            <div class="ml-auto">
-                <a href="#" class="dib items-center link dim white mr4">
-                    <h4 class="f4 ttu pa2 ma0"> New Item</h4>
+            <div class="flex flex-auto items-center">
+                <a href="#" class="dib link dim white mr2 ml-auto">
+                    <h4 class="f3 ttu pa2 ma0"><i class="fa fa-plus" aria-hidden="true"></i></h4>
                 </a>
-                <a href="{{ url_for('auth.logout') }}" class="dib link dim bg-white black">
+                {% if item and session.user.db_id == item.user.id %}
+                    <a href="#" class="dib link dim white">
+                        <h4 class="f3 ttu pa2 ma0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h4>
+                    </a>
+                {% endif %}
+
+                <a href="{{ url_for('auth.logout') }}" class="dib link dim bg-white black ml5">
                     <h3 class="f3 ttu pa2 ma0">Logout</h3>
                 </a>
             </div>

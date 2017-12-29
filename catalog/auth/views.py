@@ -89,12 +89,13 @@ def oauth2_callback():
         return redirect(flask.session['last'])
 
     user = oauth2_session.get(config.USER_INFO).json()
-
+    db_user = get_user_by_name(user['name']) or get_user_by_email(user['email'])
+    if not db_user:
+        db_user = create_user(user['name'], user['email'])
+    user['db_id'] = db_user.id
     user['token'] = token
-    flask.session['user'] = user
 
-    if not get_user_by_name(user['name']) or get_user_by_email(user['email']):
-        create_user(user['name'], user['email'])
+    flask.session['user'] = user
 
     flask.session['logged_in'] = True
     flash('You were successfully logged in.', 'info')
