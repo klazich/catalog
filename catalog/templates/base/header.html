@@ -23,9 +23,7 @@
                 </a>
             </div>
         {% else %}
-            <div class="f3">
-                <a><h3>Logout</h3></a>
-            </div>
+            <a href="{{ url_for('auth.logout') }}" class="link dim"><h3 class="f3 black bg-white ttu pa2 ma0">Logout</h3></a>
         {% endif %}
 
 

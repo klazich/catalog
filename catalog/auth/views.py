@@ -1,14 +1,17 @@
 import json
 
+from sqlalchemy.exc import IntegrityError
+import requests
 import flask
-from flask import flash, redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import abort, flash, redirect, render_template, request, url_for
 from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
+from oauthlib.oauth2.rfc6749.errors import MismatchingStateError
 
 from catalog.auth import auth
-# from forms import LoginForm, RegistrationForm
 from config import GoogleAuthConfig, FacebookAuthConfig
+from catalog.database import Session
+from catalog.models import User
 
 
 def redirect_url(default='home.index'):
@@ -29,10 +32,35 @@ def get_oauth2_session(config, state=None, token=None):
     return session
 
 
-@auth.route('/authorize/<provider>')
-def oauth2_authorize(provider):
-    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
+def get_user_by_name(user_name):
+    return Session.query(User).filter(User.name == user_name).one_or_none()
 
+
+def get_user_by_email(user_email):
+    return Session.query(User).filter(User.email == user_email).one_or_none()
+
+
+def create_user(name, email):
+    user = User(name, email)
+    Session.add(user)
+    try:
+        Session.commit()
+    except IntegrityError:
+        Session.rollback()
+        return None
+    return user
+
+
+@auth.route('/auth/<provider>')
+def oauth2_authorize(provider):
+    if not request.args.get('state'):
+        flask.session['last'] = request.referrer or url_for('home.index')
+    if 'next' in request.args:
+        flask.session['next'] = url_for(request.args['next'])
+    else:
+        flask.session['next'] = flask.session['last']
+
+    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
     oauth2_session = get_oauth2_session(config)
 
     authorization_url, state = oauth2_session.authorization_url(
@@ -40,39 +68,37 @@ def oauth2_authorize(provider):
         access_type='offline',
         prompt='select_account')
 
-    flask.session['oauth_state'] = state
-    flask.session['redirected_from'] = redirect_url()
+    flask.session['state'] = state
+    flask.session['provider'] = provider
 
     return redirect(authorization_url)
 
 
-@auth.route('/callback/<provider>')
-def oauth2_callback(provider):
-    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
+@auth.route('/auth/callback')
+def oauth2_callback():
+    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
+    oauth2_session = get_oauth2_session(config, state=flask.session['state'])
 
-    oauth2_session = get_oauth2_session(config, state=flask.session['oauth_state'])
+    try:
+        token = oauth2_session.fetch_token(
+            token_url=config.TOKEN_URL,
+            client_secret=config.CLIENT_SECRET,
+            authorization_response=request.url)
+    except MismatchingStateError:
+        flash('Could not authenticate!', 'error')
+        return redirect(flask.session['last'])
 
-    token = oauth2_session.fetch_token(
-        token_url=config.TOKEN_URL,
-        client_secret=config.CLIENT_SECRET,
-        authorization_response=request.url)
+    user = oauth2_session.get(config.USER_INFO).json()
 
-    flask.session['oauth_token'] = token
+    user['token'] = token
+    flask.session['user'] = user
 
-    flash('You were successfully logged in.')
+    if not get_user_by_name(user['name']) or get_user_by_email(user['email']):
+        create_user(user['name'], user['email'])
 
-    r = oauth2_session.get(config.USER_INFO)
-    # data = json.loads(r)
-    # print(data)
-
-    print(type(r))
-    print(r)
-    print(r.content)
-    print(r.text)
-    print(token)
-
-    back = flask.session['redirected_from']
-    return redirect(back)
+    flask.session['logged_in'] = True
+    flash('You were successfully logged in.', 'info')
+    return redirect(flask.session['next'])
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -84,11 +110,20 @@ def login():
     return render_template('auth/login.html', title='Login')
 
 
-@auth.route('/logout')
-# @login_required
+@auth.route('/auth/logout')
 def logout():
-    """
-    Handle requests to the /logout route
-    Log a user out through the todo: logout link
-    """
-    pass
+    flask.session['logged_in'] = False
+    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
+
+    response = requests.get(
+        config.REVOKE_URL,
+        params={'token': flask.session['user']['token']['access_token']})
+
+    if response.status_code != 200:
+        flash('You were not logged out!', 'error')
+        redirect(flask.session['last'])
+
+    del flask.session['user']
+    flask.session['logged_in'] = False
+    flash('You were successfully logged out.', 'info')
+    return redirect(flask.session['next'])

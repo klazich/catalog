@@ -4,7 +4,6 @@ from flask import render_template, redirect, url_for, session, flash, request
 from . import home
 from catalog.database import Session
 from catalog.models import Category, Item
-from catalog import helpers as h
 
 """
 URL 	        Method 	Description
@@ -14,6 +13,14 @@ URL 	        Method 	Description
 /users/<id> 	PUT 	Updates a single user
 /users/<id> 	DELETE 	Deletes a single user
 """
+
+
+def get_category_by_slug(category_slug):
+    return Session.query(Category).filter(Category.slug == category_slug).one_or_none()
+
+
+def get_item_by_slug(item_slug):
+    return Session.query(Item).filter(Item.slug == item_slug).one_or_none()
 
 
 @home.route('/')
@@ -33,7 +40,7 @@ def show_category(category_slug):
     :param category_slug: string
     :return: template
     """
-    category = h.get_category_by_slug(category_slug)
+    category = get_category_by_slug(category_slug)
     return render_template('home/read_category.html', category=category, title=category.name)
 
 
@@ -45,6 +52,6 @@ def show_item(category_slug, item_slug):
     :param item_slug: string
     :return: template
     """
-    category = h.get_category_by_slug(category_slug)
-    item = h.get_item_by_slug(item_slug)
+    category = get_category_by_slug(category_slug)
+    item = get_item_by_slug(item_slug)
     return render_template('home/read_item.html', category=category, item=item, title=item.name)
