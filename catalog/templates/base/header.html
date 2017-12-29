@@ -3,28 +3,32 @@
     <nav class="flex flex-auto items-center justify-between mw9 center">
 
         <div class="flex items-center justify-center bl b--white-10 bw4 pv0">
-
             <a class="f1 flex link dim lh-title ttu tracked-mega b near-white pl4"
                href="{{ url_for('home.index') }}"
                title="Home">Catalog App</a>
-
         </div>
 
-        <div class="flex flex-auto items-center pv0">
+        {% if not session.logged_in %}
+            <div id="login" class="flex flex-auto items-center pv0">
+                <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 ml-auto"
+                   href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
+                   title="Google OAuth2"><i class="fa fa-google" aria-hidden="true"></i>
+                </a>
 
-            <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 ml-auto"
-               href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
-               title="Google OAuth2"><i class="fa fa-google" aria-hidden="true"></i>
-            </a>
+                <p class="f1 white-10 pa0 ma0">/</p>
 
-            <p class="f1 white-10 pa0 ma0">/</p>
+                <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 mr4"
+                   href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
+                   title="Facebook OAuth2"><i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+            </div>
+        {% else %}
+            <div class="f3">
+                <a><h3>Logout</h3></a>
+            </div>
+        {% endif %}
 
-            <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 mr4"
-               href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
-               title="Facebook OAuth2"><i class="fa fa-facebook" aria-hidden="true"></i>
-            </a>
 
-        </div>
     </nav>
 
 </header>

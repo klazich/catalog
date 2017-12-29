@@ -11,6 +11,7 @@ class BaseConfig:
 
 
 class GoogleAuthConfig(BaseConfig):
+    PROVIDER = 'google'
     CLIENT_ID = '288467794624-ol9d6dpr3fccs8v0olhpbp1r6ots6sf7.apps.googleusercontent.com'
     CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
     AUTHORIZATION_BASE_URL = 'https://accounts.google.com/o/oauth2/auth'
@@ -22,12 +23,14 @@ class GoogleAuthConfig(BaseConfig):
 
 
 class FacebookAuthConfig(BaseConfig):
+    PROVIDER = 'facebook'
     CLIENT_ID = '1273316589480067'
     CLIENT_SECRET = 'efd08abe7ac83d5f05777ce2f07a1bb2'
     AUTHORIZATION_BASE_URL = 'https://www.facebook.com/dialog/oauth'
     TOKEN_URL = 'https://graph.facebook.com/oauth/access_token'
     REDIRECT_URI = 'http://localhost:5000/callback/facebook'
-    USER_INFO = 'https://graph.facebook.com/me?'
+    USER_INFO = 'https://graph.facebook.com/'
+    SCOPE = None
 
 
 class DevConfig(BaseConfig):
@@ -48,7 +51,7 @@ class ProdConfig(BaseConfig):
     DATABASE_URI = 'sqlite:///' + os.path.join(basedir, "catalog.db")
 
 
-config = {
+config_obj = {
     'dev': DevConfig,
     'test': TestConfig,
     'prod': ProdConfig,

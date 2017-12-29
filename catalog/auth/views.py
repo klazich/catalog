@@ -1,3 +1,5 @@
+import json
+
 import flask
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
@@ -15,85 +17,62 @@ def redirect_url(default='home.index'):
            or url_for(default)
 
 
+def get_oauth2_session(config, state=None, token=None):
+    session = OAuth2Session(
+        client_id=config.CLIENT_ID,
+        scope=config.SCOPE,
+        redirect_uri=config.REDIRECT_URI,
+        state=state,
+        token=token)
+    if config.PROVIDER == 'facebook':
+        return facebook_compliance_fix(session)
+    return session
+
+
 @auth.route('/authorize/<provider>')
 def oauth2_authorize(provider):
-    if provider not in ['google', 'facebook']:
-        return
+    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
 
-    if provider == 'google':
-        google = OAuth2Session(
-            client_id=GoogleAuthConfig.CLIENT_ID,
-            scope=GoogleAuthConfig.SCOPE,
-            redirect_uri=GoogleAuthConfig.REDIRECT_URI)
+    oauth2_session = get_oauth2_session(config)
 
-        authorization_url, state = google.authorization_url(
-            GoogleAuthConfig.AUTHORIZATION_BASE_URL,
-            access_type='offline',
-            prompt='select_account')
+    authorization_url, state = oauth2_session.authorization_url(
+        config.AUTHORIZATION_BASE_URL,
+        access_type='offline',
+        prompt='select_account')
 
-        flask.session['oauth_state'] = state
-        flask.session['redirected_from'] = redirect_url()
+    flask.session['oauth_state'] = state
+    flask.session['redirected_from'] = redirect_url()
 
-        return redirect(authorization_url)
-
-    if provider == 'facebook':
-        facebook = OAuth2Session(
-            client_id=FacebookAuthConfig.CLIENT_ID,
-            redirect_uri=FacebookAuthConfig.REDIRECT_URI)
-        facebook = facebook_compliance_fix(facebook)
-
-        authorization_url, state = facebook.authorization_url(
-            FacebookAuthConfig.AUTHORIZATION_BASE_URL)
-
-        flask.session['oauth_state'] = state
-        flask.session['redirected_from'] = redirect_url()
-
-        return redirect(authorization_url)
+    return redirect(authorization_url)
 
 
 @auth.route('/callback/<provider>')
 def oauth2_callback(provider):
-    if provider == 'google':
-        google = OAuth2Session(
-            client_id=GoogleAuthConfig.CLIENT_ID,
-            scope=GoogleAuthConfig.SCOPE,
-            redirect_uri=GoogleAuthConfig.REDIRECT_URI,
-            state=flask.session['oauth_state'])
+    config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
 
-        token = google.fetch_token(
-            token_url=GoogleAuthConfig.TOKEN_URL,
-            client_secret=GoogleAuthConfig.CLIENT_SECRET,
-            authorization_response=request.url)
+    oauth2_session = get_oauth2_session(config, state=flask.session['oauth_state'])
 
-        flask.session['oauth_token'] = token
+    token = oauth2_session.fetch_token(
+        token_url=config.TOKEN_URL,
+        client_secret=config.CLIENT_SECRET,
+        authorization_response=request.url)
 
-        flash('You were successfully logged in.')
+    flask.session['oauth_token'] = token
 
-        r = google.get(GoogleAuthConfig.USER_INFO)
+    flash('You were successfully logged in.')
 
-        redirect_back = flask.session['redirected_from']
-        return redirect(redirect_back)
+    r = oauth2_session.get(config.USER_INFO)
+    # data = json.loads(r)
+    # print(data)
 
-    if provider == 'facebook':
-        facebook = OAuth2Session(
-            client_id=FacebookAuthConfig.CLIENT_ID,
-            redirect_uri=FacebookAuthConfig.REDIRECT_URI,
-            state=flask.session['oauth_state'])
-        facebook = facebook_compliance_fix(facebook)
+    print(type(r))
+    print(r)
+    print(r.content)
+    print(r.text)
+    print(token)
 
-        token = facebook.fetch_token(
-            FacebookAuthConfig.TOKEN_URL,
-            client_secret=FacebookAuthConfig.CLIENT_SECRET,
-            authorization_response=request.url)
-
-        flask.session['oauth_token'] = token
-
-        flash('You were successfully logged in.')
-
-        r = facebook.get(FacebookAuthConfig.USER_INFO)
-
-        redirect_back = flask.session['redirected_from']
-        return redirect(redirect_back)
+    back = flask.session['redirected_from']
+    return redirect(back)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
