@@ -12,7 +12,7 @@
         {% macro show_elm(color, item) -%}
             <h1 class="f4 lh-solid tracked-tight ttc pa1 mr3 ma0">
                 <a class="link dim {{ color }}"
-                   href="{{ url_for('home.show_item', category_slug=item.category.slug, item_slug=item.slug) }}">
+                   href="{{ url_for('read.read_item', category_slug=item.category.slug, item_slug=item.slug) }}">
                     {{ item.name }}
                 </a>
             </h1>

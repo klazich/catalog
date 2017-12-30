@@ -4,7 +4,7 @@
 
         <div class="flex items-center justify-center bl b--white-10 bw4 pv0">
             <a class="f1 flex link dim lh-title ttu tracked-mega b near-white pl4"
-               href="{{ url_for('home.index') }}"
+               href="{{ url_for('read.index') }}"
                title="Home">Catalog App</a>
         </div>
 
@@ -29,6 +29,7 @@
                 <a href="#" class="dib link dim white mr2 ml-auto">
                     <h4 class="f3 ttu pa2 ma0"><i class="fa fa-plus" aria-hidden="true"></i></h4>
                 </a>
+
                 {% if item and session.user.db_id == item.user.id %}
                     <a href="#" class="dib link dim white">
                         <h4 class="f3 ttu pa2 ma0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h4>

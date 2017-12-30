@@ -14,12 +14,6 @@ from catalog.database import Session
 from catalog.models import User
 
 
-def redirect_url(default='home.index'):
-    return request.args.get('next') \
-           or request.referrer \
-           or url_for(default)
-
-
 def get_oauth2_session(config, state=None, token=None):
     session = OAuth2Session(
         client_id=config.CLIENT_ID,
@@ -54,7 +48,7 @@ def create_user(name, email):
 @auth.route('/auth/<provider>')
 def oauth2_authorize(provider):
     if not request.args.get('state'):
-        flask.session['last'] = request.referrer or url_for('home.index')
+        flask.session['last'] = request.referrer or url_for('read.index')
     if 'next' in request.args:
         flask.session['next'] = url_for(request.args['next'])
     else:
