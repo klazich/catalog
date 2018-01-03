@@ -11,7 +11,7 @@
         {% if session.logged_in %}
 
             <div class="dim mr3">
-                <a href="{{ url_for('create.create_item') }}"
+                <a href="{{ url_for('create.create_category') }}"
                    class="dib link green pa2 ba br1">New Item</a>
             </div>
 
@@ -26,13 +26,19 @@
                         {% for category, message in messages %}
                             {% if category == 'info' %}
                                 {% set color = 'blue' %}
-                                {% macro icon() %}<i class="fa fa-info-circle" aria-hidden="true"></i>{% endmacro %}
+                                {% macro icon() %}<i class="fa fa-info-circle" aria-hidden="true"></i>
+                                {% endmacro %}
                             {% elif category == 'warning' %}
                                 {% set color = 'yellow' %}
-                                {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>{% endmacro %}
+                                {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                {% endmacro %}
                             {% elif category =='error' %}
                                 {% set color = 'red' %}
                                 {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                {% endmacro %}
+                            {% else %}
+                                {% set color = 'yellow' %}
+                                {% macro icon() %}<i class="fa fa-question-circle" aria-hidden="true"></i>
                                 {% endmacro %}
                             {% endif %}
                             <div class="flex items-center justify-center pt1 ma1 {{ color }}">
