@@ -3,6 +3,7 @@ werkzeug
 python-slugify
 flask
 flask-login
+flask-WTF
 sqlalchemy
 mimesis
 #google-api-python-client

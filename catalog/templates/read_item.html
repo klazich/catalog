@@ -13,9 +13,19 @@
             {{ item.description }}
         </p>
 
+        {% if session.logged_in and item.user == session.user.name %}
+
+            <div class="f7 ttu tracked pl4">
+                <a href="#" class="dib dim link blue pa1 mr3 ba br1 tc">Edit</a>
+                <a href="#" class="dib dim link blue pa1 mr3 ba br1 tc">Delete</a>
+            </div>
+
+        {% endif %}
+
         <p class="code white-40 pl4 mb2">Created by <span class="purple">
             {{ item.user.name }}</span> on <span class="">{{ item.date_updated }}</span>
         </p>
+
 
     </article>
 {%- endblock %}

@@ -16,9 +16,10 @@
 
 {% include 'base/header.html' %}
 
-{% include 'base/flash_messages.html' %}
-
 <main class="center min-vh-100 pa4">
+
+    {% include 'base/nav.html' %}
+
     <div class="mw9 center">
         <section id="content" class="white">
             {% block content %}{% endblock %}

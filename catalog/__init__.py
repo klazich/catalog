@@ -33,7 +33,10 @@ def create_app(config_obj):
     from catalog.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from catalog.read import home as home_blueprint
-    app.register_blueprint(home_blueprint)
+    from catalog.read import read as read_blueprint
+    app.register_blueprint(read_blueprint)
+
+    from catalog.create import create as create_blueprint
+    app.register_blueprint(create_blueprint)
 
     return app

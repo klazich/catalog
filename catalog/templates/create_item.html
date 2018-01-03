@@ -1,10 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div class="mb4 mb0-ns fl w-100 w-50-l" >
-      <p class="f4 fw6 mb2 f6 mt0">
-        Sign up for our newsletter.
-      </p>
-      <input placeholder="Email Address" class="mw-100 w-100 w5-ns f5 input-reset ba b--black-20 pv3 ph4 border-box">
-      <input type="submit" class="input-reset w-100 w-auto-ns bg-black-80 white f5 pv2 pv3-ns ph4 ba b--black-80 bg-hover-mid-gray">
-    </div>
+    {#    <div class="mb4 mb0-ns fl w-100 w-50-l">#}
+    {#        <p class="f4 fw6 mb2 f6 mt0">#}
+    {#            Sign up for our newsletter.#}
+    {#        </p>#}
+    {#        <input placeholder="Email Address" class="mw-100 w-100 w5-ns f5 input-reset ba b--black-20 pv3 ph4 border-box">#}
+    {#        <input type="submit"#}
+    {#               class="input-reset w-100 w-auto-ns bg-black-80 white f5 pv2 pv3-ns ph4 ba b--black-80 bg-hover-mid-gray">#}
+    {#    </div>#}
+
+    {% if not session.logged_in %}
+    {% endif %}
+
+    <form action="{{ url_for('create.create_item') }}"
+          method="post"
+          class="flex flex-column mw7 mt4 w-auto">
+
+        {{ form.hidden_tag() }}
+
+        <div class="flex flex-column pv2 mw6">
+            {{ form.category.label(class="f3 serif ttu tracked light-blue pv2") }}
+            {{ form.category(class="f4 serif ttc moon-gray b--none outline bw1 bg-near-black ph3 pv2") }}
+        </div>
+
+        <div class="flex flex-column pv2 mw6">
+            {{ form.name.label(class="f3 ttu tracked light-blue pv2") }}
+            {{ form.name(class="code f4 ttc moon-gray b--none outline bg-near-black ph3 pv2") }}
+        </div>
+
+        <div class="flex flex-column pv2">
+            {{ form.description.label(class="f3 ttu tracked light-blue pv2") }}
+            {{ form.description(class="code f5 moon-gray b--none outline bg-near-black ph3 pv2 h4") }}
+        </div>
+
+        <div class="pv2 mt3">
+            <button type="submit"
+                    class="dim bg-mid-gray white f5 b ttu tracked pv3 ph4 b--none br1 pointer">
+                Submit
+            </button>
+        </div>
+    </form>
+
 {% endblock %}

@@ -1,9 +1,6 @@
-from time import time
-
 from sqlalchemy.exc import IntegrityError
-import requests
 import flask
-from flask import abort, flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from oauthlib.oauth2.rfc6749.errors import MismatchingStateError
@@ -50,7 +47,7 @@ def oauth2_authorize(provider):
     if not request.args.get('state'):
         flask.session['last'] = request.referrer or url_for('read.index')
     if 'next' in request.args:
-        flask.session['next'] = url_for(request.args['next'])
+        flask.session['next'] = request.args['next']
     else:
         flask.session['next'] = flask.session['last']
 
@@ -98,11 +95,21 @@ def oauth2_callback():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    flask.session['next'] = request.referrer or url_for('read.index')
+    flask.session['last'] = request.referrer or url_for('read.index')
+
     return render_template('login.html', title='Login')
 
 
 @auth.route('/auth/logout')
 def logout():
+    if not request.args.get('state'):
+        flask.session['last'] = request.referrer or url_for('read.index')
+    if 'next' in request.args:
+        flask.session['next'] = request.args['next']
+    else:
+        flask.session['next'] = flask.session['last']
+
     del flask.session['user']
     flask.session['logged_in'] = False
     flash('You were successfully logged out.', 'info')

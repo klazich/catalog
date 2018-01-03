@@ -1,47 +1,12 @@
-<header id="header" class="pv4 ph4 center bg-near-black">
+<header id="header" class="pt4 ph4 center">
 
     <nav class="flex flex-auto items-center justify-between mw9 center">
 
-        <div class="flex items-center justify-center bl b--white-10 bw4 pv0">
-            <a class="f1 flex link dim lh-title ttu tracked-mega b near-white pl4"
+        <div class="dim flex items-center pv0">
+            <a class="f1 flex link lh-title ttu tracked-mega b near-white hover-blue"
                href="{{ url_for('read.index') }}"
                title="Home">Catalog App</a>
         </div>
-
-        {% if not session.logged_in %}
-            <div id="login" class="flex flex-auto items-center pv0">
-                <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 ml-auto"
-                   href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
-                   title="Google OAuth2">
-                    <i class="fa fa-google" aria-hidden="true"></i>
-                </a>
-
-                <p class="f1 white-10 pa0 ma0">/</p>
-
-                <a class="flex items-center justify-center link dim f3 ttu tracked b near-white w2 mr4"
-                   href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
-                   title="Facebook OAuth2">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                </a>
-            </div>
-        {% else %}
-            <div class="flex flex-auto items-center">
-                <a href="#" class="dib link dim white mr2 ml-auto">
-                    <h4 class="f3 ttu pa2 ma0"><i class="fa fa-plus" aria-hidden="true"></i></h4>
-                </a>
-
-                {% if item and session.user.db_id == item.user.id %}
-                    <a href="#" class="dib link dim white">
-                        <h4 class="f3 ttu pa2 ma0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h4>
-                    </a>
-                {% endif %}
-
-                <a href="{{ url_for('auth.logout') }}" class="dib link dim bg-white black ml5">
-                    <h3 class="f3 ttu pa2 ma0">Logout</h3>
-                </a>
-            </div>
-        {% endif %}
-
 
     </nav>
 
