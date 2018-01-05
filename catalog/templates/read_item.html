@@ -13,11 +13,11 @@
             {{ item.description }}
         </p>
 
-        {% if session.logged_in and item.user == session.user.name %}
+        {% if session.logged_in and item.user.id == session.user.db_id %}
 
             <div class="f7 ttu tracked pl4">
-                <a href="#" class="dib dim link blue pa1 mr3 ba br1 tc">Edit</a>
-                <a href="#" class="dib dim link blue pa1 mr3 ba br1 tc">Delete</a>
+                <a href="#" class="dib dim link blue pa1 mr2 ba br1 tc">Edit</a>
+                <a href="#" class="dib dim link blue pa1 mr2 ba br1 tc">Delete</a>
             </div>
 
         {% endif %}

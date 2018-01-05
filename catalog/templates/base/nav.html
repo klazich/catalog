@@ -1,5 +1,5 @@
 <div class="center mw9 pb3">
-    <nav class="flex flex-auto items-center f7 ttu tracked b h2">
+    <nav class="flex flex-auto items-center f7 ttu tracked h2">
 
         <div class="dim mr3">
             <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
@@ -11,7 +11,7 @@
         {% if session.logged_in %}
 
             <div class="dim mr3">
-                <a href="{{ url_for('create.create_category') }}"
+                <a href="{{ url_for('create.create_item') }}"
                    class="dib link green pa2 ba br1">New Item</a>
             </div>
 

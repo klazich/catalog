@@ -30,11 +30,11 @@ def create_app(config_obj):
     def format_date_filter(dt):
         return dt.strftime('%B %d %Y %I:%M%p')
 
+    from catalog.views import views as views_blueprint
+    app.register_blueprint(views_blueprint)
+
     from catalog.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
-
-    from catalog.read import read as read_blueprint
-    app.register_blueprint(read_blueprint)
 
     from catalog.create import create as create_blueprint
     app.register_blueprint(create_blueprint)
