@@ -32,7 +32,7 @@ def create_category():
         flash('Category selected', 'info')
         return redirect(url_for('create.create_item', category_slug=category.slug))
     elif request.method == 'GET':
-        return render_template('create_category.html', form=form, category=None, categories=categories)
+        return render_template('create_category.html', form=form, categories=categories)
 
 
 @create.route('/catalog/<string:category_slug>/new', methods=['GET', 'POST'])
@@ -41,11 +41,8 @@ def create_item(category_slug):
         flash('Must be logged in to create a new item.', 'warning')
         return redirect(url_for('read.index'))
 
-    print('w/ slug', request.referrer)
-    print(category_slug)
     category = get_category_by_slug(category_slug)
     form = CreateItemForm(request.form)
-    print(category.slug)
 
     if request.method == 'POST' and form.validate():
         item = Item(
@@ -53,10 +50,9 @@ def create_item(category_slug):
             description=form.description.data,
             user=get_user_by_name(flask.session['user']['name']),
             category=category)
-        print(item)
         Session.add(item)
         Session.commit()
-        flash('New item created.', 'info')
+        flash('New item created', 'info')
 
         return redirect(url_for('read.read_item', category_slug=category.slug, item_slug=item.slug))
     elif request.method == 'GET':

@@ -2,7 +2,7 @@
 {% block content %}
 
 
-    <form action="{{ url_for('create.create_item', category_slug=form) }}"
+    <form action="{{ url_for('create.create_item', category_slug=category.slug) }}"
           method="post"
           class="flex flex-column mw6">
 
