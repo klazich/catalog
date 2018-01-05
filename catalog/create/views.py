@@ -24,7 +24,7 @@ def create_category():
     form = CreateCategoryForm(request.form)
     categories = Session.query(Category).all()
 
-    if request.method == 'POST' and form.category_submit():
+    if request.method == 'POST':
         category = Category(form.new_category.data or form.categories.data)
         if category.name not in map(lambda x: x.name, categories):
             Session.add(category)
@@ -32,7 +32,7 @@ def create_category():
         flash('Category selected', 'info')
         return redirect(url_for('create.create_item', category_slug=category.slug))
     elif request.method == 'GET':
-        return render_template('create_item.html', form=form, category=None, categories=categories)
+        return render_template('create_category.html', form=form, category=None, categories=categories)
 
 
 @create.route('/catalog/<string:category_slug>/new', methods=['GET', 'POST'])

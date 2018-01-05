@@ -16,7 +16,7 @@ class CreateCategoryForm(FlaskForm):
         'category name',
         render_kw={'placeholder': 'enter category name'})
 
-    category_submit = SubmitField()
+    submit = SubmitField()
 
 
 class CreateItemForm(CreateCategoryForm):
@@ -38,4 +38,4 @@ class CreateItemForm(CreateCategoryForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Enter item description'})
 
-    item_submit = SubmitField()
+    submit = SubmitField()
