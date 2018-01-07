@@ -2,9 +2,6 @@ from slugify import slugify
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from flask_login import UserMixin
-
-from catalog import login_manager
 
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
@@ -81,7 +78,7 @@ class Category(Model):
         return '<Category: {}>'.format(self.name)
 
 
-class User(UserMixin, Model):
+class User(Model):
     __tablename__ = 'users'
 
     # auth_id = Column(String(64), nullable=False, unique=True)
@@ -115,9 +112,3 @@ class User(UserMixin, Model):
 
     def __repr__(self):
         return '<User: {}({})>'.format(self.name, self.email)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    from catalog.database import Session
-    return Session.query(User).filter_by(int(user_id) == User.id).first()
