@@ -2,7 +2,7 @@
     <nav class="flex flex-auto items-center f7 ttu tracked h2">
 
         <div class="dim mr3">
-            <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
+            <a href="{{ url_for('views.logout') if session.logged_in else url_for('views.login') }}"
                class="dib link near-black pa2 bg-near-white br1">
                 {{ 'logout' if session.logged_in else 'login' }}
             </a>
@@ -11,7 +11,7 @@
         {% if session.logged_in %}
 
             <div class="dim mr3">
-                <a href="{{ url_for('create.create_item') }}"
+                <a href="{{ url_for('views.create_item') }}"
                    class="dib link green pa2 ba br1">New Item</a>
             </div>
 

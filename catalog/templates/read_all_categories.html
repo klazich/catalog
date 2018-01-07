@@ -16,7 +16,7 @@
         {% macro show_elm(color, category) -%}
             <h1 class="f2 lh-title tracked-tight ttc pa1 mr4 ma0">
                 <a class="link dim {{ color }}"
-                   href="{{ url_for('read.read_category', category_slug=category.slug) }}">
+                   href="{{ url_for('views.read_category', category_slug=category.slug) }}">
                     {{ category.name }}
                 </a>
             </h1>
