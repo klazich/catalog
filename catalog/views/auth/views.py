@@ -1,5 +1,5 @@
 import flask
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, g
 
 from werkzeug.routing import BuildError
 
@@ -7,22 +7,22 @@ from catalog.views.auth import auth
 from config import GoogleAuthConfig, FacebookAuthConfig
 from catalog.database import Session
 from catalog.models import User
-from catalog.views.helpers import get_user_by, get_oauth2_session, clean_flask_session
+from catalog.views.helpers import get_user_by, get_oauth2_session, clear_user, login_required
 
 
 @auth.route('/login', methods=['GET'])
 def login():
-    print(request.referrer)
     flask.session['redirect_back'] = request.referrer or url_for('read.index')
     return render_template('login.html', title='Login')
 
 
 @auth.route('/auth/logout', methods=['GET'])
+@login_required
 def logout():
-    clean_flask_session()
+    clear_user()
     flask.session['logged_in'] = False
 
-    flash('You were successfully logged out.', 'info')
+    flash('logout successful', 'info')
     return redirect(request.referrer or url_for('read.index'))
 
 
@@ -46,7 +46,7 @@ def oauth2_authorize(provider):
 def oauth2_callback():
     config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
     if request.args.get('state') != flask.session['state']:
-        clean_flask_session()
+        clear_user()
         flash('Authentication failed: request/session state mismatch', 'error')
         return redirect(url_for('auth.login'))
 
@@ -70,7 +70,7 @@ def oauth2_callback():
     flask.session['user'] = user
     flask.session['logged_in'] = True
 
-    flash('You were successfully logged in.', 'info')
+    flash('login successful', 'info')
 
     redirect_back = flask.session['redirect_back']
     del flask.session['redirect_back']

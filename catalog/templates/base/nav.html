@@ -1,58 +1,51 @@
-<div class="center mw9 pb3">
-    <nav class="flex flex-auto items-center f7 ttu tracked h2">
+<nav class="flex flex-auto items-center h2 mw9 center mt3">
+
+    <div class="dim mr3">
+        <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
+           class="f7 ttu tracked dib link near-white pa2 ba">
+            {{ 'logout' if session.logged_in else 'login' }}
+        </a>
+    </div>
+
+    {% if session.logged_in %}
 
         <div class="dim mr3">
-            <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
-               class="dib link near-black pa2 bg-near-white br1">
-                {{ 'logout' if session.logged_in else 'login' }}
-            </a>
+            <a href="{{ url_for('create.create_item') }}"
+               class="f7 ttu tracked dib link green pa2 ba">New Item</a>
         </div>
 
-        {% if session.logged_in %}
+    {% endif %}
 
-            <div class="dim mr3">
-                <a href="{{ url_for('create.create_item') }}"
-                   class="dib link green pa2 ba br1">New Item</a>
-            </div>
+    <aside id="flash" class="f6 ttu b tracked ph4 ml-auto">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flex flex-column items-start ph0">
+                    {% for category, message in messages %}
+                        {% if category == 'info' %}
+                            {% set color = 'blue' %}
+                            {% macro icon() %}<i class="fa fa-info-circle" aria-hidden="true"></i>
+                            {% endmacro %}
+                        {% elif category == 'warning' %}
+                            {% set color = 'yellow' %}
+                            {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            {% endmacro %}
+                        {% elif category =='error' %}
+                            {% set color = 'red' %}
+                            {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            {% endmacro %}
+                        {% else %}
+                            {% set color = 'yellow' %}
+                            {% macro icon() %}<i class="fa fa-question-circle" aria-hidden="true"></i>
+                            {% endmacro %}
+                        {% endif %}
+                        <div class="flex items-center justify-center pt1 ma1 {{ color }}">
+                            {{ icon() }}
+                            <span class="ml3">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </aside>
 
-        {% endif %}
-
-        <aside id="flash" class="ph4 ml-auto">
-
-            {% with messages = get_flashed_messages(with_categories=true) %}
-
-                {% if messages %}
-                    <ul class="flex flex-column items-start ph0">
-                        {% for category, message in messages %}
-                            {% if category == 'info' %}
-                                {% set color = 'blue' %}
-                                {% macro icon() %}<i class="fa fa-info-circle" aria-hidden="true"></i>
-                                {% endmacro %}
-                            {% elif category == 'warning' %}
-                                {% set color = 'yellow' %}
-                                {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                {% endmacro %}
-                            {% elif category =='error' %}
-                                {% set color = 'red' %}
-                                {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                {% endmacro %}
-                            {% else %}
-                                {% set color = 'yellow' %}
-                                {% macro icon() %}<i class="fa fa-question-circle" aria-hidden="true"></i>
-                                {% endmacro %}
-                            {% endif %}
-                            <div class="flex items-center justify-center pt1 ma1 {{ color }}">
-                                {{ icon() }}
-                                <span class="lh-title ml3">{{ message }}</span>
-                            </div>
-                        {% endfor %}
-                    </ul>
-
-                {% endif %}
-
-            {% endwith %}
-
-        </aside>
-
-    </nav>
-</div>
+</nav>

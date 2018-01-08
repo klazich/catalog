@@ -6,8 +6,14 @@
     <title>{{ title }} | Catalog App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,700,700i|Roboto+Slab:400,
-                                700|Roboto:400,400i,700,700i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,700,700i
+                                                                        |Roboto+Slab:400,700
+                                                                        |Roboto:400,400i,700,700i
+                                                                        |Abril+Fatface
+                                                                        |Inconsolata:400,700
+                                                                        |Merriweather:400,400i,700,700i,900,900i
+                                                                        |Playfair+Display:400,400i,700,700i,900,900i
+                                                                        |Raleway:400,400i,700,700i,900,900i">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -15,11 +21,10 @@
 
 {% include 'base/header.html' %}
 
+{% include 'base/nav.html' %}
+
 <main class="center min-vh-100 pa4">
-
-    {% include 'base/nav.html' %}
-
-    <div class="mw9 center">
+    <div class="mw9 center mt5">
         <section id="content" class="white">
             {% block content_1 %}{% endblock %}
             {% block content_2 %}{% endblock %}

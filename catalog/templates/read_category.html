@@ -3,14 +3,15 @@
 {% if item %}
     {% set i_color = 'white-10' %}
 {% else %}
-    {% set i_color = 'light-blue' %}
+    {% set i_color = 'near-white' %}
 {% endif %}
 
 {% block content_2 -%}
-    <article class="flex flex-auto items-center bl b--{{ i_color }} bw4 ph4 mb4">
+    {#    <article class="flex flex-auto items-center pv2 bb b--light-green">#}
+    <article class="flex flex-auto items-center pt2 mw8">
 
         {% macro show_elm(color, item) -%}
-            <h1 class="f4 lh-solid tracked-tight ttc normal pa1 mr3 ma0">
+            <h1 class="f4 tracked-tight ttc normal pa1 mr3 ma0">
                 <a class="link dim {{ color }}"
                    href="{{ url_for('read.read_item', category_slug=item.category.slug, item_slug=item.slug) }}">
                     {{ item.name }}
@@ -21,7 +22,7 @@
         <div class="flex flex-wrap serif">
             {% for i in category.items -%}
                 {% if item and item.name == i.name %}
-                    {{ show_elm('light-green', i) }}
+                    {{ show_elm('near-white bb b--light-green bw2', i) }}
                 {% elif item and item.name != i.name %}
                     {{ show_elm('gray', i) }}
                 {% else %}

@@ -2,13 +2,7 @@ oauthlib
 werkzeug
 python-slugify
 flask
-#flask-login
 flask-WTF
 sqlalchemy
 mimesis
-#google-api-python-client
-#google-auth
-#google-auth-oauthlib
-#google-auth-httplib2
-#requests
 requests_oauthlib
