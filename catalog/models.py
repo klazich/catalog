@@ -29,7 +29,7 @@ class Item(Model):
     category = relationship('Category', back_populates='items')
 
     def __init__(self, name, description, user, category=None):
-        self.name = name
+        self.name = name.lower()
         self.description = description
         self.user = user
         self.category = category
@@ -60,7 +60,7 @@ class Category(Model):
     def __init__(self, name, items=None):
         if items is None:
             items = []
-        self.name = name
+        self.name = name.lower()
         self.items = items
         self.slug = slugify(self.name)
 
@@ -84,7 +84,7 @@ class User(Model):
     # auth_id = Column(String(64), nullable=False, unique=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
-    slug = Column(String(250), nullable=False, unique=True)
+    slug = Column(String(250), nullable=False)
     picture = Column(String(250))
 
     items = relationship('Item', order_by=Item.id, back_populates='user')

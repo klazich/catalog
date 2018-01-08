@@ -1,31 +1,30 @@
 {% extends "read_category.html" %}
 
-{% block item_description -%}
+{% block content_3 -%}
     <article class="flex flex-column bl b--light-blue bw4 mb4">
 
-        <h1 class="f1 flex flex-auto items-center serif silver tracked-tight ttc tl pl4 pb3 pr4 mv0">
-            <span class="light-red mr3">{{ item.category.name }}</span>
-            <i class="fa fa-long-arrow-right mr3" aria-hidden="true"></i>
-            <span class="light-green mr5">{{ item.name }}</span>
-        </h1>
+        <div class="flex flex-auto items-center">
+            <h1 class="f1 serif silver tracked-tight ttc tl pl4 pb3 pr4 mv0">
+                <span class="sans-serif light-red mr3">{{ item.category.name }}</span>
+                <i class="fa fa-long-arrow-right mr3" aria-hidden="true"></i>
+                <span class="light-green">{{ item.name }}</span>
+            </h1>
+        </div>
 
-        <p class="lh-copy measure-wide white-70 pl4">
+        <p class="lh-copy measure white-70 pl4">
             {{ item.description }}
         </p>
 
         {% if session.logged_in and item.user.id == session.user.db_id %}
-
             <div class="f7 ttu tracked pl4">
-                <a href="#" class="dib dim link blue pa1 mr2 ba br1 tc">Edit</a>
-                <a href="#" class="dib dim link blue pa1 mr2 ba br1 tc">Delete</a>
+                <a href="#" class="dib dim link blue pa1 mr2 ba br1">Edit</a>
+                <a href="{{ url_for('delete.delete_item', category_slug=category.slug, item_slug=item.slug) }}" class="dib dim link blue pa1 mr2 ba br1">Delete</a>
             </div>
-
         {% endif %}
 
         <p class="code white-40 pl4 mb2">Created by <span class="purple">
-            {{ item.user.name }}</span> on <span class="">{{ item.date_updated }}</span>
+            {{ item.user.name }}</span> on <span class="">{{ item.date_updated | format_date }}</span>
         </p>
-
 
     </article>
 {%- endblock %}
