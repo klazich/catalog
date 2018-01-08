@@ -20,7 +20,7 @@ class Item(Model):
 
     name = Column(String(250), nullable=False, unique=True)
     description = Column(Text, nullable=False)
-    slug = Column(String(250), nullable=False)
+    slug = Column(String(250), nullable=False, unique=True)
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='items')
@@ -53,7 +53,7 @@ class Category(Model):
     __tablename__ = 'categories'
 
     name = Column(String(250), nullable=False, unique=True)
-    slug = Column(String(250), nullable=False)
+    slug = Column(String(250), nullable=False, unique=True)
 
     items = relationship('Item', order_by=Item.name, back_populates='category')
 
@@ -84,7 +84,7 @@ class User(Model):
     # auth_id = Column(String(64), nullable=False, unique=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
-    slug = Column(String(250), nullable=False)
+    slug = Column(String(250), nullable=False, unique=True)
     picture = Column(String(250))
 
     items = relationship('Item', order_by=Item.id, back_populates='user')

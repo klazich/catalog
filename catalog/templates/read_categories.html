@@ -6,15 +6,15 @@
     {% set c_color = 'light-blue' %}
 {% endif %}
 
-{% block categories -%}
-    <article class="flex flex-auto items-center bl b--{{ c_color }} bw4 ph4 mv4">
+{% block content_1 -%}
+    <article class="flex flex-auto items-start bl b--{{ c_color }} bw4 ph4 mv4">
 
-        <h1 class="serif light-blue ttu tr mv0">Categories</h1>
+        <h1 class="f2 light-blue ttu tr pv1 mv0">Categories</h1>
 
-        <h1 class="f2 silver mv0 mh4"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
+        <h1 class="f2 silver mv0 pv1 mh4"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>
 
         {% macro show_elm(color, category) -%}
-            <h1 class="f2 lh-title tracked-tight ttc pa1 mr4 ma0">
+            <h1 class="f2 lh-title tracked-tight ttc pa1 mr3 ma0">
                 <a class="link dim {{ color }}"
                    href="{{ url_for('views.read_category', category_slug=category.slug) }}">
                     {{ category.name }}
@@ -24,7 +24,6 @@
 
         <div class="flex flex-wrap">
             {% for c in all_categories -%}
-
                 {% if category and category.name == c.name %}
                     {{ show_elm('light-red', c) }}
                 {% elif category and category.name != c.name %}
@@ -32,10 +31,8 @@
                 {% else %}
                     {{ show_elm('white', c) }}
                 {% endif %}
-
             {%- endfor %}
-
         </div>
+
     </article>
 {%- endblock %}
-
