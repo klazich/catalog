@@ -10,35 +10,26 @@
            class="f7 dim ttu tracked dib link green pa2 mr3 ba">New Item</a>
     {% endif %}
 
-    <aside id="flash" class="f6 ttu b tracked ph4">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
+    <aside id="flash" class="f6 ttu b tracked pl3">
+        <ul class="list flex flex-wrap ph0 mv0">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for type, message in messages %}
 
-                <ul class="flex flex-column items-start ph0">
-
-                    {% for category, message in messages %}
-
-                        {% if category == 'info' %}
-                            {% set color = 'blue' %}{% set icon = 'info' %}
-                        {% elif category == 'warning' %}
-                            {% set color = 'yellow' %}{% set icon = 'exclamation' %}
-                        {% elif category =='error' %}
-                            {% set color = 'red' %}{% set icon = 'exclamation' %}
-                        {% else %}
-                            {% set color = 'yellow' %}{% set icon = 'question' %}
+                        {% if   type == 'info'  %}   {% set color = 'blue'   %}
+                        {% elif type == 'error' %}   {% set color = 'red'    %}
+                        {% else                 %}   {% set color = 'yellow' %}
                         {% endif %}
 
-                        <div class="flex items-center normal justify-center pt1 ma1 {{ color }}">
-                            <i class="fa fa-{{ icon }}-circle" aria-hidden="true"></i>
-                            <span class="ml3">{{ message }}</span>
-                        </div>
+                        <h6 class="f7 normal mv1 mh2 {{ color }}">
+                            <i class="fas fa-bullhorn" aria-hidden="true"></i>
+                            <span class="ml2">{{ message }}</span>
+                        </h6>
 
                     {% endfor %}
-
-                </ul>
-
-            {% endif %}
-        {% endwith %}
+                {% endif %}
+            {% endwith %}
+        </ul>
     </aside>
 </nav>
 
