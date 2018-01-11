@@ -6,3 +6,4 @@ flask-WTF
 sqlalchemy
 mimesis
 requests_oauthlib
+flask-restless
