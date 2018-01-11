@@ -1,12 +1,13 @@
 import flask
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, Blueprint
 from sqlalchemy.exc import IntegrityError
 
 from catalog.database import Session
 from catalog.forms import ItemForm
 from catalog.models import Category, Item
-from catalog.views.create import create
 from catalog.views.helpers import get_category_by, get_user_by, get_all_categories, login_required
+
+create = Blueprint('create', __name__)
 
 
 @create.route('/catalog/new', methods=['GET', 'POST'])

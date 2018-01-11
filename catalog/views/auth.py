@@ -1,11 +1,12 @@
 import flask
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, Blueprint
 
 from catalog.database import Session
 from catalog.models import User
-from catalog.views.auth import auth
 from catalog.views.helpers import get_user_by, get_oauth2_session, clear_user, login_required
 from config import GoogleAuthConfig, FacebookAuthConfig
+
+auth = Blueprint('auth', __name__)
 
 
 @auth.route('/login', methods=['GET'])

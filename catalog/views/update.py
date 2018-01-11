@@ -1,11 +1,12 @@
 import flask
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, Blueprint
 
 from catalog.database import Session
 from catalog.forms import ItemForm
 from catalog.models import Category
 from catalog.views.helpers import get_category_by, get_item_by, get_all_categories, login_required
-from catalog.views.update import update
+
+update = Blueprint('update', __name__)
 
 
 @update.route('/catalog/<string:category_slug>/<string:item_slug>/update', methods=['GET', 'POST'])

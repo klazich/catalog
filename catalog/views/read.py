@@ -1,7 +1,8 @@
-from flask import render_template
+from flask import render_template, Blueprint
 
 from catalog.views.helpers import get_item_by, get_category_by
-from catalog.views.read import read
+
+read = Blueprint('read', __name__)
 
 
 @read.route('/')
