@@ -7,6 +7,9 @@ def create_app(config_obj):
 
     import catalog.models
 
+    # api endpoints with Flask-Restless:
+    #   <host>:<port>/api/items
+    #   <host>:<port>/api/categories
     from catalog.api import manager
     manager.init_app(app)
 
@@ -39,5 +42,8 @@ def create_app(config_obj):
 
     from catalog.views.delete import delete as delete_blueprint
     app.register_blueprint(delete_blueprint)
+
+    from catalog.views.index import base as base_blueprint
+    app.register_blueprint(base_blueprint)
 
     return app

@@ -14,7 +14,7 @@ def delete_item(category_slug, item_slug):
 
     if item.user.id != flask.session['user']['db_id']:
         flash('must be item creator to delete item', 'warning')
-        return redirect(request.referrer or url_for('read.index'))
+        return redirect(request.referrer or url_for('base.index'))
 
     session.delete(item)
     session.commit()
@@ -25,6 +25,6 @@ def delete_item(category_slug, item_slug):
     if not category.items:
         session.delete(category)
         session.commit()
-        return redirect(url_for('read.index'))
+        return redirect(url_for('base.index'))
     else:
         return redirect(url_for('read.read_category', category_slug=category_slug))

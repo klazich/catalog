@@ -18,7 +18,7 @@ def update_item(category_slug, item_slug):
 
     if item.user.id != flask.session['user']['db_id']:
         flash('Must be creator of item to edit', 'warning')
-        return redirect(url_for('views.index'))
+        return redirect(url_for('base.index'))
 
     form = ItemForm(
         category=item.category.name,

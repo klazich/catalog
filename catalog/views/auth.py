@@ -11,7 +11,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET'])
 def login():
-    flask.session['redirect_back'] = request.referrer or url_for('read.index')
+    flask.session['redirect_back'] = request.referrer or url_for('base.index')
     return render_template('login.html')
 
 
@@ -22,7 +22,7 @@ def logout():
     flask.session['logged_in'] = False
 
     flash('logout successful', 'info')
-    return redirect(request.referrer or url_for('read.index'))
+    return redirect(request.referrer or url_for('base.index'))
 
 
 @auth.route('/auth/<provider>')
