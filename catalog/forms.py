@@ -1,24 +1,26 @@
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, StringField, SubmitField, SelectField
-from wtforms.validators import InputRequired
+from wtforms.validators import DataRequired, Optional
 
 
-class CreateItemForm(FlaskForm):
+class ItemForm(FlaskForm):
     category = SelectField(
-        'category name')
+        'category name',
+        validators=[Optional()])
 
     new_category = StringField(
         'category name',
+        validators=[Optional()],
         render_kw={'placeholder': 'enter category name'})
 
     name = StringField(
         'item name',
-        validators=[InputRequired()],
+        validators=[DataRequired()],
         render_kw={'placeholder': 'enter item name'})
 
     description = TextAreaField(
         'item description',
-        validators=[InputRequired()],
+        validators=[DataRequired()],
         render_kw={'placeholder': 'Enter item description'})
 
     submit = SubmitField()

@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <h2 class="f2 ttc lh-title tracked-tight white ph3 pv2 mt5 bl b--white-10 bw4">Edit Item</h2>
+{% block title %}Edit {{ item.name | title }}{% endblock %}
 
-    <form action="{{ url_for('update.update_item') }}"
+{% block content_1 %}
+    <h2 class="f2 ttc lh-title tracked-tight white ph3 pv2 mt5 bl b--white-10 bw4">Edit Item:
+        <span class="serif light-green normal">{{ item.name | title }}</span>
+    </h2>
+
+    <form action="{{ url_for('update.update_item', category_slug=item.category.slug, item_slug=item.slug) }}"
           method="post"
           class="flex flex-column mw9">
 

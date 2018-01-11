@@ -1,38 +1,29 @@
 {% extends "base.html" %}
 
-{% if category %}
-    {% set c_color = 'white-10' %}
-{% else %}
-    {% set c_color = 'near-white' %}
-{% endif %}
+{% block title %}Home{% endblock %}
 
 {% block content_1 -%}
-{#    <article class="flex flex-auto items-start mt4 bb b--light-red">#}
-    <article class="flex flex-auto items-start">
-
-{#        <h1 class="f2 light-blue normal ttu tr pv1 mv0">Categories</h1>#}
-
-{#        <h1 class="f2 silver mv0 pv1 mr4"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></h1>#}
-
-        {% macro show_elm(color, category) -%}
-            <h1 class="f2 lh-title tracked-tight ttc pa1 mr3 ma0">
-                <a class="link dim {{ color }}"
-                   href="{{ url_for('read.read_category', category_slug=category.slug) }}">
-                    {{ category.name }}
-                </a>
-            </h1>
-        {%- endmacro %}
+    <article class="flex flex-auto items-start nl1">
 
         <div class="flex flex-wrap">
-            {% for c in all_categories -%}
+            {% for c in all_categories %}
+
                 {% if category and category.name == c.name %}
-                    {{ show_elm('near-white bb b--light-red bw2', c) }}
+                    {% set style = 'near-white bb b--light-red bw2' %}
                 {% elif category and category.name != c.name %}
-                    {{ show_elm('gray', c) }}
+                    {% set style = 'mid-gray' %}
                 {% else %}
-                    {{ show_elm('near-white', c) }}
+                    {% set style= 'near-white' %}
                 {% endif %}
-            {%- endfor %}
+
+                <h1 class="f2 lh-title tracked-tight ttc pa1 mr3 ma0">
+                    <a class="link dim {{ style }}"
+                       href="{{ url_for('read.read_category', category_slug=c.slug) }}">
+                        {{ c.name }}
+                    </a>
+                </h1>
+
+            {% endfor %}
         </div>
 
     </article>

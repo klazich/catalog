@@ -1,9 +1,9 @@
 import flask
 from flask import redirect, request, flash, url_for
 
+from catalog.database import Session
 from catalog.views.delete import delete
 from catalog.views.helpers import get_item_by, get_category_by, login_required
-from catalog.database import Session
 
 
 @delete.route('/catalog/<string:category_slug>/<string:item_slug>/delete', methods=['GET', 'POST'])

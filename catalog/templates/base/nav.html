@@ -1,51 +1,44 @@
-<nav class="flex flex-auto items-center h2 mw9 center mt3">
+<nav class="flex flex-auto items-center h2 mw9 center mv3">
 
-    <div class="dim mr3">
-        <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
-           class="f7 ttu tracked dib link near-white pa2 ba">
-            {{ 'logout' if session.logged_in else 'login' }}
-        </a>
-    </div>
+    <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
+       class="f7 dim ttu tracked dib link near-white pa2 mr3 ba">
+        {{ 'logout' if session.logged_in else 'login' }}
+    </a>
 
     {% if session.logged_in %}
-
-        <div class="dim mr3">
-            <a href="{{ url_for('create.create_item') }}"
-               class="f7 ttu tracked dib link green pa2 ba">New Item</a>
-        </div>
-
+        <a href="{{ url_for('create.create_item') }}"
+           class="f7 dim ttu tracked dib link green pa2 mr3 ba">New Item</a>
     {% endif %}
 
-    <aside id="flash" class="f6 ttu b tracked ph4 ml-auto">
+    <aside id="flash" class="f6 ttu b tracked ph4">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
+
                 <ul class="flex flex-column items-start ph0">
+
                     {% for category, message in messages %}
+
                         {% if category == 'info' %}
-                            {% set color = 'blue' %}
-                            {% macro icon() %}<i class="fa fa-info-circle" aria-hidden="true"></i>
-                            {% endmacro %}
+                            {% set color = 'blue' %}{% set icon = 'info' %}
                         {% elif category == 'warning' %}
-                            {% set color = 'yellow' %}
-                            {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                            {% endmacro %}
+                            {% set color = 'yellow' %}{% set icon = 'exclamation' %}
                         {% elif category =='error' %}
-                            {% set color = 'red' %}
-                            {% macro icon() %}<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                            {% endmacro %}
+                            {% set color = 'red' %}{% set icon = 'exclamation' %}
                         {% else %}
-                            {% set color = 'yellow' %}
-                            {% macro icon() %}<i class="fa fa-question-circle" aria-hidden="true"></i>
-                            {% endmacro %}
+                            {% set color = 'yellow' %}{% set icon = 'question' %}
                         {% endif %}
-                        <div class="flex items-center justify-center pt1 ma1 {{ color }}">
-                            {{ icon() }}
+
+                        <div class="flex items-center normal justify-center pt1 ma1 {{ color }}">
+                            <i class="fa fa-{{ icon }}-circle" aria-hidden="true"></i>
                             <span class="ml3">{{ message }}</span>
                         </div>
+
                     {% endfor %}
+
                 </ul>
+
             {% endif %}
         {% endwith %}
     </aside>
-
 </nav>
+

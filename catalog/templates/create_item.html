@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
-{% block content_2 %}
-    <h2 class="f2 ttc lh-title tracked-tight white ph3 pv2 mt5 bl b--white-10 bw4">New Item</h2>
+{% block title %}New Item{% endblock %}
+
+{% block content_1 %}
+    <h2 class="f2 ttc lh-title tracked-tight white ph3 pv2 mt4 bl b--white-10 bw4">New Item</h2>
 
     <form action="{{ url_for('create.create_item') }}"
           method="post"

@@ -10,13 +10,11 @@ from oauthlib.oauth2.rfc6749.errors import MismatchingStateError
 from catalog.database import Session
 from catalog.models import Item, Category, User
 
+
 # general database helpers
 
-Get = namedtuple('Get', ['name', 'slug', 'id', 'email'])
-
-
 def _gets(model):
-    return Get(
+    return namedtuple('Get', ['name', 'slug', 'id', 'email'])(
         name=lambda name: Session.query(model).filter(model.name == name).one_or_none(),
         slug=lambda slug: Session.query(model).filter(model.slug == slug).one_or_none(),
         id=lambda id: Session.query(model).filter(model.id == id).one_or_none(),
@@ -26,6 +24,10 @@ def _gets(model):
 get_item_by = _gets(Item)
 get_category_by = _gets(Category)
 get_user_by = _gets(User)
+
+
+def get_all_categories():
+    return Session.query(Category).all()
 
 
 # auth helpers

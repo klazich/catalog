@@ -14,9 +14,8 @@ def create_app(config_obj):
 
     @app.context_processor
     def inject_variables():
-        from catalog.helpers import latest_items, get_all_categories
+        from catalog.views.helpers import get_all_categories
         return dict(
-            latest_items=latest_items(10),
             all_categories=get_all_categories())
 
     @app.template_filter('format_date')
@@ -32,13 +31,10 @@ def create_app(config_obj):
     from catalog.views.read import read as read_blueprint
     app.register_blueprint(read_blueprint)
 
+    from catalog.views.update import update as update_blueprint
+    app.register_blueprint(update_blueprint)
+
     from catalog.views.delete import delete as delete_blueprint
     app.register_blueprint(delete_blueprint)
-
-    # from catalog.auth import auth as auth_blueprint
-    # app.register_blueprint(auth_blueprint)
-    #
-    # from catalog.create import create as create_blueprint
-    # app.register_blueprint(create_blueprint)
 
     return app

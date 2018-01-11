@@ -1,7 +1,9 @@
 {% extends "read_category.html" %}
 
+{% block title %}{{ item.name | title }}{% endblock %}
+
 {% block content_3 -%}
-    <article class="flex flex-column pt3">
+    <article class="flex flex-column pt5">
 
         <h1 class="f1 flex flex-auto items-center mv0 ttc tracked-tight">
             <span class="sans-serif light-red mr3">{{ item.category.name }}</span>
@@ -19,7 +21,7 @@
 
         {% if session.logged_in and item.user.id == session.user.db_id %}
             <div class="f7 ttu tracked mb2">
-                <a href="#"
+                <a href="{{ url_for('update.update_item', category_slug=category.slug, item_slug=item.slug) }}"
                    class="dib dim link light-yellow code mr2">Edit</a>
                 <a href="{{ url_for('delete.delete_item', category_slug=category.slug, item_slug=item.slug) }}"
                    class="dib dim link light-yellow code mr2">Delete</a>

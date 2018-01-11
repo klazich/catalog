@@ -1,19 +1,17 @@
 import flask
-from flask import flash, redirect, render_template, request, url_for, g
+from flask import flash, redirect, render_template, request, url_for
 
-from werkzeug.routing import BuildError
-
-from catalog.views.auth import auth
-from config import GoogleAuthConfig, FacebookAuthConfig
 from catalog.database import Session
 from catalog.models import User
+from catalog.views.auth import auth
 from catalog.views.helpers import get_user_by, get_oauth2_session, clear_user, login_required
+from config import GoogleAuthConfig, FacebookAuthConfig
 
 
 @auth.route('/login', methods=['GET'])
 def login():
     flask.session['redirect_back'] = request.referrer or url_for('read.index')
-    return render_template('login.html', title='Login')
+    return render_template('login.html')
 
 
 @auth.route('/auth/logout', methods=['GET'])
