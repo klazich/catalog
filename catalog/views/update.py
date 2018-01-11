@@ -26,6 +26,7 @@ def update_item(category_slug, item_slug):
         description=item.description)
     form.category.choices = [(c.name, c.name) for c in categories]
 
+    # POST
     if request.method == 'POST' and form.validate():
         if form.new_category:
             category_name = (form.new_category.data or form.category.data).lower()
@@ -46,4 +47,5 @@ def update_item(category_slug, item_slug):
 
         return redirect(url_for('read.read_item', category_slug=item.category.slug, item_slug=item.slug))
 
+    # GET
     return render_template('update_item.html', form=form, item=item)
