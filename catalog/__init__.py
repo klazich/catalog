@@ -25,6 +25,9 @@ def create_app(config_obj):
     from catalog.views.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
+    from catalog.views.json import json as json_blueprint
+    app.register_blueprint(json_blueprint, url_prefix='/api')
+
     from catalog.views.create import create as create_blueprint
     app.register_blueprint(create_blueprint)
 

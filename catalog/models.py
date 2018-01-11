@@ -70,7 +70,7 @@ class Category(Model):
             'id': self.id,
             'name': self.name,
             'items': [
-                i.serialize() for i in self.items
+                i.serialize for i in self.items
             ]
         }
 

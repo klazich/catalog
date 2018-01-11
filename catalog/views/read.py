@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, abort
 
 from catalog.views.helpers import get_item_by, get_category_by
 
@@ -21,4 +21,6 @@ def read_category(category_slug):
 def read_item(category_slug, item_slug):
     category = get_category_by.slug(category_slug)
     item = get_item_by.slug(item_slug)
+    if not item:
+        abort(404)
     return render_template('read_item.html', category=category, item=item)
