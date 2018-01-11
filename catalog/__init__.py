@@ -7,6 +7,9 @@ def create_app(config_obj):
 
     import catalog.models
 
+    from catalog.api import manager
+    manager.init_app(app)
+
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         from catalog.database import session
@@ -24,9 +27,6 @@ def create_app(config_obj):
 
     from catalog.views.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
-
-    from catalog.views.api import api as api_blueprint
-    app.register_blueprint(api_blueprint, url_prefix='/api')
 
     from catalog.views.create import create as create_blueprint
     app.register_blueprint(create_blueprint)
