@@ -4,8 +4,7 @@
 
 {% block content_1 %}
 
-    <h2 class="f2 serif ttc lh-title normal i near-white mt3 bb b--green">Edit Item:
-        {{ item.name | title }}</h2>
+    <h2 class="f2 serif ttc lh-title normal i near-white mt3 bb b--blue">Edit Item</h2>
 
     <form action="{{ url_for('update.update_item', category_slug=item.category.slug, item_slug=item.slug) }}"
           method="post"
@@ -13,33 +12,42 @@
 
         {{ form.hidden_tag() }}
 
-        {{ form.submit(class="dim bg-green near-white f5 b ttu tracked pa3 mv3 b--none pointer") }}
+        <div class="nl3 w-100">
 
-        <div class="flex flex-wrap nl3">
-
-            <div class="flex flex-column pa3 w-30">
-
-                <h6 class="f6 ttu tracked tc pa2 mv0 bg-white-10">select a category</h6>
-                {{ form.category(class="serif f3 ttc near-black input-reset bg-light-green ph3 h3 w-100 b--none") }}
-
-                <h3 class="f3 tc pa1 b--near-whiter">OR</h3>
-
-                <h6 class="f6 ttu tracked tc pa2 mv0 bg-white-10">create a new category</h6>
-                {{ form.new_category(class="code f3 ttc near-black input-reset bg-light-green ph3 h3 w-100 b--none") }}
-
+            <div class="flex items-center pv0 ph3 w-100 h3">
+                <i class="fas fa-caret-right fa-3x blue"></i>
+                <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
+                    select a category <span class="blue b i">or</span> create a new one...</h6>
             </div>
 
-            <div class="flex flex-column pa3 w-30">
-                <h6 class="f6 ttu tracked tc pa2 mv0 bg-white-10">Item Name</h6>
-                {{ form.name(class="code f3 ttc near-black input-reset bg-light-green ph3 h3 w-100 b--none") }}
+            <div class="flex items-center pv0 ph3 w-100">
+                {{ form.category(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-30 b--none") }}
+                <i class="fas fa-arrows-alt-h fa-3x blue mh3"></i>
+                {{ form.new_category(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-30 b--none") }}
             </div>
 
-            <div class="flex flex-column pa3 w-30">
-                <h6 class="f6 ttu tracked tc pa2 mv0 bg-white-10">Item Description</h6>
-                {{ form.description(class="code f4 near-black bg-light-green pa3 h5 w-100 b--none") }}
+            <div class="flex items-center pv0 ph3 w-100 h3">
+                <i class="fas fa-caret-right fa-3x blue"></i>
+                <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
+                    Enter the item name...</h6>
             </div>
 
+            <div class="flex items-center pv0 ph3 w-100">
+                {{ form.name(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-40 b--none") }}
+            </div>
 
+            <div class="flex items-center pv0 ph3 w-100 h3">
+                <i class="fas fa-caret-right fa-3x blue"></i>
+                <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
+                    Enter a description for the item...</h6>
+            </div>
+
+            <div class="flex items-center pv0 ph3 w-100">
+                {{ form.description(class="code f3 ttc near-black input-reset bg-moon-gray pa3 h5 w-40 b--none") }}
+            </div>
         </div>
+
+        {{ form.submit(class="dim bg-blue near-white f5 b ttu tracked pa3 mt5 b--none pointer w-20") }}
+
     </form>
 {% endblock %}
