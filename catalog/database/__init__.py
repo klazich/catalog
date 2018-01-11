@@ -7,5 +7,5 @@ from config import config_obj
 engine = create_engine(config_obj['default'].DATABASE_URI)
 metadata.create_all(bind=engine)
 
-session_factory = sessionmaker(bind=engine)
-Session = scoped_session(session_factory)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+session = scoped_session(Session)

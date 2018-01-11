@@ -1,7 +1,7 @@
 import flask
 from flask import render_template, request, redirect, flash, url_for, Blueprint
 
-from catalog.database import Session
+from catalog.database import session
 from catalog.forms import ItemForm
 from catalog.models import Category
 from catalog.views.helpers import get_category_by, get_item_by, get_all_categories, login_required
@@ -40,9 +40,9 @@ def update_item(category_slug, item_slug):
         item.category = category_new
 
         if category_new.id != category.id and not category.items:
-            Session.delete(category)
+            session.delete(category)
 
-        Session.commit()
+        session.commit()
 
         return redirect(url_for('read.read_item', category_slug=item.category.slug, item_slug=item.slug))
 

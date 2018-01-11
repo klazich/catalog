@@ -1,7 +1,7 @@
 import flask
 from flask import flash, redirect, render_template, request, url_for, Blueprint
 
-from catalog.database import Session
+from catalog.database import session
 from catalog.models import User
 from catalog.views.helpers import get_user_by, get_oauth2_session, clear_user, login_required
 from config import GoogleAuthConfig, FacebookAuthConfig
@@ -60,8 +60,8 @@ def oauth2_callback():
     db_user = get_user_by.name(user['name']) or get_user_by.email(user['email'])
     if not db_user:
         db_user = User(user['name'], user['email'])
-        Session.add(db_user)
-        Session.commit()
+        session.add(db_user)
+        session.commit()
 
     user['db_id'] = db_user.id
     user['token'] = token

@@ -3,7 +3,7 @@ import random
 from sqlalchemy.exc import IntegrityError
 from mimesis import Personal, Text, Food
 
-from catalog.database import metadata, engine, Session
+from catalog.database import metadata, engine, session
 from catalog.models import Item, Category, User
 
 
@@ -11,15 +11,15 @@ def populate_item(count=200, locale='en'):
     food = Food(locale=locale)
     text = Text(locale=locale)
 
-    users = Session.query(User).all()
-    categories = Session.query(Category).all()
+    users = session.query(User).all()
+    categories = session.query(Category).all()
 
     if not users:
         populate_user()
-        users = Session.query(User).all()
+        users = session.query(User).all()
     if not categories:
         populate_category()
-        categories = Session.query(Category).all()
+        categories = session.query(Category).all()
 
     for _ in range(count):
         category = categories[random.randrange(0, len(categories))]
@@ -32,22 +32,22 @@ def populate_item(count=200, locale='en'):
             category=category
         )
 
-        Session.add(item)
+        session.add(item)
         try:
-            Session.commit()
+            session.commit()
         except IntegrityError:
-            Session.rollback()
+            session.rollback()
 
 
 def populate_category():
     for name in ['dish', 'drink', 'fruit', 'spices', 'vegetable']:
         category = Category(name=name)
 
-        Session.add(category)
+        session.add(category)
         try:
-            Session.commit()
+            session.commit()
         except IntegrityError:
-            Session.rollback()
+            session.rollback()
 
 
 def populate_user(count=75, locale='en'):
@@ -60,11 +60,11 @@ def populate_user(count=75, locale='en'):
             picture=person.avatar()
         )
 
-        Session.add(user)
+        session.add(user)
         try:
-            Session.commit()
+            session.commit()
         except IntegrityError:
-            Session.rollback()
+            session.rollback()
 
 
 def init_db():

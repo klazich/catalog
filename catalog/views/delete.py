@@ -1,7 +1,7 @@
 import flask
 from flask import redirect, request, flash, url_for, Blueprint
 
-from catalog.database import Session
+from catalog.database import session
 from catalog.views.helpers import get_item_by, get_category_by, login_required
 
 delete = Blueprint('delete', __name__)
@@ -16,15 +16,15 @@ def delete_item(category_slug, item_slug):
         flash('must be item creator to delete item', 'warning')
         return redirect(request.referrer or url_for('read.index'))
 
-    Session.delete(item)
-    Session.commit()
+    session.delete(item)
+    session.commit()
 
     flash('item removed', 'info')
 
     category = get_category_by.slug(category_slug)
     if not category.items:
-        Session.delete(category)
-        Session.commit()
+        session.delete(category)
+        session.commit()
         return redirect(url_for('read.index'))
     else:
         return redirect(url_for('read.read_category', category_slug=category_slug))

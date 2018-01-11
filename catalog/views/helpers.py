@@ -7,7 +7,7 @@ from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from oauthlib.oauth2.rfc6749.errors import MismatchingStateError
 
-from catalog.database import Session
+from catalog.database import session
 from catalog.models import Item, Category, User
 
 
@@ -15,10 +15,10 @@ from catalog.models import Item, Category, User
 
 def _gets(model):
     return namedtuple('Get', ['name', 'slug', 'id', 'email'])(
-        name=lambda name: Session.query(model).filter(model.name == name).one_or_none(),
-        slug=lambda slug: Session.query(model).filter(model.slug == slug).one_or_none(),
-        id=lambda id: Session.query(model).filter(model.id == id).one_or_none(),
-        email=lambda email: Session.query(model).filter(model.email == email).one_or_none())
+        name=lambda name: session.query(model).filter(model.name == name).one_or_none(),
+        slug=lambda slug: session.query(model).filter(model.slug == slug).one_or_none(),
+        id=lambda id: session.query(model).filter(model.id == id).one_or_none(),
+        email=lambda email: session.query(model).filter(model.email == email).one_or_none())
 
 
 get_item_by = _gets(Item)
@@ -27,7 +27,7 @@ get_user_by = _gets(User)
 
 
 def get_all_categories():
-    return Session.query(Category).all()
+    return session.query(Category).all()
 
 
 # auth helpers
