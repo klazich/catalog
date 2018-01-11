@@ -42,11 +42,10 @@ class Item(Model):
             'name': self.name,
             'description': self.description,
             'user': self.user.name,
-            'category': self.category.name
-        }
+            'category': self.category.name}
 
     def __repr__(self):
-        return '<Item: {} in {}>'.format(self.name, self.category.name)
+        return '<Item: {}:{}>'.format(self.category.name, self.name)
 
 
 class Category(Model):
@@ -69,10 +68,7 @@ class Category(Model):
         return {
             'id': self.id,
             'name': self.name,
-            'items': [
-                i.serialize for i in self.items
-            ]
-        }
+            'items': [i.serialize for i in self.items]}
 
     def __repr__(self):
         return '<Category: {}>'.format(self.name)
@@ -105,10 +101,7 @@ class User(Model):
             'name': self.name,
             'email': self.email,
             'picture': self.picture,
-            'items': [
-                i.serialize for i in self.items
-            ]
-        }
+            'items': [i.serialize for i in self.items]}
 
     def __repr__(self):
         return '<User: {}({})>'.format(self.name, self.email)

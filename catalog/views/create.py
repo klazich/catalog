@@ -15,10 +15,13 @@ create = Blueprint('create', __name__)
 def create_item():
     categories = get_all_categories()
 
+    # make Flask-WTF form object
     form = ItemForm(request.form)
     form.category.choices = [(c.name, c.name) for c in categories]
 
+    # POST
     if request.method == 'POST' and form.validate():
+        # get category or create new
         if form.new_category:
             category_name = (form.new_category.data or form.category.data).lower()
             category = get_category_by.name(category_name)
@@ -33,6 +36,7 @@ def create_item():
             user=get_user_by.id(flask.session['user']['db_id']),
             category=category)
 
+        # add item to database and catch any exceptions
         session.add(item)
         try:
             session.commit()
@@ -45,4 +49,5 @@ def create_item():
 
         return redirect(url_for('read.read_item', category_slug=category.slug, item_slug=item.slug))
 
+    # GET
     return render_template('create_item.html', form=form)

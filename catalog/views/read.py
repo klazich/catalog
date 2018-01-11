@@ -13,6 +13,8 @@ def read_catalog():
 @read.route('/catalog/<category_slug>/')
 def read_category(category_slug):
     category = get_category_by.slug(category_slug)
+    if not category:
+        abort(404)
     return render_template('read_category.html', category=category)
 
 
