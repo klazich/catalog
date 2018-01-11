@@ -28,7 +28,7 @@ class Item(Model):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
 
-    def __init__(self, name, description, user, category=None):
+    def __init__(self, name, description, user, category):
         self.name = name.lower()
         self.description = description
         self.user = user
@@ -104,4 +104,4 @@ class User(Model):
             'items': [i.serialize for i in self.items]}
 
     def __repr__(self):
-        return '<User: {}({})>'.format(self.name, self.email)
+        return '<User: {} {}>'.format(self.name, self.email)
