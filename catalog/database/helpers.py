@@ -32,78 +32,78 @@ class C:
     subreddit = internet.subreddit
     unit = unit_system.unit
 
-    def __get
 
 
 
 
-def populate_categories():
-    categories = []
-    for k in cat_subs:
-        category = Category(name=k.replace('_', ' '))
-        categories.append(category)
 
-    session.add_all(categories)
-    session.commit()
-
-
-def populate_users(count=100):
-    used = set()
-    users = []
-    for _ in range(count):
-        name = personal.name()
-        while name in used:
-            name = personal.name()
-        email = personal.email()
-        while email in used:
-            email = personal.email()
-        picture = personal.avatar()
-        while picture in used:
-            picture = personal.avatar()
-
-        used.update([name, email, picture])
-
-        users.append(User(name=name, email=email, picture=picture))
-
-    session.add_all(users)
-    session.commit()
+# def populate_categories():
+#     categories = []
+#     for k in cat_subs:
+#         category = Category(name=k.replace('_', ' '))
+#         categories.append(category)
+#
+#     session.add_all(categories)
+#     session.commit()
 
 
-def populate_items(count=600):
-    categories = session.query(Category).all()
-    users = session.query(User).all()
-
-    used = set()
-    items = []
-
-    for _ in range(count):
-        user = random.choice(users)
-        category = random.choice(categories)
-        category_key = category.name.replace(' ', '_')
-        func = cat_subs[category_key].__getattribute__(category_key)
-
-        name = func()
-        while name in used:
-            name = func()
-        used.add(name)
-
-        item = Item(
-            name=name,
-            description=text.text(),
-            category=category,
-            user=user)
-
-        items.append(item)
-
-    session.add_all(items)
-    session.commit()
+# def populate_users(count=100):
+#     used = set()
+#     users = []
+#     for _ in range(count):
+#         name = personal.name()
+#         while name in used:
+#             name = personal.name()
+#         email = personal.email()
+#         while email in used:
+#             email = personal.email()
+#         picture = personal.avatar()
+#         while picture in used:
+#             picture = personal.avatar()
+#
+#         used.update([name, email, picture])
+#
+#         users.append(User(name=name, email=email, picture=picture))
+#
+#     session.add_all(users)
+#     session.commit()
 
 
-def populate():
-    populate_categories()
-    populate_users()
-    print('annnnnnd items...')
-    populate_items()
+# def populate_items(count=600):
+#     categories = session.query(Category).all()
+#     users = session.query(User).all()
+#
+#     used = set()
+#     items = []
+#
+#     for _ in range(count):
+#         user = random.choice(users)
+#         category = random.choice(categories)
+#         category_key = category.name.replace(' ', '_')
+#         func = cat_subs[category_key].__getattribute__(category_key)
+#
+#         name = func()
+#         while name in used:
+#             name = func()
+#         used.add(name)
+#
+#         item = Item(
+#             name=name,
+#             description=text.text(),
+#             category=category,
+#             user=user)
+#
+#         items.append(item)
+#
+#     session.add_all(items)
+#     session.commit()
+
+
+# def populate():
+#     populate_categories()
+#     populate_users()
+#     print('annnnnnd items...')
+#     populate_items()
 
 
 def populate_item(count=200, locale='en'):
