@@ -1,72 +1,98 @@
 import random
+import mimesis
 
 from sqlalchemy.exc import IntegrityError, OperationalError
-from mimesis import Personal, Text, Food, Business, Internet, Generic, Games, Address, UnitSystem, Development, Hardware
+from mimesis import Personal, Text, Food, Business, Internet, Generic, Games, Address, UnitSystem, Development, \
+    Hardware, helpers
 
 from catalog.database import metadata, engine, session
 from catalog.models import Item, Category, User
 
 address = Address('en')
-business = Business('en')
-development = Development('en')
 food = Food('en')
 games = Games('en')
-hardware = Hardware('en')
-internet = Internet('en')
 personal = Personal('en')
 text = Text('en')
-unit_system = UnitSystem('en')
+
+g = Generic('en')
+
+c_map = {
+    'city': g.address.city,
+    'company': g.business.company,
+    'cpu': g.hardware.cpu,
+    'dish': g.food.dish,
+    'drink': g.food.drink,
+    'emoji': g.internet.emoji,
+    'game': g.games.game,
+    'home page': g.internet.home_page,
+    'programming language': g.development.programming_language,
+    'state': g.address.state,
+    'subreddit': g.internet.subreddit,
+    'unit': g.unit_system.unit
+}
 
 
-class C:
-    city = address.city
-    company = business.company
-    cpu = hardware.cpu
-    dish = food.dish
-    drink = food.drink
-    emoji = internet.emoji
-    game = games.game
-    home_page = internet.home_page
-    programming_language = development.programming_language
-    state = address.state
-    subreddit = internet.subreddit
-    unit = unit_system.unit
+def pop():
+    drop_db()
+    init_db()
+    populate_categories()
+    populate_users()
 
 
+def populate_categories():
+    session.add_all([Category(name=n) for n in c_map])
+    session.commit()
 
 
+def populate_users(count=100):
+    names = set()
+    while len(names) < count:
+        names.add(g.personal.name())
+    emails = set()
+    while len(emails) < count:
+        emails.add(g.personal.email())
+    pictures = set()
+    while len(pictures) < count:
+        pictures.add(g.personal.avatar())
+
+    while all([names, emails, pictures]):
+        session.add(User(
+            name=names.pop(),
+            email=emails.pop(),
+            picture=pictures.pop()
+        ))
+
+    session.commit()
 
 
-# def populate_categories():
-#     categories = []
-#     for k in cat_subs:
-#         category = Category(name=k.replace('_', ' '))
-#         categories.append(category)
-#
-#     session.add_all(categories)
-#     session.commit()
+def populate_items(count=600):
+    users = session.query(User).all()
+    categories = session.query(Category).all()
+    used = set()
 
+    for n in range(count):
 
-# def populate_users(count=100):
-#     used = set()
-#     users = []
-#     for _ in range(count):
-#         name = personal.name()
-#         while name in used:
-#             name = personal.name()
-#         email = personal.email()
-#         while email in used:
-#             email = personal.email()
-#         picture = personal.avatar()
-#         while picture in used:
-#             picture = personal.avatar()
-#
-#         used.update([name, email, picture])
-#
-#         users.append(User(name=name, email=email, picture=picture))
-#
-#     session.add_all(users)
-#     session.commit()
+        category = random.choice(categories)
+        name = c_map[category.name]()
+        while name in used:
+            name = c_map[category.name]()
+            print('(looping)', name)
+        used.add(name)
+
+        print(n, category.name, name)
+
+        session.add(Item(
+            name=name,
+            description=g.text.text(),
+            category=category,
+            user=random.choice(users)
+        ))
+
+        if n % 20 == 0:
+            print('     committing @', n)
+            session.commit()
+
+    session.commit()
 
 
 # def populate_items(count=600):
