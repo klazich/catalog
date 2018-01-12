@@ -1,18 +1,11 @@
 import random
-import mimesis
+from slugify import slugify
 
 from sqlalchemy.exc import IntegrityError, OperationalError
-from mimesis import Personal, Text, Food, Business, Internet, Generic, Games, Address, UnitSystem, Development, \
-    Hardware, helpers
+from mimesis import Personal, Text, Food, Generic
 
 from catalog.database import metadata, engine, session
 from catalog.models import Item, Category, User
-
-address = Address('en')
-food = Food('en')
-games = Games('en')
-personal = Personal('en')
-text = Text('en')
 
 g = Generic('en')
 
@@ -73,11 +66,29 @@ def populate_items(count=600):
     for n in range(count):
 
         category = random.choice(categories)
+        while category.name not in c_map:
+            category = random.choice(categories)
+
         name = c_map[category.name]()
-        while name in used:
+        slug = slugify(name)
+
+        c = 0
+        while name in used or slug in used:
+            if c == 100:
+                del c_map[category.name]
+                category = random.choice(categories)
+                while category.name not in c_map:
+                    category = random.choice(categories)
+                c = 0
+
             name = c_map[category.name]()
-            print('(looping)', name)
+            slug = slugify(name)
+            print('(looping {})'.format(c), name, slug)
+
+            c += 1
+
         used.add(name)
+        used.add(slug)
 
         print(n, category.name, name)
 
@@ -88,9 +99,9 @@ def populate_items(count=600):
             user=random.choice(users)
         ))
 
-        if n % 20 == 0:
-            print('     committing @', n)
-            session.commit()
+        # if n % 20 == 0:
+        #     print('     committing @', n)
+        #     session.commit()
 
     session.commit()
 
