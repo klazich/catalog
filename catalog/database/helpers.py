@@ -9,138 +9,63 @@ from catalog.models import Item, Category, User
 
 g = Generic('en')
 
-c_map = {
-    'city': g.address.city,
-    'company': g.business.company,
-    'cpu': g.hardware.cpu,
-    'dish': g.food.dish,
-    'drink': g.food.drink,
-    'emoji': g.internet.emoji,
-    'game': g.games.game,
-    'home page': g.internet.home_page,
-    'programming language': g.development.programming_language,
-    'state': g.address.state,
-    'subreddit': g.internet.subreddit,
-    'unit': g.unit_system.unit
-}
 
+class Populate:
+    def __init__(self, user_count=150, item_count=600):
+        self.categories = {}
+        self.users = {}
+        self.unique_emails = list(self._generate_unique_emails(user_count))
+        self.unique_category_items = self._get_unique_category_items(item_count)
 
-def pop():
-    drop_db()
-    init_db()
-    populate_categories()
-    populate_users()
+    def build(self):
+        items = []
+        while self.unique_category_items:
+            category_name, item_name = self.unique_category_items.pop()
+            user_email = random.choice(self.unique_emails)
+            items.append(Item(
+                name=item_name,
+                description=g.text.text(),
+                user=self._get_or_new_user(user_email),
+                category=self._get_or_new_category(category_name)
+            ))
+        return items
 
+    def _get_or_new_category(self, category_name):
+        if category_name not in self.categories:
+            self.categories[category_name] = Category(name=category_name)
+        return self.categories[category_name]
 
-def populate_categories():
-    session.add_all([Category(name=n) for n in c_map])
-    session.commit()
+    def _get_or_new_user(self, user_email):
+        if user_email not in self.users:
+            self.users[user_email] = User(
+                name=g.personal.name(),
+                email=user_email,
+                picture=g.personal.avatar()
+            )
+        return self.users[user_email]
 
+    @staticmethod
+    def _generate_unique_emails(n):
+        emails = set()
+        while len(emails) < n:
+            emails.add(g.personal.email.__call__())
+        return emails
 
-def populate_users(count=100):
-    names = set()
-    while len(names) < count:
-        names.add(g.personal.name())
-    emails = set()
-    while len(emails) < count:
-        emails.add(g.personal.email())
-    pictures = set()
-    while len(pictures) < count:
-        pictures.add(g.personal.avatar())
+    @staticmethod
+    def _get_unique_category_items(n):
+        category_items = set()
+        while len(category_items) < n:
+            category_items.add(Populate._random_category_item())
+        return category_items
 
-    while all([names, emails, pictures]):
-        session.add(User(
-            name=names.pop(),
-            email=emails.pop(),
-            picture=pictures.pop()
-        ))
-
-    session.commit()
-
-
-def populate_items(count=600):
-    users = session.query(User).all()
-    categories = session.query(Category).all()
-    used = set()
-
-    for n in range(count):
-
-        category = random.choice(categories)
-        while category.name not in c_map:
-            category = random.choice(categories)
-
-        name = c_map[category.name]()
-        slug = slugify(name)
-
-        c = 0
-        while name in used or slug in used:
-            if c == 100:
-                del c_map[category.name]
-                category = random.choice(categories)
-                while category.name not in c_map:
-                    category = random.choice(categories)
-                c = 0
-
-            name = c_map[category.name]()
-            slug = slugify(name)
-            print('(looping {})'.format(c), name, slug)
-
-            c += 1
-
-        used.add(name)
-        used.add(slug)
-
-        print(n, category.name, name)
-
-        session.add(Item(
-            name=name,
-            description=g.text.text(),
-            category=category,
-            user=random.choice(users)
-        ))
-
-        # if n % 20 == 0:
-        #     print('     committing @', n)
-        #     session.commit()
-
-    session.commit()
-
-
-# def populate_items(count=600):
-#     categories = session.query(Category).all()
-#     users = session.query(User).all()
-#
-#     used = set()
-#     items = []
-#
-#     for _ in range(count):
-#         user = random.choice(users)
-#         category = random.choice(categories)
-#         category_key = category.name.replace(' ', '_')
-#         func = cat_subs[category_key].__getattribute__(category_key)
-#
-#         name = func()
-#         while name in used:
-#             name = func()
-#         used.add(name)
-#
-#         item = Item(
-#             name=name,
-#             description=text.text(),
-#             category=category,
-#             user=user)
-#
-#         items.append(item)
-#
-#     session.add_all(items)
-#     session.commit()
-
-
-# def populate():
-#     populate_categories()
-#     populate_users()
-#     print('annnnnnd items...')
-#     populate_items()
+    @staticmethod
+    def _random_category_item():
+        func = random.choice([
+            g.address.city, g.address.state, g.business.company, g.development.programming_language, g.food.dish,
+            g.food.drink, g.games.game, g.hardware.cpu, g.internet.emoji, g.internet.home_page, g.internet.subreddit,
+            g.science.chemical_element, g.transport.car, g.unit_system.unit
+        ])
+        return func.__name__, func()
 
 
 def populate_item(count=200, locale='en'):
