@@ -46,6 +46,4 @@ def create_app(config_obj):
     from catalog.views.index import base as base_blueprint
     app.register_blueprint(base_blueprint)
 
-    print(app.url_map)
-
     return app

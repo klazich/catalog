@@ -28,7 +28,7 @@ class Item(Model):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
 
-    def __init__(self, name, description, user, category):
+    def __init__(self, name, description, category, user):
         self.name = name.lower()
         self.description = description
         self.user = user
