@@ -9,10 +9,10 @@ from config import GoogleAuthConfig, FacebookAuthConfig
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('auth/login', methods=['GET'])
+@auth.route('/auth/login', methods=['GET'])
 def login():
     flask.session['redirect_back'] = request.referrer or url_for('base.index')
-    return redirect(url_for('base.index', logging_in=True))
+    return render_template('login.html')
 
 
 @auth.route('/auth/logout', methods=['GET'])

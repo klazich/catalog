@@ -1,7 +1,7 @@
 <nav class="flex flex-auto items-center h2 mw9 center mv3">
 
-    {% if not request.url == url_for('auth.login') %}
-        <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
+    {% if not request.url == request.url_root.strip('/') + url_for('auth.login') %}
+        <a href="{{ url_for('auth.logout', test=True) if session.logged_in else url_for('auth.login') }}"
            class="f7 dim ttu tracked dib link near-white pa2 mr3 ba">
             {{ 'logout' if session.logged_in else 'login' }}
         </a>

@@ -54,7 +54,7 @@ def add_item_objects(items):
 
 
 class Populate:
-    def __init__(self, user_count=150, item_count=600):
+    def __init__(self, user_count=15, item_count=100):
         self.categories = {}
         self.users = {}
         self.unique_emails = list(_generate_unique_emails(user_count))

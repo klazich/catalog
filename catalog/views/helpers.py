@@ -54,6 +54,7 @@ def login_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        print(args, kwargs)
         if 'user' not in flask.session:
             flash('login required @ {}'.format(request.path), 'warning')
             return redirect(url_for('auth.login', next=request.url))
