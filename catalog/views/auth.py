@@ -11,10 +11,8 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET'])
 def login():
-    # set redirect to flask session
-    # used to redirect after authentication finishes
     flask.session['redirect_back'] = request.referrer or url_for('base.index')
-    return render_template('login.html')
+    return redirect(url_for('base.index', logging_in=True))
 
 
 @auth.route('/auth/logout', methods=['GET'])

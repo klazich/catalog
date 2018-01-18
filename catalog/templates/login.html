@@ -1,24 +1,19 @@
-{% extends 'base.html' %}
+<div class="flex items-center justify-center pv2">
 
-{% block title %}Login{% endblock %}
+    <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
+       href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
+       title="Google Login">
+        <img src="{{ url_for("static", filename="google.svg") }}"
+             class="dib h2 w2">
+        <span class="f5 ml3 pr2">Google</span>
+    </a>
 
-{% block content_1 -%}
-    <h2 class="f2 serif ttc lh-title normal i near-white mt3 bb b--blue">Login</h2>
-    <h3 class="f3 normal">Sign in with one of these services</h3>
+    <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
+       href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
+       title="Facebook Login">
+        <img src="{{ url_for("static", filename="facebook.svg") }}"
+             class="dib h2 w2">
+        <span class="f5 ml3 pr2">Facebook</span>
+    </a>
 
-    <div class="flex items-center justify-center pa4">
-
-        <a href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
-           class="flex flex-column items-center link dim bg-white-20 white pa5 ma6 w5 h5 br2">
-            <i class="fab fa-google fa-5x"></i>
-            <h2 class="f2 pa0 ma0 mt3">Google</h2>
-        </a>
-
-        <a href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
-           class="flex flex-column items-center link dim bg-white-20 white pa5 ma6 w5 h5 br2">
-            <i class="fab fa-facebook-f fa-5x"></i>
-            <h2 class="f2 pa0 ma0 mt3">Facebook</h2>
-        </a>
-
-    </div>
-{%- endblock %}
+</div>
