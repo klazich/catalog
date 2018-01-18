@@ -7,6 +7,9 @@ metadata = MetaData()
 Base = declarative_base(metadata=metadata)
 
 
+# maybe todo: change Category.items and User.items to a dynamic relationship
+# http://docs.sqlalchemy.org/en/latest/orm/collections.html
+
 class Model(Base):
     __abstract__ = True
 
@@ -28,7 +31,7 @@ class Item(Model):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
 
-    def __init__(self, name, description, user, category):
+    def __init__(self, name, description, category, user):
         self.name = name.lower()
         self.description = description
         self.user = user
@@ -45,7 +48,7 @@ class Item(Model):
             'category': self.category.name}
 
     def __repr__(self):
-        return '<Item: {}:{}>'.format(self.category.name, self.name)
+        return '<Item: {}>'.format(self.name)
 
 
 class Category(Model):
@@ -104,4 +107,4 @@ class User(Model):
             'items': [i.serialize for i in self.items]}
 
     def __repr__(self):
-        return '<User: {} {}>'.format(self.name, self.email)
+        return '<User: {}>'.format(self.name)
