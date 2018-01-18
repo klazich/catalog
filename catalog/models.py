@@ -7,6 +7,9 @@ metadata = MetaData()
 Base = declarative_base(metadata=metadata)
 
 
+# maybe todo: change Category.items and User.items to a dynamic relationship
+# http://docs.sqlalchemy.org/en/latest/orm/collections.html
+
 class Model(Base):
     __abstract__ = True
 

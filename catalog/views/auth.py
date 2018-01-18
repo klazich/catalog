@@ -9,7 +9,7 @@ from config import GoogleAuthConfig, FacebookAuthConfig
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login', methods=['GET'])
+@auth.route('auth/login', methods=['GET'])
 def login():
     # set redirect to flask session
     # used to redirect after authentication finishes
