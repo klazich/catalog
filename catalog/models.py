@@ -1,4 +1,3 @@
-from slugify import slugify
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -6,9 +5,6 @@ from sqlalchemy.orm import relationship
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
 
-
-# maybe todo: change Category.items and User.items to a dynamic relationship
-# http://docs.sqlalchemy.org/en/latest/orm/collections.html
 
 class Model(Base):
     __abstract__ = True
@@ -23,7 +19,6 @@ class Item(Model):
 
     name = Column(String(250), nullable=False, unique=True)
     description = Column(Text, nullable=False)
-    slug = Column(String(250), nullable=False, unique=True)
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='items')
@@ -36,7 +31,6 @@ class Item(Model):
         self.description = description
         self.user = user
         self.category = category
-        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
@@ -55,7 +49,6 @@ class Category(Model):
     __tablename__ = 'categories'
 
     name = Column(String(250), nullable=False, unique=True)
-    slug = Column(String(250), nullable=False, unique=True)
 
     items = relationship('Item', order_by=Item.name, back_populates='category')
 
@@ -64,7 +57,6 @@ class Category(Model):
             items = []
         self.name = name.lower()
         self.items = items
-        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
@@ -80,10 +72,8 @@ class Category(Model):
 class User(Model):
     __tablename__ = 'users'
 
-    # auth_id = Column(String(64), nullable=False, unique=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True)
-    slug = Column(String(250), nullable=False)
     picture = Column(String(250))
 
     items = relationship('Item', order_by=Item.id, back_populates='user')
@@ -95,7 +85,6 @@ class User(Model):
         self.email = email
         self.picture = picture
         self.items = items
-        self.slug = slugify(self.name)
 
     @property
     def serialize(self):
