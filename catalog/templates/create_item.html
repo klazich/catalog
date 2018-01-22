@@ -3,9 +3,9 @@
 {% block title %}New Item{% endblock %}
 
 {% block content_1 %}
-    <h2 class="f2 serif ttc lh-title normal i near-white mt3 bb b--green">New Item</h2>
+    <h2 class="f2 ttc lh-title normal near-white mt3 bb b--green">New Item</h2>
 
-    <form action="{{ url_for('create.create_item') }}"
+    <form action="{{ url_for('item.create') }}"
           method="post"
           class="mw9">
 
@@ -14,39 +14,39 @@
         <div class="nl3 w-100">
 
             <div class="flex items-center pv0 ph3 w-100 h3">
-                <i class="fas fa-caret-right fa-3x green"></i>
+                <i class="fas fa-caret-right fa-2x gray"></i>
                 <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
-                    select a category <span class="green b i">or</span> create a new one...</h6>
+                    select a category <span class="gray b i">or</span> create a new one...</h6>
             </div>
 
             <div class="flex items-center pv0 ph3 w-100">
-                {{ form.category(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-30 b--none") }}
-                <i class="fas fa-arrows-alt-h fa-3x green mh3"></i>
-                {{ form.new_category(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-30 b--none") }}
+                {{ form.category(class="code f3 ttc near-black input-reset bg-moon-gray pa2 ml3 w-30 b--none") }}
+                <i class="fas fa-arrows-alt-h fa-2x gray mh3"></i>
+                {{ form.new_category(class="code f3 ttc near-black input-reset bg-moon-gray pa2 w-30 b--none") }}
             </div>
 
             <div class="flex items-center pv0 ph3 w-100 h3">
-                <i class="fas fa-caret-right fa-3x green"></i>
+                <i class="fas fa-caret-right fa-2x gray"></i>
                 <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
                     Enter the item name...</h6>
             </div>
 
             <div class="flex items-center pv0 ph3 w-100">
-                {{ form.name(class="code f3 ttc near-black input-reset bg-moon-gray ph3 h3 w-40 b--none") }}
+                {{ form.name(class="code f3 ttc near-black input-reset bg-moon-gray pa2 ml3 w-30 b--none") }}
             </div>
 
             <div class="flex items-center pv0 ph3 w-100 h3">
-                <i class="fas fa-caret-right fa-3x green"></i>
+                <i class="fas fa-caret-right fa-2x gray"></i>
                 <h6 class="f3 normal ttu tracked tl pa3 mv0 w-100">
                     Enter a description for the item...</h6>
             </div>
 
             <div class="flex items-center pv0 ph3 w-100">
-                {{ form.description(class="code f3 ttc near-black input-reset bg-moon-gray pa3 h5 w-40 b--none") }}
+                {{ form.description(class="code f4 normal near-black input-reset bg-moon-gray pa2 ml3 h4 w-30 b--none") }}
             </div>
         </div>
 
-        {{ form.submit(class="dim bg-green near-white f5 b ttu tracked pa3 mt5 b--none pointer w-20") }}
+        {{ form.submit(class="dim bg-gray near-white f5 b ttu tracked pa3 ml3 mt5 b--none pointer w-20") }}
 
     </form>
 {% endblock %}

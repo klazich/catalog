@@ -1,30 +1,30 @@
 {% extends "read_category.html" %}
 
-{% block title %}{{ item.name | title }}{% endblock %}
+{% block title %}{{ g.item.name | title }}{% endblock %}
 
 {% block content_3 -%}
     <article class="flex flex-column pt5">
 
         <h1 class="f1 flex flex-auto items-center mv0 ttc tracked-tight">
-            <span class="sans-serif light-red mr3">{{ item.category.name }}</span>
+            <span class="sans-serif light-red mr3">{{ g.category.name }}</span>
             <i class="fas fa-long-arrow-alt-right mr3"></i>
-            <span class="serif normal light-green">{{ item.name }}</span>
+            <span class="serif normal light-green">{{ g.item.name }}</span>
         </h1>
 
         <p class="lh-copy measure-wide white-70 mb2">
-            {{ item.description }}
+            {{ g.item.description }}
         </p>
 
         <p class="code white-40 mb2">Created by <span class="light-blue serif">
-            {{ item.user.name }}</span>
+            {{ g.item.user.name }}</span>
         </p>
 
-        {% if session.logged_in and item.user.id == session.user.db_id %}
+        {% if session.logged_in and g.item.user.id == session.user.db_id %}
             {% block confirm_delete %}
                 <div class="f7 ttu tracked mb2">
-                    <a href="{{ url_for('update.update_item', category_slug=category.slug, item_slug=item.slug) }}"
+                    <a href="{{ url_for('item.update', item_id=g.item.id) }}"
                        class="dib dim link light-yellow code mr2">Edit</a>
-                    <a href="{{ url_for('delete.delete_item', category_slug=category.slug, item_slug=item.slug) }}"
+                    <a href="{{ url_for('item.delete', item_id=g.item.id) }}"
                        class="dib dim link light-yellow code mr2">Delete</a>
                 </div>
             {% endblock %}

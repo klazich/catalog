@@ -1,16 +1,16 @@
 {% extends "read_catalog.html" %}
 
-{% block title %}{{ category.name | title }}{% endblock %}
+{% block title %}{{ g.category.name | title }}{% endblock %}
 
 {% block content_2 -%}
     <article class="flex flex-auto items-center pt2 nl1 mw8">
 
         <div class="flex flex-wrap serif">
-            {% for i in category.items %}
+            {% for i in g.category.items %}
 
-                {% if item and item.name == i.name %}
+                {% if g.item and g.item.name == i.name %}
                     {% set style = 'near-white bb b--light-green bw2' %}
-                {% elif item and item.name != i.name %}
+                {% elif g.item and g.item.name != i.name %}
                     {% set style = 'mid-gray' %}
                 {% else %}
                     {% set style = 'near-white' %}
@@ -18,7 +18,7 @@
 
                 <h1 class="f4 tracked-tight ttc normal pa1 mr3 ma0">
                     <a class="link dim {{ style }}"
-                       href="{{ url_for('read.read_item', category_slug=i.category.slug, item_slug=i.slug) }}">
+                       href="{{ url_for('item.read', item_id=i.id) }}">
                         {{ i.name }}
                     </a>
                 </h1>

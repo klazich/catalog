@@ -1,12 +1,14 @@
 <nav class="flex flex-auto items-center h2 mw9 center mv3">
 
-    <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
-       class="f7 dim ttu tracked dib link near-white pa2 mr3 ba">
-        {{ 'logout' if session.logged_in else 'login' }}
-    </a>
+    {% if 'login' not in request.url_rule.rule %}
+        <a href="{{ url_for('auth.logout') if session.logged_in else url_for('auth.login') }}"
+           class="f7 dim ttu tracked dib link near-white pa2 mr3 ba">
+            {{ 'logout' if session.logged_in else 'login' }}
+        </a>
+    {% endif %}
 
     {% if session.logged_in %}
-        <a href="{{ url_for('create.create_item') }}"
+        <a href="{{ url_for('item.create') }}"
            class="f7 dim ttu tracked dib link green pa2 mr3 ba">New Item</a>
     {% endif %}
 
@@ -16,9 +18,9 @@
                 {% if messages %}
                     {% for type, message in messages %}
 
-                        {% if   type == 'info'  %}   {% set color = 'blue'   %}
-                        {% elif type == 'error' %}   {% set color = 'red'    %}
-                        {% else                 %}   {% set color = 'yellow' %}
+                        {% if   type == 'info' %}   {% set color = 'blue' %}
+                        {% elif type == 'error' %}   {% set color = 'red' %}
+                        {% else %}   {% set color = 'yellow' %}
                         {% endif %}
 
                         <h6 class="f7 normal mv1 mh2 {{ color }}">
