@@ -24,8 +24,13 @@ Vagrant.configure("2") do |config|
 
     apt-get -qqy install python3 python3-pip
     pip3 install --upgrade pip
-    pip3 install flask packaging oauth2client redis passlib flask-httpauth
-    pip3 install sqlalchemy requests Flask-WTF mimesis
+    pip3 install flask Flask-WTF flask-restless packaging redis passlib flask-httpauth
+    pip3 install sqlalchemy mimesis oauthlib requests_oauthlib werkzeug
+
+    apt-get -qqy install python python-pip
+    pip2 install --upgrade pip
+    pip2 install flask Flask-WTF flask-restless packaging redis passlib flask-httpauth
+    pip2 install sqlalchemy mimesis oauthlib requests_oauthlib werkzeug
 
     vagrantTip="[35m[1mThe shared directory is located at /vagrant\\nTo access your shared files: cd /vagrant[m"
     echo -e $vagrantTip > /etc/motd
