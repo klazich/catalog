@@ -20,30 +20,25 @@ def create_app(config_obj):
 
     @app.context_processor
     def inject_variables():
-        from catalog.views.helpers import get_all_categories
+        from .database import session
+        from .models import Category
         return dict(
-            all_categories=get_all_categories())
+            all_categories=session.query(Category).all())
 
     @app.template_filter('format_date')
     def format_date_filter(dt):
         return dt.strftime('%B %d, %Y')
 
-    from catalog.views.auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    from catalog.views.auth import auth_bp
+    app.register_blueprint(auth_bp)
 
-    from catalog.views.create import create as create_blueprint
-    app.register_blueprint(create_blueprint)
+    from catalog.views.catalog import catalog_bp
+    app.register_blueprint(catalog_bp)
 
-    from catalog.views.read import read as read_blueprint
-    app.register_blueprint(read_blueprint)
+    from catalog.views.category import category_bp
+    app.register_blueprint(category_bp)
 
-    from catalog.views.update import update as update_blueprint
-    app.register_blueprint(update_blueprint)
-
-    from catalog.views.delete import delete as delete_blueprint
-    app.register_blueprint(delete_blueprint)
-
-    from catalog.views.index import base as base_blueprint
-    app.register_blueprint(base_blueprint)
+    from catalog.views.item import item_bp
+    app.register_blueprint(item_bp)
 
     return app

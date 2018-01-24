@@ -1,32 +1,36 @@
 import flask
 from flask import flash, redirect, render_template, request, url_for, Blueprint
 
-from catalog.database import session
-from catalog.models import User
-from catalog.views.helpers import get_user_by, get_oauth2_session, clear_user, login_required
+from ..database import session
+from ..models import User
+from . import get_oauth2_session, login_required
 from config import GoogleAuthConfig, FacebookAuthConfig
 
-auth = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__)
 
 
-@auth.route('/auth/login', methods=['GET'])
+@auth_bp.route('/auth/login', methods=['GET'])
 def login():
-    flask.session['redirect_back'] = request.referrer or url_for('base.index')
+    # set redirect to flask session
+    # used to redirect after authentication finishes
+    flask.session['redirect_back'] = request.referrer or url_for('catalog.index')
     return render_template('login.html')
 
 
-@auth.route('/auth/logout', methods=['GET'])
+@auth_bp.route('/auth/logout', methods=['GET'])
 @login_required
 def logout():
     # clear user data from session and flag as logged out
-    clear_user()
+    for x in ['provider', 'state', 'user']:
+        if x in flask.session:
+            del flask.session[x]
     flask.session['logged_in'] = False
 
     flash('logout successful', 'info')
-    return redirect(request.referrer or url_for('base.index'))
+    return redirect(request.referrer or url_for('catalog.index'))
 
 
-@auth.route('/auth/<provider>')
+@auth_bp.route('/auth/<provider>')
 def oauth2_authorize(provider):
     # get config object for OAuth2 session
     config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
@@ -46,14 +50,17 @@ def oauth2_authorize(provider):
     return redirect(authorization_url)
 
 
-@auth.route('/auth/callback')
+@auth_bp.route('/auth/callback')
 def oauth2_callback():
     # get config object for OAuth2 session
     config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
 
     # check for state mismatch
     if request.args.get('state') != flask.session['state']:
-        clear_user()
+        for x in ['provider', 'state', 'user']:
+            if x in flask.session:
+                del flask.session[x]
+        flask.session['logged_in'] = False
         flash('Authentication failed: request/session state mismatch', 'error')
         return redirect(url_for('auth.login'))
 
@@ -67,7 +74,8 @@ def oauth2_callback():
     # grab user info from OAuth2 session
     user_data = oauth2_session.get(config.USER_INFO).json()
     # get the user from database or create if none
-    db_user = get_user_by.name(user_data['name']) or get_user_by.email(user_data['email'])
+    db_user = session.query(User).filter(User.name == user_data['name']).one_or_none() \
+              or session.query(User).filter(User.email == user_data['email']).one_or_none()
     if not db_user:
         db_user = User(user_data['name'], user_data['email'])
         session.add(db_user)

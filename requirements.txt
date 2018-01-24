@@ -1,6 +1,5 @@
 oauthlib
 werkzeug
-python-slugify
 flask
 flask-WTF
 sqlalchemy
