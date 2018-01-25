@@ -1,28 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
 
-{% block content_1 -%}
-    <h2 class="f2 ttc lh-title normal near-white mt3 bb b--blue">Login</h2>
-    <h3 class="f3 normal">Sign in with one of these services</h3>
+{% block content_1 %}
+    <div class="flex flex-column items-center">
+        <h2 class="near-white">Login with one of these services</h2>
+        <div class="flex items-center justify-center pv2">
 
-    <div class="flex items-center pv2">
+            <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
+               href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
+               title="Google Login">
+                <img src="{{ url_for("static", filename="google.svg") }}"
+                     class="dib h2 w2">
+                <span class="f5 ml3 pr2">Google</span>
+            </a>
 
-        <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
-           href="{{ url_for('auth.oauth2_authorize', provider='google') }}"
-           title="Google Authentication">
-            <img class="dib w2"
-                 src="{{ url_for('static', filename='google.svg') }}">
-            <span class="f3 ml3 pr2">Google</span>
-        </a>
+            <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
+               href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
+               title="Facebook Login">
+                <img src="{{ url_for("static", filename="facebook.svg") }}"
+                     class="dib h2 w2">
+                <span class="f5 ml3 pr2">Facebook</span>
+            </a>
 
-        <a class="no-underline near-black bg-animate bg-near-white hover-bg-gray inline-flex items-center ma2 tc br2 pa2"
-           href="{{ url_for('auth.oauth2_authorize', provider='facebook') }}"
-           title="Facebook Authentication">
-            <img class="dib w2"
-                 src="{{ url_for('static', filename='facebook.svg') }}">
-            <span class="f3 ml3 pr2">Facebook</span>
-        </a>
-
+        </div>
     </div>
-{%- endblock %}
+{% endblock %}
