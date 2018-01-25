@@ -8,6 +8,7 @@
 - **[Table of Contents](toc)**
 - **[Installation](install)**
   - [Requirements](requirements)
+  - [Install/Setup](setup)
 - **[Populating the Database](pop_db)**
 - **[API](api)**
 - **[TODO](todo)**
@@ -17,14 +18,16 @@
 
 ### [Requirements](#requirements)
 
-> NOTE: *requires 3 or later*
+> NOTE: *requires Python 3 or later*
 
-- [**Flask**](http://flask.pocoo.org/) v*0.12.2* ➜ pip install Flask
-- [**Flask-WTF**](https://flask-wtf.readthedocs.io/en/stable/) v*0.14.2* ➜ pip install Flask-WTF
-- [**Flask-Restless**](https://flask-restless.readthedocs.io/en/stable/) v*0.17.0* ➜ pip install Flask-Restless
-- [**SQLAlchemy**](https://www.sqlalchemy.org/) v*1.1.15* ➜ pip install SQLAlchemy
-- [**Requests-Oauthlib**](https://requests-oauthlib.readthedocs.io/en/latest/) v*0.8.0* ➜ pip install requests_oauthlib
-- [**Mimesis**](https://lk-geimfari.github.io/mimesis/) v*1.0.1* ➜ pip install mimesis
+- [**Flask**](http://flask.pocoo.org/) v*0.12*
+- [**Flask-WTF**](https://flask-wtf.readthedocs.io/en/stable/) v*0.14*
+- [**Flask-Restless**](https://flask-restless.readthedocs.io/en/stable/) v*0.17*
+- [**SQLAlchemy**](https://www.sqlalchemy.org/) v*1.1*
+- [**Requests-Oauthlib**](https://requests-oauthlib.readthedocs.io/en/latest/) v*0.8*
+- [**Mimesis**](https://lk-geimfari.github.io/mimesis/) v*1.0*
+
+### [Install/Setup](#setup)
 
 1. #### Clone Repository
     ```
@@ -43,14 +46,13 @@
     ```
     
 1. #### Start the Server
+    By default the ...
     ```
     ➜ python run.py
-    * Restarting with stat
-    * Debugger is active!
-    * Debugger PIN: 319-235-146
-    * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
     ```
-
+    then open up a browser to [http://localhost:5000/](http://localhost:5000/)
+    
+    
 ## [Populating the Database](#pop_db)
 
 
