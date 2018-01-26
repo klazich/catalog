@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from mimesis import Generic
 
-from ..models import metadata, Item, Category, User
+from .models import metadata, Item, Category, User
 from config import config_obj
 
 engine = create_engine(config_obj['default'].DATABASE_URI)
@@ -47,27 +47,32 @@ class UniqueRandomDatabaseData:
 
 
 def init_db():
-    print('creating tables from metadata...', end='')
+    print(' creating tables from metadata...', end='')
     metadata.create_all(bind=engine)
     print('done')
 
 
 def drop_db():
-    print('cropping tables from metadata...', end='')
+    print(' dropping tables from metadata...', end='')
     metadata.drop_all(bind=engine)
     print('done')
 
 
 def populate_db():
+    print()
     drop_db()
     init_db()
-    populate_users()
-    populate_categories()
-    populate_items()
+    users = populate_users()
+    categories = populate_categories()
+    items = populate_items()
+    print('\nCommitted to database:\n'
+          '  {} users\n'
+          '  {} categories\n'
+          '  {} items'.format(len(users), len(categories), len(items)))
 
 
 def populate_users(n=100):
-    print('populating users table...', end='')
+    print(' populating users table..........', end='')
     fake = UniqueRandomDatabaseData()
     users = []
     while len(users) < n:
@@ -80,10 +85,11 @@ def populate_users(n=100):
     session.add_all(users)
     session.commit()
     print('done')
+    return users
 
 
 def populate_categories():
-    print('populating categories table...', end='')
+    print(' populating categories table.....', end='')
     fake = UniqueRandomDatabaseData()
     categories = []
     for category_name in fake.categories():
@@ -92,10 +98,11 @@ def populate_categories():
     session.add_all(categories)
     session.commit()
     print('done')
+    return categories
 
 
 def populate_items(n=600):
-    print('populating items table...', end='')
+    print(' populating items table..........', end='')
     fake = UniqueRandomDatabaseData()
     users = session.query(User).all()
     categories = {c.name: c for c in session.query(Category).all()}
@@ -113,3 +120,4 @@ def populate_items(n=600):
     session.add_all(items)
     session.commit()
     print('done')
+    return items

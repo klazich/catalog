@@ -9,6 +9,7 @@ class BaseConfig:
 
 
 class GoogleAuthConfig(BaseConfig):
+    """ Google OAuth2 configuration """
     PROVIDER = 'google'
     CLIENT_ID = '288467794624-ol9d6dpr3fccs8v0olhpbp1r6ots6sf7.apps.googleusercontent.com'
     CLIENT_SECRET = 'Y3e7-a3KD3ez9P8-AZw1N0Bz'
@@ -22,6 +23,7 @@ class GoogleAuthConfig(BaseConfig):
 
 
 class FacebookAuthConfig(BaseConfig):
+    """ Facebook OAuth2 configuration """
     PROVIDER = 'facebook'
     CLIENT_ID = '1273316589480067'
     CLIENT_SECRET = 'efd08abe7ac83d5f05777ce2f07a1bb2'
@@ -33,19 +35,22 @@ class FacebookAuthConfig(BaseConfig):
 
 
 class DevConfig(BaseConfig):
+    """ Development flask configuration: debug on, testing off, db is catalog.dev.db """
     DEBUG = True
     TESTING = False
     DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'catalog.dev.db')
 
 
 class TestConfig(BaseConfig):
+    """ Testing flask configuration: debug on, testing on, db is catalog.test.db """
     DEBUG = True
     TESTING = True
     DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'catalog.test.db')
 
 
 class ProdConfig(BaseConfig):
-    DEBUG = True
+    """ Production flask configuration: debug off, testing off, db is catalog.db """
+    DEBUG = False
     TESTING = False
     DATABASE_URI = 'sqlite:///' + os.path.join(basedir, "catalog.db")
 
