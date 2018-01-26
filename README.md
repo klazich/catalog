@@ -1,22 +1,29 @@
 # Catalog App
 
-##### *Udacity - Full Stack Web Developer Nanodegree*
+##### *Udacity - Full Stack Web Developer Nanodegree* 
 
 > A simple web app showcasing flask with back-end SQLite database integration.
 
-## [Table of Contents](#toc)
-- **[Table of Contents](toc)**
-- **[Installation](install)**
-  - [Requirements](requirements)
-  - [Install/Setup](setup)
-- **[Populating the Database](pop_db)**
-- **[API](api)**
-- **[TODO](todo)**
+## Table of Contents ####################################################################
+- **[Table of Contents](#table-of-contents)**
+- **[Installation](#installation/requirements)**
+  - [Requirements](#requirements)
+  - [Install/Setup](#install/setup)
+    1. [Clone the Repository](#clone-the-repository)
+    1. [Install packages](#install-packages)
+    1. [Start the Server](#start-the-server)
+- **[Populating the Database](#populating-the-database)**
+- **[API](#api)**
+  - [catalog/](#catalog/)
+  - [database.py](#databasepy)
+  - [views.py](#viewspy)
+  - [api.py](#apipy)
+- **[TODO](#todo)**
 
 
-## [Installation/Requirements](#install)
+## Installation/Requirements ############################################################
 
-### [Requirements](#requirements)
+### Requirements 
 
 > NOTE: *requires Python 3 or later*
 
@@ -27,9 +34,10 @@
 - [**Requests-Oauthlib**](https://requests-oauthlib.readthedocs.io/en/latest/) v*0.8*
 - [**Mimesis**](https://lk-geimfari.github.io/mimesis/) v*1.0*
 
-### [Install/Setup](#setup)
 
-1. #### Clone Repository
+### Install/Setup #######################################################################
+
+1. #### Clone the Repository 
     ```
     ➜ git clone https://github.com/klazich/catalog.git project
     ➜ cd project
@@ -39,27 +47,61 @@
     ```
     ➜ pip install Flask Flask-WTF Flask-Restless SQLAlchemy requests_oauthlib mimesis
     ```
-    or with [requirements.txt](https://github.com/klazich/catalog/blob/master/requirements.txt)
-    
+    or with [requirements.txt](requirements.txt)...
     ```
-    ➜ pip install -r requirements.txt
+    ➜ pip install -r requirements.txt,
     ```
     
 1. #### Start the Server
-    By default the ...
+    The flask app will load the "development" configs by default (see 
+    [config.py](config.py)). Load different flask 
+    configs by setting the `FLASK_CONFIG` environment variable to `dev`, `test`, or `prod`.
+    ```
+    ➜ export FLASK_CONFIG=prod
+    ```
+    or with a python script...
+    ```
+    >>> import os
+    >>> os.environ['FLASK_CONFIG'] = 'prod'
+    ```
+    to start the server enter:
     ```
     ➜ python run.py
     ```
     then open up a browser to [http://localhost:5000/](http://localhost:5000/)
     
     
-## [Populating the Database](#pop_db)
+## Populating the Database ##############################################################
+Using [Mimesis](https://lk-geimfari.github.io/mimesis/) and helper functions from 
+[`/catalog/database`](/catalog/__init__.py)
+we can seed the database with fake data. This is useful for testing as well as demonstration 
+purposes.
+
+The `populate_db` function will create the Item, Category and User tables 
+([models.py](catalog/models.py)) and populate them with simulated data.
+```
+>>> from catalog.database import populate_db
+>>> populate_db()
+
+dropping tables from metadata...done
+creating tables from metadata...done
+populating users table..........done
+populating categories table.....done
+populating items table..........done
+
+Committed to database:
+100 users
+14 categories
+600 items
+```  
+> For details on the individual helper functions see the [API](#api) section.
+
+## Site Interaction #####################################################################
+
+### 
+
+## API ##################################################################################
 
 
-## [Site Interaction](#interact)
-
-
-## [API](#api)
-
-
-## [TODO](#todo)
+## TODO #################################################################################
+  - Move the populate database functions into a cli.
