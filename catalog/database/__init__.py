@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from mimesis import Generic
 
-from catalog.models import metadata, Item, Category, User
+from ..models import metadata, Item, Category, User
 from config import config_obj
 
 engine = create_engine(config_obj['default'].DATABASE_URI)
@@ -16,7 +16,7 @@ session = scoped_session(Session)
 g = Generic('en')
 
 
-class RandomItemCategoriesUser:
+class UniqueRandomDatabaseData:
     def __init__(self):
         self._mimesis_category_funcs = [
             g.address.city, g.address.state, g.business.company, g.development.programming_language, g.food.dish,
@@ -61,17 +61,17 @@ def drop_db():
 def populate_db():
     drop_db()
     init_db()
-    _populate_users()
-    _populate_categories()
-    _populate_items()
+    populate_users()
+    populate_categories()
+    populate_items()
 
 
-def _populate_users(n=100):
+def populate_users(n=100):
     print('populating users table...', end='')
-    p = RandomItemCategoriesUser()
+    fake = UniqueRandomDatabaseData()
     users = []
     while len(users) < n:
-        user_email, user_name = p.user()
+        user_email, user_name = fake.user()
         user_picture = g.personal.avatar()
         users.append(User(
             name=user_name,
@@ -82,11 +82,11 @@ def _populate_users(n=100):
     print('done')
 
 
-def _populate_categories():
+def populate_categories():
     print('populating categories table...', end='')
-    p = RandomItemCategoriesUser()
+    fake = UniqueRandomDatabaseData()
     categories = []
-    for category_name in p.categories():
+    for category_name in fake.categories():
         categories.append(Category(
             name=category_name.replace('_', ' ')))
     session.add_all(categories)
@@ -94,14 +94,14 @@ def _populate_categories():
     print('done')
 
 
-def _populate_items(n=600):
+def populate_items(n=600):
     print('populating items table...', end='')
-    p = RandomItemCategoriesUser()
+    fake = UniqueRandomDatabaseData()
     users = session.query(User).all()
     categories = {c.name: c for c in session.query(Category).all()}
     items = []
     while len(items) < n:
-        item_category_name, item_name = p.item()
+        item_category_name, item_name = fake.item()
         item_description = g.text.text()
         item_user = random.choice(users)
         item_category = categories[item_category_name.replace('_', ' ')]
