@@ -2,33 +2,28 @@ from flask import Flask
 
 
 def create_app(config_obj):
+    """Flask application factory for creating app instances"""
     app = Flask(__name__)
     app.config.from_object(config_obj)
 
     import catalog.models
 
     # api endpoints with Flask-Restless:
-    #   <host>:<port>/api/items
-    #   <host>:<port>/api/categories
     from catalog.api import manager
     manager.init_app(app)
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
+        """See: http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/"""
         from catalog.database import session
         session.remove()
 
-    @app.context_processor
-    def inject_variables():
-        from .database import session
-        from .models import Category
-        return dict(
-            all_categories=session.query(Category).all())
-
     @app.template_filter('format_date')
     def format_date_filter(dt):
+        """A Jinja2 filter to format date in templates"""
         return dt.strftime('%B %d, %Y')
 
+    # register blueprints
     from catalog.views.auth import auth_bp
     app.register_blueprint(auth_bp)
 
