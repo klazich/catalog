@@ -82,23 +82,31 @@ The `populate_db` function will create the Item, Category and User tables
 ```
 >>> from catalog.database import populate_db
 >>> populate_db()
-
-dropping tables from metadata...done
-creating tables from metadata...done
-populating users table..........done
-populating categories table.....done
-populating items table..........done
-
-Committed to database:
-100 users
-14 categories
-600 items
 ```  
 > For details on the individual helper functions see the [API](#api) section.
 
 ## Site Interaction #####################################################################
 
-### 
+### URL Table
+
+| Request URL            | View Function                   |     |
+| ---------------------- | ------------------------------- | --- |
+| `/catalog`             | catalog.index()                 | Renders site index, listing categories |
+| `/auth/login`          | auth.login()                    | Renders the login page |
+| `/auth/logout`         | auth.logout()                   | Logs out user and redirects to referrer |
+| `/auth/{provider}`     | auth.oauth2_authorize(provider) | Initiates user authentication request to provider OAuth2 service |
+| `/auth/callback`       | auth.oauth2_callback()          | Handles the callback from provider OAuth2 service and redirects to auth.login referrer |
+| `/category/{id}`       | category.read(id)               | Renders a list of items from category with `id` (*extends catalog.index*) |
+| `/item/new`            | item.create()                   | Renders the `ItemForm` for item creation |
+| `/item/{id}`           | item.read(id)                   | Renders a summary of an item with `id` (*extends category.read*) |
+| `/item/{id}/update`    | item.update(id)                 | Renders the `ItemForm` for item with `id` updates |
+| `/item/{id}/delete`    | item.delete(id)                 | Removes item with `id` from database |
+| `/api/categories`      | *Flask-Restless*                | Returns a list of all category objects in JSON format |
+| `/api/categories/{id}` | *Flask-Restless*                | Returns an individual category object with `id` in JSON format |
+| `/api/items`           | *Flask-Restless*                | Returns a list of all item objects in JSON format |
+| `/api/items/{id}`      | *Flask-Restless*                | Returns an individual item object with `id` in JSON format |
+
+
 
 ## API ##################################################################################
 
