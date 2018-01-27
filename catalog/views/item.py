@@ -13,12 +13,12 @@ item_bp = Blueprint('item', __name__)
 @item_bp.route('/item/new', methods=['GET', 'POST'])
 @login_required
 def create():
-    categories = session.query(Category).all()
-    items = session.query(Item).all()
+    all_items = session.query(Item).all()
+    all_categories = session.query(Category).all()
     user = session.query(User).filter(User.id == flask.session['user']['db_id']).one_or_none()
 
     form = ItemForm(request.form)
-    form.category.choices = [(c.name, c.name) for c in categories]
+    form.category.choices = [(c.name, c.name) for c in all_categories]
 
     if request.method == 'POST' and form.validate():
         category_name = (form.new_category.data or form.category.data).lower()
@@ -26,15 +26,15 @@ def create():
         if not category:
             category = Category(category_name)
 
+        if form.name.data.lower() in map(lambda i: i.name, all_items):
+            flash('that item name is already in use', 'warning')
+            return redirect(request.referrer)
+
         item = Item(
             name=form.name.data.lower(),
             description=form.description.data,
             category=category,
             user=user)
-
-        if item.name in map(lambda i: i.name, items):
-            flash('that item name is already in use', 'warning')
-            return redirect(request.referrer)
 
         session.add(item)
         try:
@@ -65,8 +65,8 @@ def read(item_id):
 @item_bp.route('/item/<int:item_id>/update', methods=['GET', 'POST', 'UPDATE'])
 @login_required
 def update(item_id):
-    items = session.query(Item).all()
-    categories = session.query(Category).all()
+    all_items = session.query(Item).all()
+    all_categories = session.query(Category).all()
     item = session.query(Item).filter(Item.id == item_id).one_or_none()
     category = item.category
     user = session.query(User).filter(User.id == flask.session['user']['db_id']).one_or_none()
@@ -78,8 +78,8 @@ def update(item_id):
     form = ItemForm(
         name=item.name,
         description=item.description,
-        category=category)
-    form.category.choices = [(c.name, c.name) for c in categories]
+        category=category.name)
+    form.category.choices = [(c.name, c.name) for c in all_categories]
 
     if request.method == 'POST' and form.validate():
         category_name = (form.new_category.data or form.category.data).lower()
@@ -87,13 +87,15 @@ def update(item_id):
         if not category_new:
             category_new = Category(category_name)
 
+        print(form.name.data.lower())
+
+        if item.name != form.name.data.lower() and form.name.data.lower() in map(lambda i: i.name, all_items):
+            flash('that item name is already in use', 'warning')
+            return redirect(request.referrer)
+
         item.name = form.name.data.lower()
         item.description = form.description.data
         item.category = category_new
-
-        if item.name in map(lambda i: i.name, items):
-            flash('that item name is already in use', 'warning')
-            return redirect(request.referrer)
 
         if category_new.id != category.id and not category.items:
             session.delete(category)
