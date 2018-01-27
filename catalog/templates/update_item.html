@@ -6,24 +6,19 @@
     <h2 class="f2 ttc lh-title normal near-white mt3 bb b--gray">Edit Item</h2>
 
     <form action="{{ url_for('item.update', item_id=g.item.id) }}"
-          method="post"
-          class="mw9">
+          method="post" class="mw9">
 
         {{ form.hidden_tag() }}
 
-        <h6 class="f3 normal ttu tracked tl pv2 mt0 mb0">
+        <h6 class="f4 normal ttu tracked tl pv2 mv0">
             select a category <span class="gray b">or</span> create a new one</h6>
-
         {{ form.category(class="code f3 ttc near-black input-reset bg-moon-gray pa2 w-30 b--none") }}
-
         {{ form.new_category(class="code f3 ttc near-black input-reset bg-moon-gray pa2 w-30 b--none") }}
 
-        <h6 class="f3 normal ttu tracked tl pv2 mt3 mb0">Enter the item name</h6>
-
+        <h6 class="f4 normal ttu tracked tl pv2 mt3 mb0">Enter the item name</h6>
         {{ form.name(class="code f3 ttc near-black input-reset bg-moon-gray pa2 w-30 b--none") }}
 
-        <h6 class="f3 normal ttu tracked tl pv2 mt3 mb0">Enter a description for the item</h6>
-
+        <h6 class="f4 normal ttu tracked tl pv2 mt3 mb0">Enter a description for the item</h6>
         {{ form.description(class="code f4 normal near-black input-reset bg-moon-gray pa2 h4 w-40 b--none") }}
 
         {{ form.submit(class="dim db bg-gray near-white f5 b ttu tracked pa3 mt5 b--none pointer w5") }}
