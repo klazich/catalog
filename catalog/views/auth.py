@@ -11,8 +11,7 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/auth/login', methods=['GET'])
 def login():
-    """
-
+    """ Login page
     :return: rendering of the login.html template
     """
     # set redirect to flask session
@@ -25,7 +24,7 @@ def login():
 @login_required
 def logout():
     """
-
+    Clears user info from session and returns users to request referrer.
     :return: redirect to previous page
     """
     # clear user data from session and flag as logged out
