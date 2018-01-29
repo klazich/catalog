@@ -11,6 +11,10 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/auth/login', methods=['GET'])
 def login():
+    """
+
+    :return: rendering of the login.html template
+    """
     # set redirect to flask session
     # used to redirect after authentication finishes
     flask.session['redirect_back'] = request.referrer or url_for('catalog.index')
@@ -20,6 +24,10 @@ def login():
 @auth_bp.route('/auth/logout', methods=['GET'])
 @login_required
 def logout():
+    """
+
+    :return: redirect to previous page
+    """
     # clear user data from session and flag as logged out
     for x in ['provider', 'state', 'user']:
         if x in flask.session:
@@ -32,9 +40,15 @@ def logout():
 
 @auth_bp.route('/auth/<provider>')
 def oauth2_authorize(provider):
+    """
+    Handles OAuth2 initiating with Google/Facebook. Saves state to session to check against at callback.
+    :param provider: google or facebook, button pressed from auth/login
+    :type provider: str
+    :return: a redirect to the authorization url from oauth2_session.
+    """
     # get config object for OAuth2 session
     config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[provider]
-    oauth2_session = get_oauth2_session(config)
+    oauth2_session = get_oauth2_session(config)  # see: catalog/views/__init__.py
 
     # get the authorization url and state
     authorization_url, state = oauth2_session.authorization_url(
@@ -52,6 +66,11 @@ def oauth2_authorize(provider):
 
 @auth_bp.route('/auth/callback')
 def oauth2_callback():
+    """
+    Endpoint for OAuth2 provider callback after redirect to authorization_url in function oauth2_authorize. Confirms
+    state and fetches token with authenticated credentials. Gets user from database or create new.
+    :return: a redirect to the request referrer at login.html
+    """
     # get config object for OAuth2 session
     config = {'google': GoogleAuthConfig, 'facebook': FacebookAuthConfig}[flask.session['provider']]
 
@@ -64,7 +83,7 @@ def oauth2_callback():
         flash('Authentication failed: request/session state mismatch', 'error')
         return redirect(url_for('auth.login'))
 
-    oauth2_session = get_oauth2_session(config, state=request.args.get('state'))
+    oauth2_session = get_oauth2_session(config, state=request.args.get('state'))  # get state from flask session
 
     token = oauth2_session.fetch_token(
         token_url=config.TOKEN_URL,
@@ -74,8 +93,7 @@ def oauth2_callback():
     # grab user info from OAuth2 session
     user_data = oauth2_session.get(config.USER_INFO).json()
     # get the user from database or create if none
-    db_user = session.query(User).filter(User.name == user_data['name']).one_or_none() \
-              or session.query(User).filter(User.email == user_data['email']).one_or_none()
+    db_user = session.query(User).filter(User.email == user_data['email']).one_or_none()
     if not db_user:
         db_user = User(user_data['name'], user_data['email'])
         session.add(db_user)
