@@ -14,11 +14,6 @@
     1. [Start the Server](#start-the-server)
 - **[Populating the Database](#populating-the-database)**
 - **[URL Table](#url-table)**
-- **[API](#api)**
-  - [catalog/](#catalog/)
-  - [database.py](#databasepy)
-  - [views.py](#viewspy)
-  - [api.py](#apipy)
 - **[TODO](#todo)**
 
 
@@ -55,7 +50,7 @@
     
 1. #### Start the Server
     The flask app will load the "development" configs by default (see 
-    [config.py](config.py)). Load different flask 
+    [config.py](config.py)). The development config turns on debug. Load different flask 
     configs by setting the `FLASK_CONFIG` environment variable to `dev`, `test`, or `prod`.
     ```
     ➜ export FLASK_CONFIG=prod
@@ -63,7 +58,7 @@
     or with a python script...
     ```
     >>> import os
-    >>> os.environ['FLASK_CONFIG'] = 'prod'
+    >>> os.environ['FLASK_CONFIG'] = 'prod'  # set Flask to load production configurations
     ```
     to start the server enter:
     ```
@@ -129,10 +124,6 @@ To populate individual tables use `populate_users(n)`, `populate_categories()` a
 | `/api/items`           | *Flask-Restless*                | *Returns a list of all item objects in JSON format* |
 | `/api/items/{id}`      | *Flask-Restless*                | *Returns an individual item object with `id` in JSON format* |*
 *
-
-## API ##################################################################################
-
-### 
 
 
 ## TODO #################################################################################
