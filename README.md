@@ -74,17 +74,40 @@
     
 ## Populating the Database ##############################################################
 Using [Mimesis](https://lk-geimfari.github.io/mimesis/) and helper functions from 
-[`/catalog/database`](/catalog/__init__.py)
-we can seed the database with fake data. This is useful for testing as well as demonstration 
-purposes.
+[`/catalog/database`](/catalog/__init__.py) we can seed the database with fake data. This is useful for testing as 
+well as demonstration purposes.
 
-The `populate_db` function will create the Item, Category and User tables 
-([models.py](catalog/models.py)) and populate them with simulated data.
-```
->>> from catalog.database import populate_db
->>> populate_db()
-```  
-> For details on the individual helper functions see the [API](#api) section.
+To populate all the tables in the database use `populate_db`:
+  ```
+  >>> from catalog.database import populate_db
+  
+  >>> populate_db()
+  ```
+  > Note: *Be aware that* `populate_db` *will call* `drop_db` *witch will drop all the database tables.*
+  - **`populate_db()`** will create the Item, Category and User tables ([models.py](catalog/models.py)) and populate 
+  them with simulated data using the other function is the database module. 
+
+Use `init_db` and `drop_db` to create metadata tables and drop tables, respectively.
+  ```
+  >>> from catalog.database import init_db, drop_db
+  
+  >>> init_db()  # to create database tables 
+  >>> drop_db()  # to drop all tables in database
+  ```
+  - **`init_db()`** will create all tables found in the metadata if they are not already created.
+  - **`drop_db()`** will drop all tables in the database. 
+
+To populate individual tables use `populate_users(n)`, `populate_categories()` and `populate_items(n)`:
+  ```
+  >>> from catalog.database import populate_users, populate_categories, populate_items
+  
+  >>> populate_users(10)     # add 10 User objects to database
+  >>> populate_categories()  # add Category objects to database
+  >>> populate_items(90)     # add 90 Item objects to database
+  ```
+  - `populate_users(n)` will create and commit `n` users to the database (defaults to `n=100`).
+  - `populate_categories()` will create and commit the simulated categories.
+  - `populate_items(n)` will create and commit `n` items to the database (defaults to `n=600`).
 
 
 ## URL Table ############################################################################
