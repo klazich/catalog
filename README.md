@@ -100,9 +100,9 @@ To populate individual tables use `populate_users(n)`, `populate_categories()` a
   >>> populate_categories()  # add Category objects to database
   >>> populate_items(90)     # add 90 Item objects to database
   ```
-  - `populate_users(n)` will create and commit `n` users to the database (defaults to `n=100`).
-  - `populate_categories()` will create and commit the simulated categories.
-  - `populate_items(n)` will create and commit `n` items to the database (defaults to `n=600`).
+  - **`populate_users(n)`** will create and commit `n` users to the database (defaults to `n=100`).
+  - **`populate_categories()`** will create and commit the simulated categories.
+  - **`populate_items(n)`** will create and commit `n` items to the database (defaults to `n=600`).
 
 
 ## URL Table ############################################################################
@@ -122,8 +122,8 @@ To populate individual tables use `populate_users(n)`, `populate_categories()` a
 | `/api/categories`      | *Flask-Restless*                | *Returns a list of all category objects in JSON format* |
 | `/api/categories/{id}` | *Flask-Restless*                | *Returns an individual category object with `id` in JSON format* |
 | `/api/items`           | *Flask-Restless*                | *Returns a list of all item objects in JSON format* |
-| `/api/items/{id}`      | *Flask-Restless*                | *Returns an individual item object with `id` in JSON format* |*
-*
+| `/api/items/{id}`      | *Flask-Restless*                | *Returns an individual item object with `id` in JSON format* |
+
 
 
 ## TODO #################################################################################
