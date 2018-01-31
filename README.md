@@ -78,7 +78,7 @@ To populate all the tables in the database use `populate_db`:
   
   >>> populate_db()
   ```
-  > Note: *Be aware that* `populate_db` *will call* `drop_db` *witch will drop all the database tables.*
+  > Note: *Be aware that* `populate_db` *will call* `drop_db` *which will drop all the database tables.*
   - **`populate_db()`** will create the Item, Category and User tables ([models.py](catalog/models.py)) and populate 
   them with simulated data using the other function is the database module. 
 
