@@ -16,7 +16,6 @@ class Model(Base):
 
 
 class Item(Model):
-    """"""
     __tablename__ = 'items'
 
     name = Column(String(250), nullable=False, unique=True)
