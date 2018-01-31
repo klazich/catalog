@@ -45,7 +45,7 @@
     ```
     or with [requirements.txt](requirements.txt)...
     ```
-    ➜ pip install -r requirements.txt,
+    ➜ pip install -r requirements.txt
     ```
     
 1. #### Start the Server
@@ -60,7 +60,7 @@
     >>> import os
     >>> os.environ['FLASK_CONFIG'] = 'prod'  # set Flask to load production configurations
     ```
-    to start the server enter:
+    to start the server enter...
     ```
     ➜ python run.py
     ```
