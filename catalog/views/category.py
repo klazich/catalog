@@ -8,6 +8,12 @@ category_bp = Blueprint('category', __name__)
 
 @category_bp.route('/category/<int:category_id>')
 def read(category_id):
+    """
+    Extends catalog.index and lists all items of `category_id` in the database.
+    :param category_id: the database id (`Category.id`) of the category to list items of.
+    :type category_id: int
+    :return: rendering of the read_category.html template
+    """
     categories = session.query(Category).all()
     category = session.query(Category).filter(Category.id == category_id).one_or_none()
     if not category:
