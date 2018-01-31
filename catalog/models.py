@@ -7,6 +7,7 @@ Base = declarative_base(metadata=metadata)
 
 
 class Model(Base):
+    """Base class with properties common to all models."""
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -15,6 +16,7 @@ class Model(Base):
 
 
 class Item(Model):
+    """"""
     __tablename__ = 'items'
 
     name = Column(String(250), nullable=False, unique=True)
