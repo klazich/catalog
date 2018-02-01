@@ -14,17 +14,19 @@ item_bp = Blueprint('item', __name__)
 @login_required
 def create():
     """
-    Creates a new item and commits it to the database. 
-    The user must be logged in to reach the html form and is redirected to the auth.login 
+    Creates a new item and commits it to the database.
+    The user must be logged in to reach the html form and is redirected to the auth.login
     if not. Form data is validated and item is checked for uniqueness to prevent SQLALchemy
     IntegretyError exceptions.
+
     :returns: (GET) a rendering of the create_item.html template with ItemForm form;
               (POST) a redirect to the item.read endpoint for created item
     """
     # get data from database
     all_items = session.query(Item).all()
     all_categories = session.query(Category).all()
-    user = session.query(User).filter(User.id == flask.session['user']['db_id']).one_or_none()
+    user = session.query(User).filter(
+        User.id == flask.session['user']['db_id']).one_or_none()
 
     # create ItemForm form (Flask-WTF)
     form = ItemForm(request.form)
@@ -33,7 +35,8 @@ def create():
 
     if request.method == 'POST' and form.validate():
         category_name = (form.new_category.data or form.category.data).lower()
-        category = session.query(Category).filter(Category.name == category_name).one_or_none()
+        category = session.query(Category).filter(
+            Category.name == category_name).one_or_none()
         if not category:
             category = Category(category_name)
 
@@ -68,7 +71,8 @@ def create():
 @item_bp.route('/item/<int:item_id>/', methods=['GET'])
 def read(item_id):
     """
-    Displays an items data 
+    Displays an items data
+
     :param item_id: the databse id (Item.id) of the item to read
     :type item_id: int
     :return: a rendering of the read_item.html template
@@ -87,6 +91,7 @@ def read(item_id):
 def update(item_id):
     """
     Update an item in the database.
+
     :param item_id: the database id (Item.id) of the item to update
     :type item_id: int
     :returns: (GET) a rendering of the update_item.html template with ItemForm form;
@@ -97,8 +102,9 @@ def update(item_id):
     all_categories = session.query(Category).all()
     item = session.query(Item).filter(Item.id == item_id).one_or_none()
     category = item.category
-    user = session.query(User).filter(User.id == flask.session['user']['db_id']).one_or_none()
-    
+    user = session.query(User).filter(
+        User.id == flask.session['user']['db_id']).one_or_none()
+
     # check that the user is item's owner
     if item.user.id != user.id:
         flash('item must be yous to edit/delete', 'warning')
@@ -109,15 +115,16 @@ def update(item_id):
         name=item.name,
         description=item.description,
         category=category.name)
-    # add all the database categories to the form's category select field    
+    # add all the database categories to the form's category select field
     form.category.choices = [(c.name, c.name) for c in all_categories]
 
     if request.method == 'POST' and form.validate():
         category_name = (form.new_category.data or form.category.data).lower()
-        category_new = session.query(Category).filter(Category.name == category_name).one_or_none()
+        category_new = session.query(Category).filter(
+            Category.name == category_name).one_or_none()
         if not category_new:
             category_new = Category(category_name)
-        
+
         # check the new item name is unique
         if item.name != form.name.data.lower() and form.name.data.lower() in map(lambda i: i.name, all_items):
             flash('that item name is already in use', 'warning')
@@ -127,7 +134,7 @@ def update(item_id):
         item.name = form.name.data.lower()
         item.description = form.description.data
         item.category = category_new
-        
+
         # remove the item's old category from the database if that category is now empty
         if category_new.id != category.id and not category.items:
             session.delete(category)
@@ -148,6 +155,7 @@ def delete(item_id):
     """
     Delete an item from the database.
     The user must be logged in and owner of the item.
+
     :param item_id: the database id (Item.id) of the item to delete
     :type item_id: int
     :return: a redirect to the deleted item's category or index
@@ -155,7 +163,8 @@ def delete(item_id):
     # get data from the database
     item = session.query(Item).filter(Item.id == item_id).one_or_none()
     category = item.category
-    user = session.query(User).filter(User.id == flask.session['user']['db_id']).one_or_none()
+    user = session.query(User).filter(
+        User.id == flask.session['user']['db_id']).one_or_none()
 
     # check that the user is item's owner
     if item.user.id != user.id:

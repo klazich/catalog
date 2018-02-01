@@ -2,7 +2,13 @@ from flask import Flask
 
 
 def create_app(config_obj):
-    """Flask application factory for creating app instances"""
+    """
+    Flask application factory for creating app instances
+
+    :param config_obj:
+    :return:
+    :rtype:
+    """
     app = Flask(__name__)
     app.config.from_object(config_obj)
 

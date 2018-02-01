@@ -20,6 +20,7 @@ g = Generic('en')
 class UniqueRandomDatabaseData(object):
     """
     For creating Item, Category and User objects. Used in populating functions.
+
     :type _mimesis_category_funcs: list[() -> str]
     :type _used_item_names: set[str]
     :type _used_user_email: set[str]
@@ -28,8 +29,9 @@ class UniqueRandomDatabaseData(object):
     def __init__(self):
         # an array of mimesis functions used to populate tables
         self._mimesis_category_funcs = [
-            g.address.city, g.address.state, g.business.company, g.development.programming_language, g.food.dish,
-            g.food.drink, g.games.game, g.hardware.cpu, g.internet.emoji, g.internet.home_page, g.internet.subreddit,
+            g.address.city, g.address.state, g.business.company,
+            g.development.programming_language, g.food.dish, g.food.drink, g.games.game,
+            g.hardware.cpu, g.internet.emoji, g.internet.home_page, g.internet.subreddit,
             g.science.chemical_element, g.transport.car, g.unit_system.unit]
 
         # Used to keep item names unique and avoid IntegrityError SQLAlchemy exceptions
@@ -41,6 +43,7 @@ class UniqueRandomDatabaseData(object):
     def item(self):
         """
         Returns a category name and a unique item name in that category for item creation.
+
         :return: a tuple of category name and item name
         :rtype: (str, str)
         """
@@ -55,6 +58,7 @@ class UniqueRandomDatabaseData(object):
     def user(self):
         """
         Returns a unique email address and random name for user creation.
+
         :return: a tuple of user email and user name
         :rtype: (str, str)
         """
@@ -68,6 +72,7 @@ class UniqueRandomDatabaseData(object):
     def categories(self):
         """
         Returns a list of the category names in _mimesis_category_funcs.
+
         :return: a list of category names
         :rtype: list[str]
         """
@@ -91,6 +96,7 @@ def init_db():
 def populate_db():
     """
     Calls functions in this module to populate a database.
+
     :return: a tuple of lists of Item types, Category types and User types
     :rtype: (list[Item], list[Category], list[User])
     """
@@ -109,9 +115,12 @@ def populate_db():
 
 def populate_users(n=100):
     """
-    Creates *n* users of type User with unique emails and commits them the User table (Defaults to n=100).
+    Creates *n* users of type User with unique emails and commits them the User
+    table (Defaults to n=100).
 
-    Note: Needs to be called before populate_items otherwise, populate_items may raise an exception.
+    Note: Needs to be called before populate_items otherwise, populate_items may raise
+          an exception.
+
     :param n: count of users to create
     :type n: int
     :return: a list of User objects of length *n*
@@ -135,8 +144,8 @@ def populate_users(n=100):
 
 def populate_categories():
     """
-    Creates a list of category objects from UniqueRandomDatabaseData.categories and commits them to the
-    Category table.
+    Creates a list of category objects from UniqueRandomDatabaseData.categories and commits them
+    to the Category table.
     :return: a list of Category objects
     :rtype: list[Category]
     """
@@ -154,10 +163,12 @@ def populate_categories():
 
 def populate_items(n=600):
     """
-    Creates a list of Item objects with unique names of length *n* and commits them to the Item table.
+    Creates a list of Item objects with unique names of length *n* and commits them to
+    the Item table.
 
-    Note: populate_users and populate_categories should be called before this function otherwise, this may
-          raise an exception.
+    Note: populate_users and populate_categories should be called before this function
+          otherwise, this may raise an exception.
+
     :param n: count of items to create
     :type n: int
     :return: a list of Item objects of length *n*
@@ -166,7 +177,8 @@ def populate_items(n=600):
     print(' populating items table..........', end='')
     fake = UniqueRandomDatabaseData()
     users = session.query(User).all()  # all users from database
-    categories = {c.name: c for c in session.query(Category).all()}  # all categories from database
+    categories = {c.name: c for c in session.query(
+        Category).all()}  # all categories from database
     items = []
     while len(items) < n:
         item_category_name, item_name = fake.item()

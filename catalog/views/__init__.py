@@ -11,6 +11,7 @@ from config import GoogleAuthConfig, FacebookAuthConfig, BaseConfig
 def get_oauth2_session(config, state=None, token=None):
     """
 
+
     :param config: Google or Facebook config object from config.py
     :type config: Union[GoogleAuthConfig, FacebookAuthConfig]
     :param state: the state string
@@ -32,7 +33,12 @@ def get_oauth2_session(config, state=None, token=None):
 
 
 def login_required(f):
-    """A route decorator for views requiring a logged in user."""
+    """
+    A route decorator for views requiring a logged in user.
+
+    :return:
+    :rtype:
+    """
 
     @wraps(f)
     def decorated_function(*args, **kwargs):

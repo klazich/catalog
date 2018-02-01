@@ -11,6 +11,7 @@ catalog_bp = Blueprint('catalog', __name__)
 def index():
     """
     App html entry point. Renders the homepage which list all categories in the database.
+
     :return: rendering of the read_catalog.html template
     """
     g.categories = sorted(session.query(Category).all(), key=lambda c: c.name)
