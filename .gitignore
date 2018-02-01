@@ -117,3 +117,4 @@ out
 # *.logs
 
 *.db
+.vscode
