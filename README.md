@@ -22,14 +22,15 @@
 
 ### Requirements
 
-> NOTE: *requires Python 3 or later*
+**Catalog App** will work in Python 2 and Python 3. But the optional data faking functions in
+module [`catalog/populate.py`](/catalog/populate.py) will not work in Python 2.
 
 - [**Flask**](http://flask.pocoo.org/) v*0.12*
 - [**Flask-WTF**](https://flask-wtf.readthedocs.io/en/stable/) v*0.14*
 - [**Flask-Restless**](https://flask-restless.readthedocs.io/en/stable/) v*0.17*
 - [**SQLAlchemy**](https://www.sqlalchemy.org/) v*1.1*
 - [**Requests-Oauthlib**](https://requests-oauthlib.readthedocs.io/en/latest/) v*0.8*
-- [**Mimesis**](https://lk-geimfari.github.io/mimesis/) v*1.0*
+- [**Mimesis**](https://lk-geimfari.github.io/mimesis/) v*1.0*  *(requires Python 3)*
 
 
 ### Install/Setup #################################################################################
@@ -44,8 +45,14 @@
 1. #### Install Packages
 
     ```
-    ➜ pip install Flask Flask-WTF Flask-Restless SQLAlchemy requests_oauthlib mimesis
+    ➜ pip install Flask Flask-WTF Flask-Restless SQLAlchemy requests_oauthlib
     ```
+    > If you are using Python 3 and want to use the apps database populating features, install
+      mimesis as well...
+    > ```
+    >  ➜ pip3 install Flask Flask-WTF Flask-Restless SQLAlchemy requests_oauthlib mimesis
+    >  ```
+
     or with [requirements.txt](requirements.txt)...
     ```
     ➜ pip install -r requirements.txt
@@ -74,35 +81,45 @@
 ## Populating the Database ########################################################################
 
 Using [Mimesis](https://lk-geimfari.github.io/mimesis/) and helper functions from
-[`catalog/database.py`](/catalog/database.py) we can seed the database with fake data. This is
+[`catalog/populate.py`](/catalog/populate.py) we can seed the database with fake data. This is
 useful for testing as well as demonstration purposes.
 
-- **To populate all the tables in the database use `populate_db`.**
+> **`catalog.populate` requires Python 3 or later**. If you try to import the module with Python 2
+  the app will raise a `AssertionError`. The populate functions require the Mimesis package and
+  Mimesis will fail on import with Python 2.
+
+### To populate all the tables in the database use `populate_db`.
 
   ```
-  >>> from catalog.database import populate_db
+  ➜ python3
 
+  >>> from catalog.populate import populate_db
   >>> populate_db()
   ```
-  > Note: *Be aware that* `populate_db` *will call* `drop_db` *which will drop all the database tables.*
-  - **`populate_db()`** will create the Item, Category and User tables ([`catalog/models.py`](catalog/models.py)) and populate
-  them with simulated data using the other function is the database module.
+  > **Note** - *Be aware that* `populate_db` *will call* `drop_db` *which will drop all the
+    database tables.*
+  - **`populate_db()`** will create the Item, Category and User tables
+    ([`catalog/models.py`](catalog/models.py)) and populate them with simulated data using the
+    other function is the database module.
 
-- **Use `init_db` and `drop_db` to create metadata tables and drop tables, respectively.**
+### Use `init_db` and `drop_db` to create and drop tables, respectively.
+
   ```
-  >>> from catalog.database import init_db, drop_db
+  ➜ python3
 
+  >>> from catalog.populate import init_db, drop_db
   >>> init_db()  # to create database tables
   >>> drop_db()  # to drop all tables in database
   ```
   - **`init_db()`** will create all tables found in the metadata if they are not already created.
   - **`drop_db()`** will drop all tables in the database.
 
-- **To populate individual tables use `populate_users(n)`, `populate_categories()` and `populate_items(n)`.**
+### To populate individual tables use `populate_users(n)`, `populate_categories()` and `populate_items(n)`.
 
   ```
-  >>> from catalog.database import populate_users, populate_categories, populate_items
+  ➜ python3
 
+  >>> from catalog.populate import populate_users, populate_categories, populate_items
   >>> populate_users(10)     # add 10 User objects to database
   >>> populate_categories()  # add Category objects to database
   >>> populate_items(90)     # add 90 Item objects to database
