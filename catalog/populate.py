@@ -5,9 +5,8 @@ assert sys.version_info >= (3, 0)
 
 from mimesis import Generic
 
-from .database import session, engine, init_db, drop_db
-from .models import metadata, Item, Category, User
-from config import config_obj
+from .database import session, init_db, drop_db
+from .models import Item, Category, User
 
 g = Generic('en')
 
@@ -72,9 +71,6 @@ class UniqueRandomDatabaseData(object):
         :rtype: list[str]
         """
         return [func.__name__ for func in self._mimesis_category_funcs]
-
-
-
 
 
 def populate_db():
